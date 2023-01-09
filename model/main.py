@@ -6,6 +6,7 @@ def main():
     game.set_black_player_direction(-1)
     game.set_white_player_direction(1)
     game.print_table()
+    game.check_print()
 
 
 if __name__ == "__main__":

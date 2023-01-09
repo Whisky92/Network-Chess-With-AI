@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class PieceType(Enum):
     NO_TYPE = 0
     PAWN = 1
