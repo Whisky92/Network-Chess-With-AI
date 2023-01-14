@@ -68,29 +68,26 @@ class Piece:
     def __check_bishop_steps(self, board):
         possible_steps = []
         possible_steps.extend(self.__check_bishop_steps_diagonally(board, 1, 1))
-        possible_steps.extend(self.__check_bishop_steps_diagonally(board, 1, -1))
-        possible_steps.extend(self.__check_bishop_steps_diagonally(board, 1, 1))
-        possible_steps.extend(self.__check_bishop_steps_diagonally(board, -1, -1))
         return possible_steps
 
     def __check_rook_steps(self, board, x, y):
         possible_steps = []
-        possible_steps.extend(self.__check_rook_steps_vertical(board, x, 8, 1))
-        possible_steps.extend(self.__check_rook_steps_vertical(board, x, -1, -1))
-        possible_steps.extend(self.__check_rook_steps_horizontal(board, y, 8, 1))
-        possible_steps.extend(self.__check_rook_steps_horizontal(board, y, -1, -1))
+        possible_steps.extend(self.__check_rook_steps_vertical(board, x+1, 8, 1))
+        possible_steps.extend(self.__check_rook_steps_vertical(board, x-1, -1, -1))
+        possible_steps.extend(self.__check_rook_steps_horizontal(board, y+1, 8, 1))
+        possible_steps.extend(self.__check_rook_steps_horizontal(board, y-1, -1, -1))
         return possible_steps
 
     def __check_knight_steps(self, board, x, y):
         possible_steps = []
-        possible_steps.extend(self.__check_cell(board, x - 3, y + 1))
-        possible_steps.extend(self.__check_cell(board, x - 3, y - 1))
-        possible_steps.extend(self.__check_cell(board, x + 3, y + 1))
-        possible_steps.extend(self.__check_cell(board, x + 3, y - 1))
-        possible_steps.extend(self.__check_cell(board, x + 1, y + 3))
-        possible_steps.extend(self.__check_cell(board, x + 1, y - 3))
-        possible_steps.extend(self.__check_cell(board, x - 1, y + 3))
-        possible_steps.extend(self.__check_cell(board, x - 1, y - 3))
+        possible_steps.extend(self.__check_cell(board, x - 2, y + 1))
+        possible_steps.extend(self.__check_cell(board, x - 2, y - 1))
+        possible_steps.extend(self.__check_cell(board, x + 2, y + 1))
+        possible_steps.extend(self.__check_cell(board, x + 2, y - 1))
+        possible_steps.extend(self.__check_cell(board, x + 1, y + 2))
+        possible_steps.extend(self.__check_cell(board, x + 1, y - 2))
+        possible_steps.extend(self.__check_cell(board, x - 1, y + 2))
+        possible_steps.extend(self.__check_cell(board, x - 1, y - 2))
         return possible_steps
 
     def __check_king_steps(self, board, x, y):
@@ -104,10 +101,10 @@ class Piece:
 
     def __check_pawn_steps(self, board, x, y, last_step):
         possible_steps = []
-        possible_steps.extend(self.__is_correct_pawn_step(board, x + 1, y))
-        possible_steps.extend(self.__is_correct_pawn_step(board, x + 2, y))
-        possible_steps.extend(self.__is_correct_pawn_step(board, x + 1, y + 1))
-        possible_steps.extend(self.__is_correct_pawn_step(board, x + 1, y - 1))
+        possible_steps.extend(self.__is_correct_pawn_step(board, x - 1 * self.get_direction(), y))
+        possible_steps.extend(self.__is_correct_pawn_step(board, x - 2 * self.get_direction(), y))
+        possible_steps.extend(self.__is_correct_pawn_step(board, x - 1 * self.get_direction(), y + 1))
+        possible_steps.extend(self.__is_correct_pawn_step(board, x - 1 * self.get_direction(), y - 1))
         possible_steps.extend(self.__is_en_passant(board, x, y, last_step))
         return possible_steps
 
@@ -121,12 +118,13 @@ class Piece:
         possible_steps = []
         current_x = self.get_piece_x() + x_incr_val
         current_y = self.get_piece_y() + y_incr_val
-        while current_x < 8 and current_y < 8:
-            current_piece = board[current_x][current_y]
+        while -1 < current_x < 8 and -1 < current_y < 8:
+            current = board[current_x][current_y]
+            current_piece = current.get_piece()
             if current_piece.get_direction() == 0:
-                possible_steps.append(current_piece)
-            elif current_piece.get_direction != self.get_direction():
-                possible_steps.append(current_piece)
+                possible_steps.append(current)
+            elif current_piece.get_direction() != self.get_direction():
+                possible_steps.append(current)
                 break
             else:
                 break
@@ -138,27 +136,32 @@ class Piece:
         possible_steps = []
         if -1 < x < 8 and -1 < y < 8:
             current = board[x][y]
+            current_piece = current.get_piece()
             if self.get_piece_y() != y:
-                if current.get_direction() != 0 and current.get_direction() != self.get_direction():
+                if current_piece.get_direction() != 0 and current_piece.get_direction() != self.get_direction():
                     possible_steps.append(current)
             else:
-                if current.get_direction() == 0:
-                    if y == self.get_piece_y() + 1 * self.get_direction():
+                if current_piece.get_direction() == 0:
+                    if x == self.get_piece_x() - 1 * self.get_direction():
                         possible_steps.append(current)
                     else:
-                        if board[self.get_piece_x() + 1][self.get_piece_y()].get_direction() == 0 \
+                        if board[self.get_piece_x() - 1 * self.get_direction()][self.get_piece_y()]\
+                                .get_piece().get_direction() == 0 \
                                 and self.get_is_first_step():
                             possible_steps.append(current)
 
         return possible_steps
 
-    def __is_en_passant(self, board, x, y, last_step):
+    def __is_en_passant(self, board, x, y, last_step_cell):
+
         possible_steps = []
-        if last_step is not None:
+        if last_step_cell is not None:
+            last_step = last_step_cell.get_piece()
             if last_step.get_direction() != self.get_direction():
                 if last_step.get_piece_x() == x \
-                        and last_step.get_piece_y() == (y + 1 or y - 1):
-                    step_x = last_step.get_piece_x() + 1 * self.get_direction()
+                        and (last_step.get_piece_y() == y + 1 or
+                             last_step.get_piece_y() == y - 1):
+                    step_x = last_step.get_piece_x() - 1 * self.get_direction()
                     step_y = last_step.get_piece_y()
                     step = board[step_x][step_y]
                     possible_steps.append(step)
@@ -168,11 +171,12 @@ class Piece:
     def __check_rook_steps_vertical(self, board, begin, end, step_distance):
         possible_steps = []
         for i in range(begin, end, step_distance):
-            current_piece = board[i][self.get_piece_y()]
+            current = board[i][self.get_piece_y()]
+            current_piece = current.get_piece()
             if current_piece.get_direction() == 0:
-                possible_steps.append(current_piece)
-            elif current_piece.get_direction != self.get_direction():
-                possible_steps.append(current_piece)
+                possible_steps.append(current)
+            elif current_piece.get_direction() != self.get_direction():
+                possible_steps.append(current)
                 break
             else:
                 break
@@ -181,11 +185,12 @@ class Piece:
     def __check_rook_steps_horizontal(self, board, begin, end, step_distance):
         possible_steps = []
         for i in range(begin, end, step_distance):
-            current_piece = board[self.get_piece_x()][i]
+            current = board[self.get_piece_x()][i]
+            current_piece = current.get_piece()
             if current_piece.get_direction() == 0:
-                possible_steps.append(current_piece)
-            elif current_piece.get_direction != self.get_direction():
-                possible_steps.append(current_piece)
+                possible_steps.append(current)
+            elif current_piece.get_direction() != self.get_direction():
+                possible_steps.append(current)
                 break
             else:
                 break
@@ -203,6 +208,6 @@ class Piece:
         steps = []
         if -1 < x < 8 and -1 < y < 8:
             current = board[x][y]
-            if current.get_direction() != self.get_direction():
+            if current.get_piece().get_direction() != self.get_direction():
                 steps.append(current)
         return steps

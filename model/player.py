@@ -16,6 +16,9 @@ class Player:
     def set_direction(self, direction):
         self._direction = direction
 
+    def get_captured_pieces(self):
+        return self._captured_pieces
+
     def add_to_captured_pieces(self, piece):
         self._captured_pieces.append(piece)
 
