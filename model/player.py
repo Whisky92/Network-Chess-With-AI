@@ -1,8 +1,9 @@
 class Player:
-    def __init__(self, color):
+    def __init__(self, color, direction):
         self._color = color
-        self._direction = None
+        self._direction = direction
         self._captured_pieces = list()
+        self._pieces_on_board = list()
 
     def get_color(self):
         return self._color
@@ -24,3 +25,12 @@ class Player:
 
     def remove_from_captured_pieces(self, piece):
         self._captured_pieces.remove(piece)
+
+    def get_pieces_on_board(self):
+        return self._pieces_on_board
+
+    def add_to_pieces_on_board(self, piece):
+        self._pieces_on_board.append(piece)
+
+    def remove_from_pieces_on_board(self, piece):
+        self._pieces_on_board.remove(piece)
