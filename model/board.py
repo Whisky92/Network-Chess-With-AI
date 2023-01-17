@@ -38,6 +38,9 @@ class Board:
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
         self._board[3][1] = Cell(Piece(3, 1, PieceType.PAWN, 1))
+        self._board[0][1] = Cell(Piece(0, 1, PieceType.NO_TYPE, 0))
+        self._board[0][2] = Cell(Piece(0, 2, PieceType.NO_TYPE, 0))
+        self._board[0][3] = Cell(Piece(0, 3, PieceType.NO_TYPE, 0))
 
 
 
@@ -56,7 +59,8 @@ class Board:
             print()
 
 
-    def print_piece_data(self, piece):
+    def print_piece_data(self, cell):
+        piece = cell.get_piece()
         print(piece.get_piece_x(), piece.get_piece_y(), piece.get_piece_type(), piece.get_direction())
 
 

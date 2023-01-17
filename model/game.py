@@ -14,6 +14,9 @@ class Game:
         self._board = Board()
         self._last_step = None
         self.__add_to_player_pieces()
+        self._castling_step = []
+        self._castling_rook = []
+        self._rook_target = []
 
     def change_current_player(self):
         if self._current_player == self._white_player:
@@ -53,13 +56,23 @@ class Game:
         piece_to_move = cell_to_move_from.get_piece()
         x_target_coord = target_cell.get_piece().get_piece_x()
         y_target_coord = target_cell.get_piece().get_piece_y()
-        check_list = None
-        if cell_to_move_from.get_piece().get_piece_type() == PieceType.KING:
-            check_list = self.__check_king_steps(cell_to_move_from)
-        else:
-            check_list = piece_to_move.get_possible_steps(self._board.get_board(), self._last_step)
+        check_list = self.check_king_steps(cell_to_move_from) \
+            if cell_to_move_from.get_piece().get_piece_type() == PieceType.KING \
+            else piece_to_move.get_possible_steps(self._board.get_board(), self._last_step)
         if target_cell in check_list:
-            if target_cell.get_piece().get_direction() != 0:
+            if target_cell in self._castling_step:
+                index = self.get_index_of_item(self._castling_step, target_cell)
+                rook_y = self._rook_target[index].get_piece().get_piece_y()
+                rook_direction = self._rook_target[index].get_piece().get_direction()
+                self._rook_target[index].set_piece(self._castling_rook[index].get_piece())
+                self._rook_target[index].get_piece().set_piece_y(rook_y)
+                self._rook_target[index].get_piece().set_direction(rook_direction)
+                self._castling_rook[index].set_piece(Piece(piece_to_move.get_piece_x(), piece_to_move.get_piece_y(),
+                                                    PieceType.NO_TYPE, 0))
+                self._castling_rook = []
+                self._castling_step = []
+                self._rook_target = []
+            elif target_cell.get_piece().get_direction() != 0:
                 target_cell.get_piece().set_piece_x(-1)
                 target_cell.get_piece().set_piece_y(-1)
                 current_player = self.__get_player_by_direction(target_cell.get_piece().get_direction())
@@ -91,33 +104,48 @@ class Game:
             piece_to_move.change_to_not_first_step()
             target_cell.set_piece(piece_to_move)
 
+    def printing(self):
+        print(len(self._castling_step))
+        self._board.print_piece_data(self._castling_step[0])
+        self._board.print_piece_data(self._castling_rook[0])
+        self._board.print_piece_data(self._rook_target[0])
     def evolve_pawn(self, cell, p_type):
         piece = cell.get_piece()
         if piece.get_is_able_to_evolve():
             piece.set_to_not_able_to_evolve()
             piece.set_piece_type(p_type)
     def is_king_targeted(self, player):
-        king_cell = self.__get_king_cell(player)
-        return self.__is_cell_targeted(king_cell)
+        enemy_player = self._black_player if player == self._white_player else self._white_player
+        king_cell = self.get_king_cell(player)
+        return self.is_cell_targeted(king_cell, enemy_player)
     def is_king_cells_targeted(self, player):
-        king_cell = self.__get_king_cell(player)
+        king_cell = self.get_king_cell(player)
         non_targeted_cells = []
+        enemy_player = self._black_player if player == self._white_player else self._white_player
         for i in king_cell.get_piece().get_possible_steps(self._board.get_board(), self._last_step):
-            if not self.__is_cell_targeted(i):
+            if not self.is_cell_targeted(i, enemy_player):
                 non_targeted_cells.append(i)
         return non_targeted_cells
-    def __is_cell_targeted(self, cell):
-        enemy_player = None
-        if cell.get_piece().get_direction() == self._white_player.get_direction():
-            enemy_player = self._black_player
-        else:
-            enemy_player = self._white_player
+    def is_cell_targeted(self, cell, enemy_player):
+        player = self._black_player if enemy_player == self._white_player else self._white_player
+        changed = False
         for i in enemy_player.get_pieces_on_board():
-            if cell in i.get_possible_steps():
+            if i.get_piece_type() == PieceType.PAWN and cell.get_piece().get_direction() == 0:
+                changed = True
+                cell.get_piece().set_direction(player.get_direction())
+            result = cell in i.get_possible_steps(self._board.get_board(), self._last_step)
+            if changed:
+                cell.get_piece().set_direction(0)
+            if result:
                 return True
         return False
+    def print_king(self, x, y):
+        piece = self.get_board_table()[x][y]
+        for i in self.check_king_steps(piece):
+            print(i.get_piece().get_piece_x(), i.get_piece().get_piece_y(),
+                  "type:", i.get_piece().get_piece_type(), i.get_piece().get_direction())
 
-    def __get_king_cell(self, player):
+    def get_king_cell(self, player):
         for i in player.get_pieces_on_board():
             if i.get_piece_type() == PieceType.KING:
                 return self._board.get_board()[i.get_piece_x()][i.get_piece_y()]
@@ -145,54 +173,69 @@ class Game:
             print(i.get_piece().get_piece_x(), i.get_piece().get_piece_y(),
                   "type:", i.get_piece().get_piece_type(), i.get_piece().get_direction())
 
-    def __check_king_steps(self, cell):
+    def check_king_steps(self, cell):
         possible_cells = []
-        possible_cells.extend(cell.get_piece().get_possible_steps(self._board.get_board(), self._last_step))
-        possible_cells.extend(self.__add_castling_steps_to_possible_steps(cell, cell.get_piece().get_piece_x(), cell.get_piece().get_piece_y() + 2))
-        possible_cells.extend(self.__add_castling_steps_to_possible_steps(cell, cell.get_piece().get_piece_x(), cell.get_piece().get_piece_y() - 2))
         player = self.get_player_by_direction(cell.get_piece().get_direction())
         possible_cells.extend(self.is_king_cells_targeted(player))
+        possible_cells.extend(self.add_castling_steps_to_possible_steps(cell, cell.get_piece().get_piece_x(),
+                                                                        cell.get_piece().get_piece_y() + 2))
+        possible_cells.extend(self.add_castling_steps_to_possible_steps(cell, cell.get_piece().get_piece_x(),
+                                                                        cell.get_piece().get_piece_y() - 2))
         return possible_cells
-    def __add_castling_steps_to_possible_steps(self, cell, x, y):
+
+    def add_castling_steps_to_possible_steps(self, cell, x, y):
         possible_steps = []
-        board = self.get_board_table()
+        board = self.get_board().get_board()
         target_piece = board[x][y]
         if 7 - y < y - 0:
-            castling = cell.__check_castling_on_one_side(board, target_piece, 7)
+            castling = self.__check_castling_on_one_side(cell, target_piece, 7)
             if len(castling) != 0:
+                if board[x][5] not in self._rook_target:
+                    self._rook_target.append(board[x][5])
                 possible_steps.extend(castling)
-                cell._castling_step = board.get_board()[x][5]
         else:
-            castling = cell.__check_castling_on_one_side(board, target_piece, 0)
+            castling = self.__check_castling_on_one_side(cell, target_piece, 0)
             if len(castling) != 0:
+                if board[x][3] not in self._rook_target:
+                    self._rook_target.append(board[x][3])
                 possible_steps.extend(castling)
-                cell._castling_step = board.get_board()[x][3]
         return possible_steps
 
 
     def __check_castling_on_one_side(self, cell, target_piece, rook_y):
         possible_steps = []
         game_board = self.get_board()
+        cell_y = cell.get_piece().get_piece_y()
         target_x = target_piece.get_piece().get_piece_x()
         target_y = target_piece.get_piece().get_piece_y()
-        rook_cell = game_board.get_board()[target_x][rook_y]
+        rook_cell = self.get_board().get_board()[target_x][rook_y]
         min_y = None
         max_y = None
-        if rook_y > target_y:
-            min_y = rook_y
-            max_y = target_y
-        else:
+        if cell_y > target_y:
             min_y = target_y
-            max_y = rook_y
-        if rook_cell.get_piece().get_is_first_step() and cell.get_is_first_step():
-            for i in range(min_y, max_y + 1):
-                cell = game_board.get_board()[target_x][i]
-                if self.__is_cell_targeted(cell):
-                    return possible_steps
+            max_y = cell_y
+        else:
+            min_y = cell_y
+            max_y = target_y
+        if rook_cell.get_piece().get_is_first_step() and cell.get_piece().get_is_first_step():
             for i in range(min_y + 1, max_y):
                 cell = game_board.get_board()[target_x][i]
                 if cell.get_piece().get_piece_type() != PieceType.NO_TYPE:
                     return possible_steps
+            for i in range(min_y, max_y + 1):
+                enemy_player = self._black_player if cell.get_piece().get_direction() == \
+                                                     self._white_player.get_direction() else self._white_player
+                cell = game_board.get_board()[target_x][i]
+                if self.is_cell_targeted(cell, enemy_player):
+                    return possible_steps
+            if target_piece not in self._castling_step:
+                self._castling_rook.append(rook_cell)
+                self._castling_step.append(target_piece)
             possible_steps.append(target_piece)
-            cell._castling_step = rook_cell
         return possible_steps
+
+    def get_index_of_item(self, lst, item):
+        for i in range(0, len(lst)):
+            if lst[i] == item:
+                return i
+        return -1
