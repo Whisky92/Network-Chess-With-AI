@@ -37,10 +37,9 @@ class Board:
                                Cell(Piece(6, 2, PieceType.PAWN, 1)), Cell(Piece(6, 3, PieceType.PAWN, 1)),
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
-        self._board[3][1] = Cell(Piece(3, 1, PieceType.PAWN, 1))
-        self._board[0][1] = Cell(Piece(0, 1, PieceType.NO_TYPE, 0))
-        self._board[0][2] = Cell(Piece(0, 2, PieceType.NO_TYPE, 0))
-        self._board[0][3] = Cell(Piece(0, 3, PieceType.NO_TYPE, 0))
+        self._board[3][3] = Cell(Piece(3, 3, PieceType.BISHOP, 1))
+
+
 
 
 

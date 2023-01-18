@@ -158,6 +158,20 @@ class Game:
         piece = self.get_board_table()[x][y].get_piece()
         return piece.get_possible_steps(self._board.get_board(), self._last_step)
 
+    def print_possible_board(self, x, y):
+        cell = self._board.get_board()[x][y]
+        lst = cell.get_piece().get_possible_steps(self._board.get_board(), self._last_step)
+        for i in range(0, 8):
+            for j in range(0, 8):
+                if self._board.get_board()[i][j] == cell:
+                    print("X", end=" ")
+                elif self._board.get_board()[i][j] in lst:
+                    print("x", end=" ")
+                else:
+                    print("-", end=" ")
+            print()
+
+
     def get_player_by_direction(self, direction):
         if self._white_player.get_direction() == direction:
             return self._white_player
@@ -218,15 +232,15 @@ class Game:
             min_y = cell_y
             max_y = target_y
         if rook_cell.get_piece().get_is_first_step() and cell.get_piece().get_is_first_step():
+            enemy_player = self._black_player if cell.get_piece().get_direction() == \
+                                                 self._white_player.get_direction() else self._white_player
             for i in range(min_y + 1, max_y):
-                cell = game_board.get_board()[target_x][i]
-                if cell.get_piece().get_piece_type() != PieceType.NO_TYPE:
+                current_cell = game_board.get_board()[target_x][i]
+                if current_cell.get_piece().get_piece_type() != PieceType.NO_TYPE:
                     return possible_steps
             for i in range(min_y, max_y + 1):
-                enemy_player = self._black_player if cell.get_piece().get_direction() == \
-                                                     self._white_player.get_direction() else self._white_player
-                cell = game_board.get_board()[target_x][i]
-                if self.is_cell_targeted(cell, enemy_player):
+                current_cell = game_board.get_board()[target_x][i]
+                if self.is_cell_targeted(current_cell, enemy_player):
                     return possible_steps
             if target_piece not in self._castling_step:
                 self._castling_rook.append(rook_cell)

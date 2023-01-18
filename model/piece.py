@@ -83,6 +83,9 @@ class Piece:
     def __check_bishop_steps(self, board):
         possible_steps = []
         possible_steps.extend(self.__check_bishop_steps_diagonally(board, 1, 1))
+        possible_steps.extend(self.__check_bishop_steps_diagonally(board, 1, -1))
+        possible_steps.extend(self.__check_bishop_steps_diagonally(board, -1, 1))
+        possible_steps.extend(self.__check_bishop_steps_diagonally(board, -1, -1))
         return possible_steps
 
     def __check_rook_steps(self, board, x, y):
@@ -143,8 +146,8 @@ class Piece:
                 break
             else:
                 break
-        current_x += x_incr_val
-        current_y += y_incr_val
+            current_x += x_incr_val
+            current_y += y_incr_val
         return possible_steps
 
     def __is_correct_pawn_step(self, board, x, y):
