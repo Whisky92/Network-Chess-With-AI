@@ -53,7 +53,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../resource_images/white_pawn.png</pixmap>
+      <pixmap>../resource_images/w_pawn.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -152,7 +152,7 @@
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>../resource_images/black_pawn.png</pixmap>
+      <pixmap>../resource_images/black_p.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
