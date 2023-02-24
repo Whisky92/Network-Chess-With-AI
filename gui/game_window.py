@@ -39,9 +39,6 @@ class GameWindow(QDialog):
                 cell_type = self.game.get_board_table()[i][j].get_piece().get_piece_type()
                 direction = self.game.get_board_table()[i][j].get_piece().get_direction()
 
-                item.setScaledContents(True)
-                item.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-
                 pixmap = None
 
                 if cell_type == PieceType.PAWN and direction == 1:
