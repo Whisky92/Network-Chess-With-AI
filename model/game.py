@@ -1,15 +1,15 @@
-from player import Player
-from colors import Color
-from board import Board
-from cell import Cell
-from piece_type import PieceType
-from piece import Piece
+from model.player import Player
+from model.colors import Color
+from model.board import Board
+from model.cell import Cell
+from model.piece_type import PieceType
+from model.piece import Piece
 
 class Game:
 
-    def __init__(self, white_direction, black_direction):
-        self._white_player = Player(Color.WHITE, white_direction)
-        self._black_player = Player(Color.BLACK, black_direction)
+    def __init__(self):
+        self._white_player = Player(Color.WHITE, 1)
+        self._black_player = Player(Color.BLACK, -1)
         self._current_player = self._white_player
         self._board = Board()
         self._last_step = None

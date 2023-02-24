@@ -1,4 +1,4 @@
-from piece_type import PieceType
+from model.piece_type import PieceType
 
 
 class Piece:

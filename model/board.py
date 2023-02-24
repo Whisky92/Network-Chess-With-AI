@@ -1,6 +1,6 @@
-from piece import Piece
-from piece_type import PieceType
-from cell import Cell
+from model.piece import Piece
+from model.piece_type import PieceType
+from model.cell import Cell
 
 
 class Board:
@@ -37,7 +37,6 @@ class Board:
                                Cell(Piece(6, 2, PieceType.PAWN, 1)), Cell(Piece(6, 3, PieceType.PAWN, 1)),
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
-        self._board[3][3] = Cell(Piece(3, 3, PieceType.BISHOP, 1))
 
 
 

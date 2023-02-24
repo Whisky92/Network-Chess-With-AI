@@ -1200,7 +1200,7 @@ border: 1px solid black;</string>
 	border: 5px solid black;
 }</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout" rowstretch="1,1,1,1,1,1,1,1" columnstretch="1,1,1,1,1,1,1,1">
+     <layout class="QGridLayout" name="gameLayout" rowstretch="1,1,1,1,1,1,1,1" columnstretch="1,1,1,1,1,1,1,1">
       <property name="leftMargin">
        <number>0</number>
       </property>

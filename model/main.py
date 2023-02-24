@@ -1,11 +1,15 @@
 #!/usr/bin/env python3
-from game import Game
+from model.game import Game
 
 def main():
-    game = Game(-1, 1)
+    game = Game()
     board = game.get_board()
     table = game.get_board_table()
-    game.print_possible_board(3, 3)
+    typer = game.get_board_table()[0][1].get_piece().get_piece_type()
+    print(typer)
+    d = game.get_board_table()[0][0].get_piece().get_direction()
+    print(d)
+
 
 
 
