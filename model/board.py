@@ -41,13 +41,9 @@ class Board:
 
 
 
-
     def get_cell_of_board(self, x, y):
         return self._board[x][y]
 
-
-    def get_possible_steps(self, x, y):
-        return self._board[x][y].get_possible_steps(self._board, self._last_step)
 
 
     def print_board(self):

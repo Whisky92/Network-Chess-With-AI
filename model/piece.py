@@ -1,4 +1,5 @@
 from model.piece_type import PieceType
+from model.king_step_checker import KingStepChecker
 
 
 class Piece:
@@ -49,8 +50,8 @@ class Piece:
 
     def get_is_able_to_evolve(self):
         return self._is_able_to_evolve
+
     def change_to_able_to_evolve(self):
-        enemy_border = None
         if self._direction == 1:
             enemy_border = 7
         else:
@@ -61,7 +62,8 @@ class Piece:
     def set_to_not_able_to_evolve(self):
         self._is_able_to_evolve = False
 
-    def get_possible_steps(self, board, last_step):
+    def get_possible_steps(self, board, last_step, white_player, black_player, castling_step, castling_rook,
+                           rook_target):
         possible_cells = []
         x = self._x
         y = self._y
@@ -69,7 +71,8 @@ class Piece:
         if p_type == PieceType.KNIGHT:
             possible_cells.extend(self.__check_knight_steps(board, x, y))
         elif p_type == PieceType.KING:
-            possible_cells.extend(self.__check_king_steps(board, x, y))
+            possible_cells.extend(KingStepChecker.check_king_steps(board, x, y, white_player, black_player, last_step,
+                                                                   castling_step, castling_rook, rook_target))
         elif p_type == PieceType.ROOK:
             possible_cells.extend(self.__check_rook_steps(board, x, y))
         elif p_type == PieceType.PAWN:
@@ -98,23 +101,15 @@ class Piece:
 
     def __check_knight_steps(self, board, x, y):
         possible_steps = []
-        possible_steps.extend(self.__check_cell(board, x - 2, y + 1))
-        possible_steps.extend(self.__check_cell(board, x - 2, y - 1))
-        possible_steps.extend(self.__check_cell(board, x + 2, y + 1))
-        possible_steps.extend(self.__check_cell(board, x + 2, y - 1))
-        possible_steps.extend(self.__check_cell(board, x + 1, y + 2))
-        possible_steps.extend(self.__check_cell(board, x + 1, y - 2))
-        possible_steps.extend(self.__check_cell(board, x - 1, y + 2))
-        possible_steps.extend(self.__check_cell(board, x - 1, y - 2))
-        return possible_steps
-
-    def __check_king_steps(self, board, x, y):
-        possible_steps = []
-        possible_steps.extend(self.__check_cell(board, x + 1, y + 1))
-        possible_steps.extend(self.__check_cell(board, x + 1, y - 1))
-        possible_steps.extend(self.__check_cell(board, x - 1, y + 1))
-        possible_steps.extend(self.__check_cell(board, x - 1, y - 1))
-        possible_steps.extend(self.__check_adjacent_cells(board, x, y))
+        cell = board[x][y]
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x - 2, y + 1))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x - 2, y - 1))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x + 2, y + 1))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x + 2, y - 1))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x + 1, y + 2))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x + 1, y - 2))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x - 1, y + 2))
+        possible_steps.extend(KingStepChecker.check_cell(board, cell, x - 1, y - 2))
         return possible_steps
 
     def __check_pawn_steps(self, board, x, y, last_step):
@@ -127,9 +122,10 @@ class Piece:
         return possible_steps
 
     def __check_queen_steps(self, board, x, y):
+        cell = board[x][y]
         possible_steps = []
         possible_steps.extend(self.__check_bishop_steps(board))
-        possible_steps.extend(self.__check_adjacent_cells(board, x, y))
+        possible_steps.extend(KingStepChecker.check_adjacent_cells(board, cell, x, y))
         return possible_steps
 
     def __check_bishop_steps_diagonally(self, board, x_incr_val, y_incr_val):
@@ -213,19 +209,3 @@ class Piece:
             else:
                 break
         return possible_steps
-
-    def __check_adjacent_cells(self, board, x, y):
-        possible_steps = []
-        possible_steps.extend(self.__check_cell(board, x + 1, y))
-        possible_steps.extend(self.__check_cell(board, x - 1, y))
-        possible_steps.extend(self.__check_cell(board, x, y + 1))
-        possible_steps.extend(self.__check_cell(board, x, y - 1))
-        return possible_steps
-
-    def __check_cell(self, board, x, y):
-        steps = []
-        if -1 < x < 8 and -1 < y < 8:
-            current = board[x][y]
-            if current.get_piece().get_direction() != self.get_direction():
-                steps.append(current)
-        return steps
