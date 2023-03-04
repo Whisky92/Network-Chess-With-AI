@@ -105,6 +105,13 @@ class Game:
             piece_to_move.change_to_not_first_step()
             target_cell.set_piece(piece_to_move)
 
+            if self.__is_player_king_cells_targeted(self._white_player) and not self.is_king_targeted(self._white_player):
+                self._white_player.set_can_stalemate(True)
+
+            if self.__is_player_king_cells_targeted(self._black_player) and not self.is_king_targeted(self._black_player):
+                self._black_player.set_can_stalemate(True)
+
+
     def printing(self):
         print(len(self._castling_step))
         self._board.print_piece_data(self._castling_step[0])
@@ -176,3 +183,11 @@ class Game:
             if lst[i] == item:
                 return i
         return -1
+
+    def __is_player_king_cells_targeted(self, player):
+        return len(KingStepChecker.is_king_cells_targeted
+                   (self.get_board_table(), player, self._white_player,
+                    self._black_player, self._last_step, self._castling_step,
+                    self._castling_rook, self._rook_target)) == 0
+
+

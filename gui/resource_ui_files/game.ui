@@ -164,7 +164,7 @@ border-radius: 15px;
               </spacer>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="player2DrawRequest">
+              <widget class="ClickableLabel" name="player2DrawRequest">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -255,7 +255,7 @@ border: 1px solid black;</string>
               </spacer>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="player2StepInfo">
+              <widget class="ClickableLabel" name="player2StepInfo">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -343,7 +343,7 @@ border: 1px solid black;</string>
               </spacer>
              </item>
              <item row="0" column="1">
-              <widget class="QLabel" name="player2Surrender">
+              <widget class="ClickableLabel" name="player2Surrender">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -444,7 +444,7 @@ color: white;</string>
             <number>0</number>
            </property>
            <item row="0" column="1">
-            <widget class="QLabel" name="label_66">
+            <widget class="ClickableLabel" name="label_66">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -455,7 +455,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_73">
+            <widget class="ClickableLabel" name="label_73">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -465,7 +465,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="3">
-            <widget class="QLabel" name="label_68">
+            <widget class="ClickableLabel" name="label_68">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -476,7 +476,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QLabel" name="label_71">
+            <widget class="ClickableLabel" name="label_71">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -487,7 +487,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QLabel" name="label_67">
+            <widget class="ClickableLabel" name="label_67">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -498,7 +498,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_69">
+            <widget class="ClickableLabel" name="label_69">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -508,7 +508,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="3">
-            <widget class="QLabel" name="label_76">
+            <widget class="ClickableLabel" name="label_76">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -519,7 +519,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLabel" name="label_70">
+            <widget class="ClickableLabel" name="label_70">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -530,7 +530,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="2">
-            <widget class="QLabel" name="label_75">
+            <widget class="ClickableLabel" name="label_75">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -541,7 +541,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="3">
-            <widget class="QLabel" name="label_72">
+            <widget class="ClickableLabel" name="label_72">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -552,7 +552,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QLabel" name="label_65">
+            <widget class="ClickableLabel" name="label_65">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -562,7 +562,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLabel" name="label_74">
+            <widget class="ClickableLabel" name="label_74">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -573,7 +573,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="label_77">
+            <widget class="ClickableLabel" name="label_77">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -583,7 +583,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QLabel" name="label_78">
+            <widget class="ClickableLabel" name="label_78">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -594,7 +594,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="2">
-            <widget class="QLabel" name="label_79">
+            <widget class="ClickableLabel" name="label_79">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -605,7 +605,7 @@ border-left: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="3">
-            <widget class="QLabel" name="label_80">
+            <widget class="ClickableLabel" name="label_80">
              <property name="styleSheet">
               <string notr="true">border: 1px solid black;</string>
              </property>
@@ -713,7 +713,7 @@ border-radius: 15px;
             <number>0</number>
            </property>
            <item row="0" column="3">
-            <widget class="QLabel" name="label_85">
+            <widget class="ClickableLabel" name="label_85">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -723,7 +723,7 @@ border-radius: 15px;
             </widget>
            </item>
            <item row="1" column="2">
-            <widget class="QLabel" name="label_86">
+            <widget class="ClickableLabel" name="label_86">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -734,7 +734,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="3">
-            <widget class="QLabel" name="label_93">
+            <widget class="ClickableLabel" name="label_93">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -744,7 +744,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="1">
-            <widget class="QLabel" name="label_91">
+            <widget class="ClickableLabel" name="label_91">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -755,7 +755,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="2">
-            <widget class="QLabel" name="label_92">
+            <widget class="ClickableLabel" name="label_92">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -766,7 +766,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="1">
-            <widget class="QLabel" name="label_88">
+            <widget class="ClickableLabel" name="label_88">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -777,7 +777,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="3">
-            <widget class="QLabel" name="label_89">
+            <widget class="ClickableLabel" name="label_89">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
@@ -787,7 +787,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="1" column="0">
-            <widget class="QLabel" name="label_87">
+            <widget class="ClickableLabel" name="label_87">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -798,7 +798,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="2" column="0">
-            <widget class="QLabel" name="label_90">
+            <widget class="ClickableLabel" name="label_90">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -809,7 +809,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="1">
-            <widget class="QLabel" name="label_83">
+            <widget class="ClickableLabel" name="label_83">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -820,7 +820,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="0">
-            <widget class="QLabel" name="label_82">
+            <widget class="ClickableLabel" name="label_82">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -831,7 +831,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="0" column="2">
-            <widget class="QLabel" name="label_84">
+            <widget class="ClickableLabel" name="label_84">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -842,7 +842,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="0">
-            <widget class="QLabel" name="label_94">
+            <widget class="ClickableLabel" name="label_94">
              <property name="styleSheet">
               <string notr="true">border: 1px solid black;</string>
              </property>
@@ -852,7 +852,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="1">
-            <widget class="QLabel" name="label_95">
+            <widget class="ClickableLabel" name="label_95">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;
@@ -864,7 +864,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="2">
-            <widget class="QLabel" name="label_96">
+            <widget class="ClickableLabel" name="label_96">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;
@@ -876,7 +876,7 @@ border-right: 1px solid black;</string>
             </widget>
            </item>
            <item row="3" column="3">
-            <widget class="QLabel" name="label_97">
+            <widget class="ClickableLabel" name="label_97">
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;</string>
@@ -925,7 +925,7 @@ border-bottom: 1px solid black;</string>
               <number>0</number>
              </property>
              <item row="0" column="1">
-              <widget class="QLabel" name="player1StepInfo">
+              <widget class="ClickableLabel" name="player1StepInfo">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -1019,7 +1019,7 @@ border: 1px solid black;</string>
               <number>0</number>
              </property>
              <item row="0" column="1">
-              <widget class="QLabel" name="player1DrawRequest">
+              <widget class="ClickableLabel" name="player1DrawRequest">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -1126,7 +1126,7 @@ color: white;</string>
               <number>0</number>
              </property>
              <item row="0" column="1">
-              <widget class="QLabel" name="player1Surrender">
+              <widget class="ClickableLabel" name="player1Surrender">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
                  <horstretch>0</horstretch>
@@ -1217,7 +1217,7 @@ border: 1px solid black;</string>
        <number>0</number>
       </property>
       <item row="5" column="2">
-       <widget class="QLabel" name="label_44">
+       <widget class="ClickableLabel" name="label_44">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1238,7 +1238,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="7">
-       <widget class="QLabel" name="label_24">
+       <widget class="ClickableLabel" name="label_24">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1259,7 +1259,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="3">
-       <widget class="QLabel" name="label_21">
+       <widget class="ClickableLabel" name="label_21">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1280,7 +1280,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="0">
-       <widget class="QLabel" name="label_18">
+       <widget class="ClickableLabel" name="label_18">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1302,7 +1302,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="4" column="4">
-       <widget class="QLabel" name="label_37">
+       <widget class="ClickableLabel" name="label_37">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1323,7 +1323,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="3" column="5">
-       <widget class="QLabel" name="label_31">
+       <widget class="ClickableLabel" name="label_31">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1344,7 +1344,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="3" column="4">
-       <widget class="QLabel" name="label_29">
+       <widget class="ClickableLabel" name="label_29">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1365,7 +1365,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="1" column="2">
-       <widget class="QLabel" name="label_12">
+       <widget class="ClickableLabel" name="label_12">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1386,7 +1386,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="5" column="4">
-       <widget class="QLabel" name="label_45">
+       <widget class="ClickableLabel" name="label_45">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1407,7 +1407,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="0" column="2">
-       <widget class="QLabel" name="label_3">
+       <widget class="ClickableLabel" name="label_3">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1428,7 +1428,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="4" column="5">
-       <widget class="QLabel" name="label_38">
+       <widget class="ClickableLabel" name="label_38">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1449,7 +1449,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="1" column="5">
-       <widget class="QLabel" name="label_14">
+       <widget class="ClickableLabel" name="label_14">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1470,7 +1470,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="5" column="7">
-       <widget class="QLabel" name="label_48">
+       <widget class="ClickableLabel" name="label_48">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1491,7 +1491,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="6" column="2">
-       <widget class="QLabel" name="label_49">
+       <widget class="ClickableLabel" name="label_49">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1512,7 +1512,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="6" column="0">
-       <widget class="QLabel" name="label_50">
+       <widget class="ClickableLabel" name="label_50">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1534,7 +1534,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="5" column="6">
-       <widget class="QLabel" name="label_47">
+       <widget class="ClickableLabel" name="label_47">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1555,7 +1555,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="0" column="7">
-       <widget class="QLabel" name="label_8">
+       <widget class="ClickableLabel" name="label_8">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1576,7 +1576,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="5">
-       <widget class="QLabel" name="label_22">
+       <widget class="ClickableLabel" name="label_22">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1597,7 +1597,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="2">
-       <widget class="QLabel" name="label_20">
+       <widget class="ClickableLabel" name="label_20">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1618,7 +1618,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="0" column="4">
-       <widget class="QLabel" name="label_5">
+       <widget class="ClickableLabel" name="label_5">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1639,7 +1639,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="1" column="7">
-       <widget class="QLabel" name="label_16">
+       <widget class="ClickableLabel" name="label_16">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1660,7 +1660,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="1" column="4">
-       <widget class="QLabel" name="label_13">
+       <widget class="ClickableLabel" name="label_13">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1681,7 +1681,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="1">
-       <widget class="QLabel" name="label_19">
+       <widget class="ClickableLabel" name="label_19">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1702,7 +1702,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="6" column="7">
-       <widget class="QLabel" name="label_56">
+       <widget class="ClickableLabel" name="label_56">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1723,7 +1723,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="4" column="1">
-       <widget class="QLabel" name="label_33">
+       <widget class="ClickableLabel" name="label_33">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1744,7 +1744,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="1" column="3">
-       <widget class="QLabel" name="label_9">
+       <widget class="ClickableLabel" name="label_9">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1765,7 +1765,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="5" column="3">
-       <widget class="QLabel" name="label_41">
+       <widget class="ClickableLabel" name="label_41">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1786,7 +1786,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="1" column="6">
-       <widget class="QLabel" name="label_15">
+       <widget class="ClickableLabel" name="label_15">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1807,7 +1807,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="3" column="7">
-       <widget class="QLabel" name="label_32">
+       <widget class="ClickableLabel" name="label_32">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1828,7 +1828,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="3" column="3">
-       <widget class="QLabel" name="label_28">
+       <widget class="ClickableLabel" name="label_28">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1849,7 +1849,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="0" column="3">
-       <widget class="QLabel" name="label_4">
+       <widget class="ClickableLabel" name="label_4">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1870,7 +1870,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="4" column="3">
-       <widget class="QLabel" name="label_36">
+       <widget class="ClickableLabel" name="label_36">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1891,7 +1891,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="5" column="5">
-       <widget class="QLabel" name="label_46">
+       <widget class="ClickableLabel" name="label_46">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1912,7 +1912,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="6" column="5">
-       <widget class="QLabel" name="label_54">
+       <widget class="ClickableLabel" name="label_54">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1933,7 +1933,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="4" column="7">
-       <widget class="QLabel" name="label_40">
+       <widget class="ClickableLabel" name="label_40">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1954,7 +1954,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="3" column="0">
-       <widget class="QLabel" name="label_25">
+       <widget class="ClickableLabel" name="label_25">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1976,7 +1976,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="4" column="6">
-       <widget class="QLabel" name="label_39">
+       <widget class="ClickableLabel" name="label_39">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -1997,7 +1997,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="0" column="6">
-       <widget class="QLabel" name="label_7">
+       <widget class="ClickableLabel" name="label_7">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2018,7 +2018,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="6" column="3">
-       <widget class="QLabel" name="label_52">
+       <widget class="ClickableLabel" name="label_52">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2039,7 +2039,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="2" column="4">
-       <widget class="QLabel" name="label_17">
+       <widget class="ClickableLabel" name="label_17">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2060,7 +2060,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="4" column="2">
-       <widget class="QLabel" name="label_35">
+       <widget class="ClickableLabel" name="label_35">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2081,7 +2081,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="2" column="6">
-       <widget class="QLabel" name="label_23">
+       <widget class="ClickableLabel" name="label_23">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2102,7 +2102,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="4" column="0">
-       <widget class="QLabel" name="label_34">
+       <widget class="ClickableLabel" name="label_34">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2124,7 +2124,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="1" column="1">
-       <widget class="QLabel" name="label_11">
+       <widget class="ClickableLabel" name="label_11">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2145,7 +2145,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="1" column="0">
-       <widget class="QLabel" name="label_10">
+       <widget class="ClickableLabel" name="label_10">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2167,7 +2167,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="3" column="6">
-       <widget class="QLabel" name="label_30">
+       <widget class="ClickableLabel" name="label_30">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2188,7 +2188,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="6" column="6">
-       <widget class="QLabel" name="label_55">
+       <widget class="ClickableLabel" name="label_55">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2209,7 +2209,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="6" column="1">
-       <widget class="QLabel" name="label_51">
+       <widget class="ClickableLabel" name="label_51">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2230,7 +2230,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="3" column="2">
-       <widget class="QLabel" name="label_27">
+       <widget class="ClickableLabel" name="label_27">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2251,7 +2251,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="5" column="0">
-       <widget class="QLabel" name="label_42">
+       <widget class="ClickableLabel" name="label_42">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2273,7 +2273,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="0" column="0">
-       <widget class="QLabel" name="label">
+       <widget class="ClickableLabel" name="label">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2295,7 +2295,7 @@ border-left: 5px solid black;</string>
        </widget>
       </item>
       <item row="3" column="1">
-       <widget class="QLabel" name="label_26">
+       <widget class="ClickableLabel" name="label_26">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2316,7 +2316,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="0" column="1">
-       <widget class="QLabel" name="label_2">
+       <widget class="ClickableLabel" name="label_2">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2337,7 +2337,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="5" column="1">
-       <widget class="QLabel" name="label_43">
+       <widget class="ClickableLabel" name="label_43">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2358,7 +2358,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="0" column="5">
-       <widget class="QLabel" name="label_6">
+       <widget class="ClickableLabel" name="label_6">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2379,7 +2379,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="6" column="4">
-       <widget class="QLabel" name="label_53">
+       <widget class="ClickableLabel" name="label_53">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2400,7 +2400,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="7" column="3">
-       <widget class="QLabel" name="label_57">
+       <widget class="ClickableLabel" name="label_57">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2422,7 +2422,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="7" column="0">
-       <widget class="QLabel" name="label_58">
+       <widget class="ClickableLabel" name="label_58">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2445,7 +2445,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="7" column="1">
-       <widget class="QLabel" name="label_59">
+       <widget class="ClickableLabel" name="label_59">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2467,7 +2467,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="7" column="2">
-       <widget class="QLabel" name="label_60">
+       <widget class="ClickableLabel" name="label_60">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2489,7 +2489,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="7" column="4">
-       <widget class="QLabel" name="label_61">
+       <widget class="ClickableLabel" name="label_61">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2511,7 +2511,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="7" column="5">
-       <widget class="QLabel" name="label_62">
+       <widget class="ClickableLabel" name="label_62">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2533,7 +2533,7 @@ background-color: #704214;</string>
        </widget>
       </item>
       <item row="7" column="6">
-       <widget class="QLabel" name="label_63">
+       <widget class="ClickableLabel" name="label_63">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2555,7 +2555,7 @@ background-color: #FFDBAC;</string>
        </widget>
       </item>
       <item row="7" column="7">
-       <widget class="QLabel" name="label_64">
+       <widget class="ClickableLabel" name="label_64">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
           <horstretch>0</horstretch>
@@ -2581,6 +2581,13 @@ background-color: #704214;</string>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>ClickableLabel</class>
+   <extends>QLabel</extends>
+   <header location="global">clickable_label</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

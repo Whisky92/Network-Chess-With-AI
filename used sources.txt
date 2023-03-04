@@ -1,0 +1,8 @@
+Sources I used as samples, and references for my project, and borrowed ideas from:
+
+- https://stackoverflow.com/questions/73023857/pyqt6-mouse-hover-event-over-qpushbuttons-in-a-gridlayout
+- https://youtube.com/playlist?list=PLCC34OHNcOtpmCA8s_dpPMvQLyHbvxocY
+- https://www.youtube.com/watch?v=82v2ZR-g6wY
+- https://stackoverflow.com/questions/75406564/how-can-i-create-a-responsive-ui-with-buttons-that-scales-with-size-changes-wit
+- https://stackoverflow.com/questions/45575626/make-qlabel-clickable
+- https://stackoverflow.com/questions/72429693/pyqt5-using-loadui-with-promoted-widgets-from-qt-designer

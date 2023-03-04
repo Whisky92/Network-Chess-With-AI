@@ -4,6 +4,7 @@ class Player:
         self._direction = direction
         self._captured_pieces = list()
         self._pieces_on_board = list()
+        self._can_stalemate = False
 
     def get_color(self):
         return self._color
@@ -25,6 +26,9 @@ class Player:
 
     def remove_from_captured_pieces(self, piece):
         self._captured_pieces.remove(piece)
+
+    def set_can_stalemate(self, value):
+        self._can_stalemate = value
 
     def get_pieces_on_board(self):
         return self._pieces_on_board
