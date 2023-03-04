@@ -102,7 +102,7 @@ class KingStepChecker:
         changed_to_zero = False
         for i in enemy_player.get_pieces_on_board():
             dir = i.get_direction()
-            if i == cell.get_piece():
+            if i == cell.get_piece() or i.get_piece_type() == PieceType.KING:
               continue
             elif i.get_piece_type() == PieceType.PAWN and cell.get_piece().get_direction() == 0:
                 changed = True
