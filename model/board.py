@@ -40,7 +40,6 @@ class Board:
 
 
 
-
     def get_cell_of_board(self, x, y):
         return self._board[x][y]
 

@@ -408,7 +408,7 @@ color: white;</string>
        </layout>
       </item>
       <item row="2" column="0">
-       <layout class="QGridLayout" name="gridLayout_6">
+       <layout class="QGridLayout" name="_3">
         <item row="4" column="3">
          <widget class="QWidget" name="player1CapturedPieces" native="true">
           <property name="sizePolicy">
@@ -427,7 +427,7 @@ color: white;</string>
 	border-bottom-right-radius: 15px 15px;
 }</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_29">
+          <layout class="QGridLayout" name="player1CapturedPiecesLayout">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -443,51 +443,14 @@ color: white;</string>
            <property name="spacing">
             <number>0</number>
            </property>
-           <item row="0" column="1">
-            <widget class="ClickableLabel" name="label_66">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="ClickableLabel" name="label_73">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="3">
-            <widget class="ClickableLabel" name="label_68">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="2">
-            <widget class="ClickableLabel" name="label_71">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
            <item row="0" column="2">
             <widget class="ClickableLabel" name="label_67">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -495,20 +458,19 @@ border-left: 1px solid black;</string>
              <property name="text">
               <string/>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="0">
-            <widget class="ClickableLabel" name="label_69">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="3">
             <widget class="ClickableLabel" name="label_76">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-left: 1px solid black;</string>
@@ -516,101 +478,283 @@ border-left: 1px solid black;</string>
              <property name="text">
               <string/>
              </property>
-            </widget>
-           </item>
-           <item row="1" column="1">
-            <widget class="ClickableLabel" name="label_70">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="2">
-            <widget class="ClickableLabel" name="label_75">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="1" column="3">
-            <widget class="ClickableLabel" name="label_72">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="ClickableLabel" name="label_65">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="1">
-            <widget class="ClickableLabel" name="label_74">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="ClickableLabel" name="label_77">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="1">
-            <widget class="ClickableLabel" name="label_78">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="2">
-            <widget class="ClickableLabel" name="label_79">
-             <property name="styleSheet">
-              <string notr="true">border-top: 1px solid black;
-border-left: 1px solid black;</string>
-             </property>
-             <property name="text">
-              <string/>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="3" column="3">
             <widget class="ClickableLabel" name="label_80">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="2">
+            <widget class="ClickableLabel" name="label_79">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="ClickableLabel" name="label_73">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="ClickableLabel" name="label_66">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="ClickableLabel" name="label_78">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="ClickableLabel" name="label_71">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="ClickableLabel" name="label_69">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3">
+            <widget class="ClickableLabel" name="label_68">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="ClickableLabel" name="label_65">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="ClickableLabel" name="label_75">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="ClickableLabel" name="label_70">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="ClickableLabel" name="label_74">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="3">
+            <widget class="ClickableLabel" name="label_72">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;
+border-left: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="ClickableLabel" name="label_77">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">border-top: 1px solid black;</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -647,7 +791,7 @@ border: 2px solid black;
 border-radius: 15px;
 }</string>
      </property>
-     <layout class="QGridLayout" name="gridLayout_15" rowstretch="1,1,1">
+     <layout class="QGridLayout" name="player2_captured_pieces" rowstretch="1,1,1">
       <property name="leftMargin">
        <number>0</number>
       </property>
@@ -677,7 +821,7 @@ border-radius: 15px;
        </spacer>
       </item>
       <item row="0" column="0">
-       <layout class="QGridLayout" name="gridLayout_17">
+       <layout class="QGridLayout" name="_2">
         <item row="4" column="1">
          <widget class="QWidget" name="player2CapturedPieces" native="true">
           <property name="sizePolicy">
@@ -696,7 +840,7 @@ border-radius: 15px;
 	border-top-right-radius: 15px 15px;
 }</string>
           </property>
-          <layout class="QGridLayout" name="gridLayout_28">
+          <layout class="QGridLayout" name="player2CapturedPiecesLayout">
            <property name="leftMargin">
             <number>0</number>
            </property>
@@ -714,59 +858,110 @@ border-radius: 15px;
            </property>
            <item row="0" column="3">
             <widget class="ClickableLabel" name="label_85">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="1" column="2">
             <widget class="ClickableLabel" name="label_86">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="3">
             <widget class="ClickableLabel" name="label_93">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="1">
             <widget class="ClickableLabel" name="label_91">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="2">
             <widget class="ClickableLabel" name="label_92">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="1" column="1">
             <widget class="ClickableLabel" name="label_88">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -774,64 +969,118 @@ border-right: 1px solid black;</string>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="1" column="3">
             <widget class="ClickableLabel" name="label_89">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="1" column="0">
             <widget class="ClickableLabel" name="label_87">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="2" column="0">
             <widget class="ClickableLabel" name="label_90">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="0" column="1">
             <widget class="ClickableLabel" name="label_83">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="0" column="0">
             <widget class="ClickableLabel" name="label_82">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="0" column="2">
             <widget class="ClickableLabel" name="label_84">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;</string>
@@ -839,20 +1088,38 @@ border-right: 1px solid black;</string>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="3" column="0">
             <widget class="ClickableLabel" name="label_94">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="3" column="1">
             <widget class="ClickableLabel" name="label_95">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;
@@ -860,11 +1127,20 @@ border-right: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item row="3" column="2">
             <widget class="ClickableLabel" name="label_96">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;
@@ -873,16 +1149,28 @@ border-right: 1px solid black;</string>
              <property name="text">
               <string/>
              </property>
+             <property name="scaledContents">
+              <bool>true</bool>
+             </property>
             </widget>
            </item>
            <item row="3" column="3">
             <widget class="ClickableLabel" name="label_97">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="styleSheet">
               <string notr="true">border-top: 1px solid black;
 border-bottom: 1px solid black;</string>
              </property>
              <property name="text">
               <string/>
+             </property>
+             <property name="scaledContents">
+              <bool>true</bool>
              </property>
             </widget>
            </item>

@@ -44,6 +44,15 @@ class Game:
     def get_last_step(self):
         return self._last_step
 
+    def get_castling_step(self):
+        return self._castling_step
+
+    def get_castling_rook(self):
+        return self._castling_rook
+
+    def get_rook_target(self):
+        return self._rook_target
+
     def __add_to_player_pieces(self):
         for i in range(0, 8):
             for j in range(0, 8):
@@ -58,22 +67,17 @@ class Game:
         x_target_coord = target_cell.get_piece().get_piece_x()
         y_target_coord = target_cell.get_piece().get_piece_y()
         if target_cell in self._castling_step:
-            index = self.get_index_of_item(self._castling_step, target_cell)
+            index = Game.get_index_of_item(self._castling_step, target_cell)
             rook_y = self._rook_target[index].get_piece().get_piece_y()
-            rook_direction = self._rook_target[index].get_piece().get_direction()
-            self._rook_target[index].set_piece(self._castling_rook[index].get_piece())
-            self._rook_target[index].get_piece().set_piece_y(rook_y)
-            self._rook_target[index].get_piece().set_direction(rook_direction)
-            self._castling_rook[index].set_piece(Piece(piece_to_move.get_piece_x(), piece_to_move.get_piece_y(),
-                                                 PieceType.NO_TYPE, 0))
-            self._castling_rook = []
-            self._castling_step = []
-            self._rook_target = []
+            rook_old_y = self._castling_rook[0].get_piece().get_piece_y()
+            self._castling_rook[0].get_piece().set_piece_y(rook_y)
+            self._rook_target[0].set_piece(self._castling_rook[0].get_piece())
+            self._castling_rook[0].set_piece(Piece(x_target_coord, rook_old_y, PieceType.NO_TYPE, 0))
+
         elif target_cell.get_piece().get_direction() != 0:
             target_cell.get_piece().set_piece_x(-1)
             target_cell.get_piece().set_piece_y(-1)
             current_player = self.__get_player_by_direction(target_cell.get_piece().get_direction())
-            current_player.add_to_captured_pieces(target_cell.get_piece())
             current_player.remove_from_pieces_on_board(target_cell.get_piece())
         elif piece_to_move.get_en_passant_step() is not None \
                 and target_cell == piece_to_move.get_en_passant_step():
@@ -85,7 +89,6 @@ class Game:
             cell_to_capture_from.get_piece().set_piece_x(-1)
             cell_to_capture_from.get_piece().set_piece_y(-1)
             current_player = self.__get_player_by_direction(target_direction)
-            current_player.add_to_captured_pieces(cell_to_capture_from.get_piece())
             current_player.remove_from_pieces_on_board(cell_to_capture_from.get_piece())
             cell_to_capture_from.set_piece(Piece(target_x, target_y, PieceType.NO_TYPE, 0))
         if (piece_to_move.get_piece_x() == target_cell.get_piece().get_piece_x() - 2
@@ -107,7 +110,7 @@ class Game:
         if self.__is_player_king_cells_targeted(self._black_player) and not self.is_king_targeted(self._black_player):
             self._black_player.set_can_stalemate(True)
 
-            self.change_current_player()
+        self.change_current_player()
 
     def printing(self):
         print(len(self._castling_step))
@@ -172,7 +175,8 @@ class Game:
             print(i.get_piece().get_piece_x(), i.get_piece().get_piece_y(),
                   "type:", i.get_piece().get_piece_type(), i.get_piece().get_direction())
 
-    def get_index_of_item(self, lst, item):
+    @staticmethod
+    def get_index_of_item(lst, item):
         for i in range(0, len(lst)):
             if lst[i] == item:
                 return i

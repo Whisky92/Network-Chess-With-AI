@@ -7,16 +7,15 @@ def main():
     table = game.get_board_table()
     board.print_board()
     game.print_possible_steps(0, 4)
-    s = game.get_board_table()[6][3]
-    t = game.get_board_table()[4][3]
-    game.move_piece(s, t)
-    print("---")
+    game.get_possible_steps(7, 4)
+    print()
+    print(game.get_rook_target()[0].get_piece().get_piece_x(), game.get_rook_target()[0].get_piece().get_piece_y())
+    print(game.get_castling_rook()[0].get_piece().get_piece_x(), game.get_castling_rook()[0].get_piece().get_piece_y())
+    print(game.get_castling_step()[0].get_piece().get_piece_x(), game.get_castling_step()[0].get_piece().get_piece_y())
+    print(".......")
+    game.move_piece(game.get_board_table()[7][4], game.get_board_table()[7][2])
     board.print_board()
-    s = game.get_board_table()[1][3]
-    t = game.get_board_table()[3][3]
-    game.move_piece(s, t)
-    print("---")
-    board.print_board()
+
 
 
 
