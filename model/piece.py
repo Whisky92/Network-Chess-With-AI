@@ -10,7 +10,6 @@ class Piece:
         self._direction = direction
         self._is_first_step = True
         self._en_passant_step = None
-        self._is_able_to_evolve = False
 
     def get_piece_x(self):
         return self._x
@@ -47,20 +46,6 @@ class Piece:
 
     def change_to_not_first_step(self):
         self._is_first_step = False
-
-    def get_is_able_to_evolve(self):
-        return self._is_able_to_evolve
-
-    def change_to_able_to_evolve(self):
-        if self._direction == 1:
-            enemy_border = 7
-        else:
-            enemy_border = 0
-        if self._p_type == PieceType.PAWN and self._x == enemy_border:
-            self._is_able_to_evolve = True
-
-    def set_to_not_able_to_evolve(self):
-        self._is_able_to_evolve = False
 
     def get_possible_steps(self, board, last_step, white_player, black_player, castling_step, castling_rook,
                            rook_target):

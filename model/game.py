@@ -118,11 +118,9 @@ class Game:
         self._board.print_piece_data(self._castling_rook[0])
         self._board.print_piece_data(self._rook_target[0])
 
-    def evolve_pawn(self, cell, p_type):
+    def promote_pawn(self, cell, p_type):
         piece = cell.get_piece()
-        if piece.get_is_able_to_evolve():
-            piece.set_to_not_able_to_evolve()
-            piece.set_piece_type(p_type)
+        piece.set_piece_type(p_type)
 
     def is_king_targeted(self, player):
         enemy_player = self._black_player if player == self._white_player else self._white_player

@@ -1,7 +1,7 @@
 import random
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout
+from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QMessageBox, QPushButton
 from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
@@ -147,12 +147,22 @@ class GameWindow(QDialog):
                 self.current_piece.update()
 
                 self.game.move_piece(start_cell, target_cell)
+                if target_cell.get_piece().get_direction() == 1:
+                    enemy_border = 0
+                else:
+                    enemy_border = 7
+                if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
+                        target_cell.get_piece().get_piece_x() == enemy_border:
+                    self.promote_message_box(target_cell, target)
+                    print(target_cell.get_piece().get_piece_type())
 
             self.step_progress = 1
 
             for i in self.colored_cells:
                 i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
             self.colored_cells = []
+
+        print(self.step_progress)
 
     def capture(self, target_pixmap):
         target_board = self.player1CapturedPiecesLayout \
@@ -173,6 +183,61 @@ class GameWindow(QDialog):
 
         item = target_board.itemAtPosition(x_coord, y_coord).widget()
         item.setPixmap(target_pixmap)
+
+    def promote_message_box(self, cell, gui_cell):
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Promotion")
+        msgbox.setText('Choose the type of piece you would like to promote the pawn to')
+
+        queen_b = QPushButton("Queen")
+        rook_b = QPushButton("Rook")
+        bishop_b = QPushButton("Bishop")
+        knight_b = QPushButton("Knight")
+
+        msgbox.addButton(queen_b, QMessageBox.YesRole)
+        msgbox.addButton(rook_b, QMessageBox.NoRole)
+        msgbox.addButton(bishop_b, QMessageBox.RejectRole)
+        msgbox.addButton(knight_b, QMessageBox.AcceptRole)
+
+        msgbox.exec_()
+
+        if msgbox.clickedButton() == queen_b:
+
+            self.game.promote_pawn(cell, PieceType.QUEEN)
+            if cell.get_piece().get_direction() == 1:
+                pixmap = QPixmap("./resource_images/pieces/w_queen.png")
+            else:
+                pixmap = QPixmap("./resource_images/pieces/b_queen.png")
+            gui_cell.setPixmap(pixmap)
+
+        elif msgbox.clickedButton() == rook_b:
+
+            self.game.promote_pawn(cell, PieceType.ROOK)
+            if cell.get_piece().get_direction() == 1:
+                pixmap = QPixmap("./resource_images/pieces/w_rook.png")
+            else:
+                pixmap = QPixmap("./resource_images/pieces/b_rook.png")
+            gui_cell.setPixmap(pixmap)
+
+        elif msgbox.clickedButton() == bishop_b:
+
+            self.game.promote_pawn(cell, PieceType.BISHOP)
+            if cell.get_piece().get_direction() == 1:
+                pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
+            else:
+                pixmap = QPixmap("./resource_images/pieces/b_bishop.png")
+            gui_cell.setPixmap(pixmap)
+
+        elif msgbox.clickedButton() == knight_b:
+
+            self.game.promote_pawn(cell, PieceType.KNIGHT)
+            if cell.get_piece().get_direction() == 1:
+                pixmap = QPixmap("./resource_images/pieces/w_knight.png")
+            else:
+                pixmap = QPixmap("./resource_images/pieces/b_knight.png")
+            gui_cell.setPixmap(pixmap)
+
+
 
     def mark_possible_steps(self, pos_x, pos_y):
 
