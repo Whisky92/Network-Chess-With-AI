@@ -78,8 +78,6 @@ class GameWindow(QDialog):
                 if pixmap is not None:
                     item.setPixmap(pixmap)
 
-
-
     def get_first_player(self, player_1_name, player_2_name):
         names = [player_1_name, player_2_name]
         return random.choice(names)

@@ -22,7 +22,7 @@ class Board:
                         Cell(Piece(7, 4, PieceType.KING, 1)), Cell(Piece(7, 5, PieceType.BISHOP, 1)),
                         Cell(Piece(7, 6, PieceType.KNIGHT, 1)), Cell(Piece(7, 7, PieceType.ROOK, 1))]]
 
-        self._board.insert(1, [Cell(Piece(1, 0, PieceType.PAWN, 1)), Cell(Piece(1, 1, PieceType.PAWN, -1)),
+        self._board.insert(1, [Cell(Piece(1, 0, PieceType.PAWN, -1)), Cell(Piece(1, 1, PieceType.PAWN, -1)),
                                Cell(Piece(1, 2, PieceType.PAWN, -1)), Cell(Piece(1, 3, PieceType.PAWN, -1)),
                                Cell(Piece(1, 4, PieceType.PAWN, -1)), Cell(Piece(1, 5, PieceType.PAWN, -1)),
                                Cell(Piece(1, 6, PieceType.PAWN, -1)), Cell(Piece(1, 7, PieceType.PAWN, -1))])

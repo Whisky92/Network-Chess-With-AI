@@ -107,10 +107,9 @@ class Piece:
         return possible_steps
 
     def __check_queen_steps(self, board, x, y):
-        cell = board[x][y]
         possible_steps = []
         possible_steps.extend(self.__check_bishop_steps(board))
-        possible_steps.extend(KingStepChecker.check_adjacent_cells(board, cell, x, y))
+        possible_steps.extend(self.__check_rook_steps(board, x, y))
         return possible_steps
 
     def __check_bishop_steps_diagonally(self, board, x_incr_val, y_incr_val):

@@ -104,10 +104,12 @@ class Game:
         piece_to_move.change_to_not_first_step()
         target_cell.set_piece(piece_to_move)
 
-        if self.__is_player_king_cells_targeted(self._white_player) and not self.is_king_targeted(self._white_player):
+        if self.__is_player_king_cells_targeted(self._white_player) and not self.is_king_targeted(self._white_player)\
+                and len(self._white_player.get_pieces_on_board()) == 1:
             self._white_player.set_can_stalemate(True)
 
-        if self.__is_player_king_cells_targeted(self._black_player) and not self.is_king_targeted(self._black_player):
+        if self.__is_player_king_cells_targeted(self._black_player) and not self.is_king_targeted(self._black_player)\
+                and len(self._black_player.get_pieces_on_board()) == 1:
             self._black_player.set_can_stalemate(True)
 
         self.change_current_player()
