@@ -25,54 +25,6 @@
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2" columnstretch="1,8,1,24,1,8,1">
-   <item row="1" column="4">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="6">
-    <spacer name="horizontalSpacer_3">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="0">
-    <spacer name="horizontalSpacer_4">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Preferred</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
    <item row="1" column="1">
     <widget class="QWidget" name="widget_2" native="true">
      <property name="styleSheet">
@@ -119,99 +71,6 @@ border-radius: 15px;
         <property name="spacing">
          <number>0</number>
         </property>
-        <item row="2" column="0">
-         <layout class="QGridLayout" name="gridLayout_13" columnstretch="0">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="1" column="0">
-           <widget class="QWidget" name="widget_7" native="true">
-            <property name="styleSheet">
-             <string notr="true">#widget_7 {
-	background-color: #704214;
-	border-right: 2px solid black;
-	border-left: 2px solid black;
-}</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_23" columnstretch="1,2,1">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item row="0" column="0">
-              <spacer name="horizontalSpacer_6">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="1">
-              <widget class="ClickableLabel" name="player2DrawRequest">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: #A9A9A9;
-border: 1px solid black;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap>../resource_images/draw_g.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-               <property name="alignment">
-                <set>Qt::AlignCenter</set>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="2">
-              <spacer name="horizontalSpacer_16">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </item>
         <item row="1" column="0">
          <layout class="QGridLayout" name="gridLayout_14" columnstretch="0,0,0,0">
           <property name="spacing">
@@ -226,7 +85,7 @@ border: 1px solid black;</string>
 	border-left: 2px solid black;
 }</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_25" columnstretch="1,2,1">
+            <layout class="QGridLayout" name="gridLayout_25" columnstretch="1,3,1,3,1">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -242,23 +101,7 @@ border: 1px solid black;</string>
              <property name="spacing">
               <number>0</number>
              </property>
-             <item row="0" column="0">
-              <spacer name="horizontalSpacer_8">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="1">
+             <item row="0" column="3">
               <widget class="ClickableLabel" name="player2StepInfo">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
@@ -282,6 +125,22 @@ border: 1px solid black;</string>
               </widget>
              </item>
              <item row="0" column="2">
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Ignored</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="4">
               <spacer name="horizontalSpacer_5">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
@@ -297,27 +156,63 @@ border: 1px solid black;</string>
                </property>
               </spacer>
              </item>
+             <item row="0" column="1">
+              <widget class="ClickableLabel" name="makePlayer1Surrender">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #A9A9A9;
+border: 1px solid black;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>../resource_images/enemy_surrender.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="0">
+              <spacer name="horizontalSpacer_7">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
             </layout>
            </widget>
           </item>
          </layout>
         </item>
-        <item row="3" column="0">
-         <layout class="QGridLayout" name="gridLayout_12" columnstretch="0,0,0">
+        <item row="2" column="0">
+         <layout class="QGridLayout" name="gridLayout_13" columnstretch="0">
           <property name="spacing">
            <number>0</number>
           </property>
-          <item row="1" column="2">
-           <widget class="QWidget" name="widget_6" native="true">
+          <item row="1" column="0">
+           <widget class="QWidget" name="widget_7" native="true">
             <property name="styleSheet">
-             <string notr="true">#widget_6 {
+             <string notr="true">#widget_7 {
 	background-color: #704214;
 	border-right: 2px solid black;
 	border-left: 2px solid black;
 	border-bottom: 2px solid black;
 }</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_24" columnstretch="1,2,1">
+            <layout class="QGridLayout" name="gridLayout_23" columnstretch="1,3,1,3,1">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -334,7 +229,7 @@ border: 1px solid black;</string>
               <number>0</number>
              </property>
              <item row="0" column="0">
-              <spacer name="horizontalSpacer_7">
+              <spacer name="horizontalSpacer_6">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -375,8 +270,50 @@ border: 1px solid black;</string>
                </property>
               </widget>
              </item>
+             <item row="0" column="3">
+              <widget class="ClickableLabel" name="player2DrawRequest">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #A9A9A9;
+border: 1px solid black;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>../resource_images/draw_g.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <spacer name="horizontalSpacer_16">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Ignored</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
              <item row="0" column="2">
-              <spacer name="horizontalSpacer_9">
+              <spacer name="horizontalSpacer_12">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -773,8 +710,8 @@ border-left: 1px solid black;</string>
      </layout>
     </widget>
    </item>
-   <item row="1" column="2">
-    <spacer name="horizontalSpacer">
+   <item row="1" column="4">
+    <spacer name="horizontalSpacer_2">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -1192,96 +1129,22 @@ border-bottom: 1px solid black;</string>
          <number>0</number>
         </property>
         <item row="2" column="0">
-         <layout class="QGridLayout" name="gridLayout_18" columnstretch="0,0">
-          <property name="spacing">
-           <number>0</number>
+         <widget class="QLabel" name="player1Name">
+          <property name="styleSheet">
+           <string notr="true">background-color: #4B3621;
+border: 2px solid black;
+border-radius: 15px;
+color: white;</string>
           </property>
-          <item row="0" column="1">
-           <widget class="QWidget" name="widget_3" native="true">
-            <property name="styleSheet">
-             <string notr="true">#widget_3 {
-	background-color: #FFDBAC;
-	border-right: 2px solid black;
-	border-left: 2px solid black;
-}</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_21" columnstretch="1,2,1">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item row="0" column="1">
-              <widget class="ClickableLabel" name="player1StepInfo">
-               <property name="sizePolicy">
-                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-                 <horstretch>0</horstretch>
-                 <verstretch>0</verstretch>
-                </sizepolicy>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">background-color: #A9A9A9;
-border: 1px solid black;</string>
-               </property>
-               <property name="text">
-                <string/>
-               </property>
-               <property name="pixmap">
-                <pixmap>../resource_images/step_i.png</pixmap>
-               </property>
-               <property name="scaledContents">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <spacer name="horizontalSpacer_11">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-             <item row="0" column="2">
-              <spacer name="horizontalSpacer_14">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
+          <property name="text">
+           <string>Player1</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
         </item>
-        <item row="1" column="0">
+        <item row="0" column="0">
          <layout class="QGridLayout" name="gridLayout_19" columnstretch="0,0,0,0">
           <property name="spacing">
            <number>0</number>
@@ -1299,9 +1162,10 @@ border: 1px solid black;</string>
 	background-color: #FFDBAC;
 	border-right: 2px solid black;
 	border-left: 2px solid black;
+	border-top: 2px solid black;
 }</string>
             </property>
-            <layout class="QGridLayout" name="gridLayout_26" columnstretch="1,2,1">
+            <layout class="QGridLayout" name="gridLayout_26" columnstretch="1,3,1,3,1">
              <property name="leftMargin">
               <number>0</number>
              </property>
@@ -1359,75 +1223,7 @@ border: 1px solid black;</string>
                </property>
               </spacer>
              </item>
-             <item row="0" column="2">
-              <spacer name="horizontalSpacer_13">
-               <property name="orientation">
-                <enum>Qt::Horizontal</enum>
-               </property>
-               <property name="sizeType">
-                <enum>QSizePolicy::Ignored</enum>
-               </property>
-               <property name="sizeHint" stdset="0">
-                <size>
-                 <width>40</width>
-                 <height>20</height>
-                </size>
-               </property>
-              </spacer>
-             </item>
-            </layout>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item row="3" column="0">
-         <widget class="QLabel" name="player1Name">
-          <property name="styleSheet">
-           <string notr="true">background-color: #4B3621;
-border: 2px solid black;
-border-radius: 15px;
-color: white;</string>
-          </property>
-          <property name="text">
-           <string>Player1</string>
-          </property>
-          <property name="alignment">
-           <set>Qt::AlignCenter</set>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="0">
-         <layout class="QGridLayout" name="gridLayout_20" columnstretch="0,0">
-          <property name="spacing">
-           <number>0</number>
-          </property>
-          <item row="1" column="1">
-           <widget class="QWidget" name="widget_5" native="true">
-            <property name="styleSheet">
-             <string notr="true">#widget_5 {
-	background-color:#FFDBAC;
-	border-left: 2px solid black;
-	border-right: 2px solid black;
-	border-top: 2px solid black;
-}</string>
-            </property>
-            <layout class="QGridLayout" name="gridLayout_27" columnstretch="1,2,1">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
-              <number>0</number>
-             </property>
-             <property name="spacing">
-              <number>0</number>
-             </property>
-             <item row="0" column="1">
+             <item row="0" column="3">
               <widget class="ClickableLabel" name="player1Surrender">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
@@ -1453,8 +1249,8 @@ border: 1px solid black;</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="0">
-              <spacer name="horizontalSpacer_10">
+             <item row="0" column="4">
+              <spacer name="horizontalSpacer_13">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -1470,7 +1266,136 @@ border: 1px solid black;</string>
               </spacer>
              </item>
              <item row="0" column="2">
-              <spacer name="horizontalSpacer_12">
+              <spacer name="horizontalSpacer_17">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Ignored</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
+           </widget>
+          </item>
+         </layout>
+        </item>
+        <item row="1" column="0">
+         <layout class="QGridLayout" name="gridLayout_18" columnstretch="0,0">
+          <property name="spacing">
+           <number>0</number>
+          </property>
+          <item row="0" column="1">
+           <widget class="QWidget" name="widget_3" native="true">
+            <property name="styleSheet">
+             <string notr="true">#widget_3 {
+	background-color: #FFDBAC;
+	border-right: 2px solid black;
+	border-left: 2px solid black;
+}</string>
+            </property>
+            <layout class="QGridLayout" name="gridLayout_21" columnstretch="1,3,1,3,1">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
+              <number>0</number>
+             </property>
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item row="0" column="0">
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Ignored</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="3">
+              <widget class="ClickableLabel" name="makePlayer2Surrender">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #A9A9A9;
+border: 1px solid black;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>../resource_images/enemy_surrender.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="4">
+              <spacer name="horizontalSpacer_14">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Ignored</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+             <item row="0" column="1">
+              <widget class="ClickableLabel" name="player1StepInfo">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: #A9A9A9;
+border: 1px solid black;</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+               <property name="pixmap">
+                <pixmap>../resource_images/step_i.png</pixmap>
+               </property>
+               <property name="scaledContents">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="2">
+              <spacer name="horizontalSpacer_10">
                <property name="orientation">
                 <enum>Qt::Horizontal</enum>
                </property>
@@ -2880,6 +2805,54 @@ background-color: #704214;</string>
       </item>
      </layout>
     </widget>
+   </item>
+   <item row="1" column="6">
+    <spacer name="horizontalSpacer_3">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <spacer name="horizontalSpacer_4">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Preferred</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>
