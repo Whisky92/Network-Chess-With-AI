@@ -6,8 +6,6 @@ from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
 
-
-
 class GameWindow(QDialog):
     def __init__(self, player_1_name, player_2_name):
 
@@ -108,6 +106,22 @@ class GameWindow(QDialog):
         if self.step_progress == 1:
             if self.__is_correct_position(pos_x, pos_y):
 
+                if self.game.is_king_targeted(self.game.get_current_player()):
+
+                    cell = self.game.get_board_table()[pos_x][pos_y]
+
+                    self.game.print_king_targeted_steps()
+
+                    cells = self.game.steps_if_king_is_targeted()
+
+                    for i in cells:
+                        print(i[0])
+                    print(cell)
+                    if len(cells) != 0:
+                        print("yes")
+                        if not self.game.contains_cell(cells, cell):
+                            self.still_check_message_box()
+                            return
                 self.mark_possible_steps(pos_x, pos_y)
                 self.step_progress = 2
                 self.current_piece = target
@@ -266,6 +280,17 @@ class GameWindow(QDialog):
 
         if msgbox.clickedButton() == yes_button:
             self.end_game_message_box(enemy_player_name)
+
+
+    def still_check_message_box(self):
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Warning")
+        msgbox.setText("'Your king is in check. You can't step with this piece.")
+        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        msgbox.addButton(QPushButton("OK"), QMessageBox.YesRole)
+
+        msgbox.exec_()
 
 
     def make_enemy_surrender_message_box(self, player_name):
