@@ -103,6 +103,8 @@ class GameWindow(QDialog):
         pos_y = pos[1]
         print(pos_x, pos_y)
 
+        cells = self.game.steps_if_king_is_targeted()
+
         if self.step_progress == 1:
             if self.__is_correct_position(pos_x, pos_y):
 
@@ -112,17 +114,20 @@ class GameWindow(QDialog):
 
                     self.game.print_king_targeted_steps()
 
-                    cells = self.game.steps_if_king_is_targeted()
-
-                    for i in cells:
-                        print(i[0])
-                    print(cell)
                     if len(cells) != 0:
-                        print("yes")
-                        if not self.game.contains_cell(cells, cell):
+                        self.game.print_king_targeted_steps()
+
+                        current_check_counter_start = self.game.contains_start_cell(cells, cell)
+
+                        if current_check_counter_start is None:
                             self.still_check_message_box()
                             return
-                self.mark_possible_steps(pos_x, pos_y)
+
+                        else:
+                            self.mark_possible_steps(current_check_counter_start[1])
+
+                else:
+                    self.mark_possible_steps(self.game.get_possible_steps(pos_x, pos_y))
                 self.step_progress = 2
                 self.current_piece = target
 
@@ -177,10 +182,26 @@ class GameWindow(QDialog):
                     enemy_border = 0
                 else:
                     enemy_border = 7
+
                 if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
                         target_cell.get_piece().get_piece_x() == enemy_border:
                     self.promote_message_box(target_cell, target)
                     print(target_cell.get_piece().get_piece_type())
+
+                if self.game.is_stalemate():
+                    self.stalemate_message_box()
+
+                if self.game.is_king_targeted(self.game.get_current_player()):
+                    for i in self.colored_cells:
+                        i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
+                    self.colored_cells = []
+
+                    if len(self.game.steps_if_king_is_targeted()) == 0:
+                        winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+                            else self.player1Name.text()
+                        self.checkmate_message_box(winner)
+
+                    self.check_message_box()
 
             self.step_progress = 1
 
@@ -281,11 +302,24 @@ class GameWindow(QDialog):
         if msgbox.clickedButton() == yes_button:
             self.end_game_message_box(enemy_player_name)
 
+    def check_message_box(self):
+
+        name = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+            else self.player2Name.text()
+
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Warning ")
+        msgbox.setText(name + "! Your king is in check.")
+        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        msgbox.addButton(QPushButton("OK"), QMessageBox.YesRole)
+
+        msgbox.exec_()
 
     def still_check_message_box(self):
         msgbox = QMessageBox()
         msgbox.setWindowTitle("Warning")
-        msgbox.setText("'Your king is in check. You can't step with this piece.")
+        msgbox.setText("Your king is in check. You can't step with this piece.")
         msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
 
         msgbox.addButton(QPushButton("OK"), QMessageBox.YesRole)
@@ -328,6 +362,23 @@ class GameWindow(QDialog):
         if msgbox.clickedButton() == yes_button:
             self.end_game_message_box("Draw")
 
+    def checkmate_message_box(self, game_result):
+        if game_result != "Draw":
+            game_result = game_result + "'s victory"
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("CheckMate!")
+        msgbox.setText('The result of the game is: ' + game_result)
+        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        return_btn = QPushButton("Return to main page")
+
+        msgbox.addButton(return_btn, QMessageBox.YesRole)
+
+        msgbox.exec_()
+
+        if msgbox.clickedButton() == return_btn:
+            print("Game finished")
+
     def end_game_message_box(self, game_result):
         if game_result != "Draw":
             game_result = game_result + "'s victory"
@@ -345,9 +396,23 @@ class GameWindow(QDialog):
         if msgbox.clickedButton() == return_btn:
             print("Game finished")
 
-    def mark_possible_steps(self, pos_x, pos_y):
 
-        cells = self.game.get_possible_steps(pos_x, pos_y)
+    def stalemate_message_box(self):
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle("Stalemate")
+        msgbox.setText('The result of the game is stalemate')
+        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
+
+        return_btn = QPushButton("Return to main page")
+
+        msgbox.addButton(return_btn, QMessageBox.YesRole)
+
+        msgbox.exec_()
+
+        if msgbox.clickedButton() == return_btn:
+            print("Game finished")
+
+    def mark_possible_steps(self, cells):
 
         for i in cells:
             piece = i.get_piece()

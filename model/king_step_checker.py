@@ -11,18 +11,33 @@ class KingStepChecker:
         possible_cells.extend(KingStepChecker.is_king_cells_targeted(board, player, white_player, black_player,
                                                                      last_step, castling_step, castling_rook,
                                                                      rook_target))
-        possible_cells.extend(KingStepChecker.add_castling_steps_to_possible_steps(board, cell,
-                                                                                   cell.get_piece().get_piece_x(),
-                                                                                   cell.get_piece().get_piece_y() + 2,
-                                                                                   castling_step, castling_rook,
-                                                                                   rook_target, white_player,
-                                                                                   black_player, last_step))
-        possible_cells.extend(KingStepChecker.add_castling_steps_to_possible_steps(board, cell,
-                                                                                   cell.get_piece().get_piece_x(),
-                                                                                   cell.get_piece().get_piece_y() - 2,
-                                                                                   castling_step, castling_rook,
-                                                                                   rook_target, white_player,
-                                                                                   black_player, last_step))
+
+        direction = cell.get_piece().get_direction()
+        king_x = 0 if direction == -1 else 7
+        king_y = 4
+
+        cell_x = cell.get_piece().get_piece_x()
+
+        if board[cell_x][7].get_piece().get_piece_type() == PieceType.ROOK \
+            and board[cell_x][7].get_piece().get_direction() \
+                == direction and x == king_x and y == king_y:
+
+            possible_cells.extend(KingStepChecker.add_castling_steps_to_possible_steps(board, cell,
+                                                                                       cell_x,
+                                                                                       cell.get_piece().get_piece_y() + 2,
+                                                                                       castling_step, castling_rook,
+                                                                                       rook_target, white_player,
+                                                                                       black_player, last_step))
+        if board[cell_x][0].get_piece().get_piece_type() == PieceType.ROOK \
+            and board[cell_x][0].get_piece().get_direction() \
+                == direction:
+
+            possible_cells.extend(KingStepChecker.add_castling_steps_to_possible_steps(board, cell,
+                                                                                       cell_x,
+                                                                                       cell.get_piece().get_piece_y() - 2,
+                                                                                       castling_step, castling_rook,
+                                                                                       rook_target, white_player,
+                                                                                       black_player, last_step))
         return possible_cells
 
     @staticmethod

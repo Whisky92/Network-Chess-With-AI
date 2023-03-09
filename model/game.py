@@ -67,13 +67,8 @@ class Game:
 
         self.move(cell_to_move_from, target_cell)
 
-        if self.__is_player_king_cells_targeted(self._white_player) and not self.is_king_targeted(self._white_player)\
-                and len(self._white_player.get_pieces_on_board()) == 1:
-            self._white_player.set_can_stalemate(True)
-
-        if self.__is_player_king_cells_targeted(self._black_player) and not self.is_king_targeted(self._black_player)\
-                and len(self._black_player.get_pieces_on_board()) == 1:
-            self._black_player.set_can_stalemate(True)
+        if self.is_stalemate():
+            self._current_player.set_can_stalemate(True)
 
         self.change_current_player()
 
@@ -136,6 +131,36 @@ class Game:
                                           self._black_player, self._castling_step, self._castling_rook, self._rook_target):
             print(i.get_piece().get_piece_x(), i.get_piece().get_piece_y(),
                   "type:", i.get_piece().get_piece_type(), i.get_piece().get_direction())
+
+    def is_stalemate(self):
+        for i in self._current_player.get_pieces_on_board():
+
+            steps = self.get_possible_steps(i.get_piece_x(), i.get_piece_y())
+
+            if not len(steps) == 0 and not self.__cause_king_to_be_targeted(i, steps[0]):
+                return False
+
+        return True
+
+    def __cause_king_to_be_targeted(self, piece, target):
+
+        piece_x = piece.get_piece_x()
+        piece_y = piece.get_piece_y()
+
+        target_x = target.get_piece().get_piece_x()
+        target_y = target.get_piece().get_piece_y()
+
+        test_game = copy.deepcopy(self)
+
+        cell_to_move_from = test_game.get_board_table()[piece_x][piece_y]
+        target_cell = test_game.get_board_table()[target_x][target_y]
+
+        test_game.move(cell_to_move_from, target_cell)
+
+        if test_game.is_king_targeted(test_game.get_current_player()):
+            return True
+        return False
+
 
     def steps_if_king_is_targeted(self):
 
@@ -216,9 +241,15 @@ class Game:
         piece_to_move.change_to_not_first_step()
         target_cell.set_piece(piece_to_move)
 
-    def contains_cell(self, lst, target):
+    def contains_start_cell(self, lst, target):
         for i in lst:
             if i[0] == target:
+                return i
+        return None
+
+    def contains_target_cell(self, lst, target):
+        for i in lst:
+            if i == target:
                 return True
         return False
 
@@ -237,11 +268,5 @@ class Game:
             if lst[i] == item:
                 return i
         return -1
-
-    def __is_player_king_cells_targeted(self, player):
-        return len(KingStepChecker.is_king_cells_targeted
-                   (self.get_board_table(), player, self._white_player,
-                    self._black_player, self._last_step, self._castling_step,
-                    self._castling_rook, self._rook_target)) == 0
 
 
