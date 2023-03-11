@@ -141,7 +141,7 @@ class GameWindow(QDialog):
                             self.mark_possible_steps(current_check_counter_start[1])
 
                 else:
-                    self.mark_possible_steps(self.game.get_possible_steps(pos_x, pos_y))
+                    self.mark_possible_steps(self.game.filter_wrong_moves(pos_x, pos_y))
                 self.step_progress = 2
                 self.current_piece = target
 
@@ -203,7 +203,7 @@ class GameWindow(QDialog):
                     print(target_cell.get_piece().get_piece_type())
 
                 if self.game.is_stalemate():
-                    MessageBox.stalemate_message_box()
+                    MessageBox.stalemate_message_box(self)
 
                 if self.game.is_king_targeted(self.game.get_current_player()):
                     for i in self.colored_cells:
@@ -213,7 +213,7 @@ class GameWindow(QDialog):
                     if len(self.game.steps_if_king_is_targeted()) == 0:
                         winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                             else self.player1Name.text()
-                        MessageBox.checkmate_message_box(winner)
+                        MessageBox.checkmate_message_box(self, winner)
 
                     MessageBox.check_message_box(self)
 

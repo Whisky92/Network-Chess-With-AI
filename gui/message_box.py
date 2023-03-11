@@ -7,17 +7,20 @@ from PyQt5 import QtCore
 class MessageBox:
 
     @staticmethod
-    def stalemate_message_box():
+    def stalemate_message_box(game):
 
         msgbox = MyDualMessageBox("The result of the game is stalemate",
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
+
         msgbox.exec_()
 
     @staticmethod
-    def checkmate_message_box(game_result):
+    def checkmate_message_box(game, game_result):
 
         game_result = game_result + "'s victory"
 
@@ -25,6 +28,9 @@ class MessageBox:
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
 
         msgbox.exec_()
 

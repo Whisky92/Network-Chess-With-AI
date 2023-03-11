@@ -20,6 +20,7 @@ class Game:
         self._castling_step = []
         self._castling_rook = []
         self._rook_target = []
+        self._self_checkmate = False
 
     def change_current_player(self):
         if self._current_player == self._white_player:
@@ -53,6 +54,12 @@ class Game:
 
     def get_rook_target(self):
         return self._rook_target
+
+    def get_self_checkmate(self):
+        return self._self_checkmate
+
+    def set_self_checkmate(self):
+        self._self_checkmate = False
 
     def __add_to_player_pieces(self):
         for i in range(0, 8):
@@ -92,6 +99,16 @@ class Game:
     def print_pieces(self):
         for i in self._black_player.get_pieces_on_board():
             print(i)
+
+    def filter_wrong_moves(self, x, y):
+        piece = self.get_board_table()[x][y].get_piece()
+        possible_moves = []
+
+        for i in self.get_possible_steps(x, y):
+            if not self.__cause_king_to_be_targeted(piece, i):
+                possible_moves.append(i)
+
+        return possible_moves
 
     def get_possible_steps(self, x, y):
         cell = self.get_board_table()[x][y]
@@ -141,8 +158,12 @@ class Game:
 
             steps = self.get_possible_steps(i.get_piece_x(), i.get_piece_y())
 
-            if not len(steps) == 0 and not self.__cause_king_to_be_targeted(i, steps[0]):
-                return False
+            if i.get_piece_type() != PieceType.KING:
+                if len(steps) != 0 and not self.__cause_king_to_be_targeted(i, steps[0]):
+                    return False
+            else:
+                if len(steps) != 0:
+                    return False
 
         return True
 
