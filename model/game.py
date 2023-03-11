@@ -133,6 +133,10 @@ class Game:
                   "type:", i.get_piece().get_piece_type(), i.get_piece().get_direction())
 
     def is_stalemate(self):
+
+        if self.is_king_targeted(self.get_current_player()):
+            return False
+
         for i in self._current_player.get_pieces_on_board():
 
             steps = self.get_possible_steps(i.get_piece_x(), i.get_piece_y())
@@ -216,6 +220,7 @@ class Game:
             target_cell.get_piece().set_piece_y(-1)
             current_player = self.__get_player_by_direction(target_cell.get_piece().get_direction())
             current_player.remove_from_pieces_on_board(target_cell.get_piece())
+
         elif piece_to_move.get_en_passant_step() is not None \
                 and target_cell == piece_to_move.get_en_passant_step():
             piece_to_move.delete_last_en_passant_step()
@@ -228,6 +233,7 @@ class Game:
             current_player = self.__get_player_by_direction(target_direction)
             current_player.remove_from_pieces_on_board(cell_to_capture_from.get_piece())
             cell_to_capture_from.set_piece(Piece(target_x, target_y, PieceType.NO_TYPE, 0))
+
         if (piece_to_move.get_piece_x() == target_cell.get_piece().get_piece_x() - 2
             or piece_to_move.get_piece_x() == target_cell.get_piece().get_piece_x() + 2) \
                 and piece_to_move.get_piece_type() == PieceType.PAWN:

@@ -46,8 +46,8 @@ class PlayerOneNameChoose(QDialog):
             self.nameField.setText("")
 
 
-
 class PlayerTwoNameChoose(QDialog):
+
     def __init__(self, player_1_name):
 
         super(PlayerTwoNameChoose, self).__init__()
@@ -66,7 +66,7 @@ class PlayerTwoNameChoose(QDialog):
 
         text = self.nameField.text()
         if text != "" and player_1_name != text:
-            screen = GameWindow(player_1_name, text)
+            screen = GameWindow(widget, player_1_name, text)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")

@@ -6,3 +6,6 @@ Sources I used as samples, and references for my project, and borrowed ideas fro
 - https://stackoverflow.com/questions/75406564/how-can-i-create-a-responsive-ui-with-buttons-that-scales-with-size-changes-wit
 - https://stackoverflow.com/questions/45575626/make-qlabel-clickable
 - https://stackoverflow.com/questions/72429693/pyqt5-using-loadui-with-promoted-widgets-from-qt-designer
+- https://www.youtube.com/watch?v=imRXqTORkSs&t=383s
+- https://stackoverflow.com/questions/35333236/how-to-round-qwidget-corners
+- https://www.qtcentre.org/threads/2351-Transparent-TextEdit-or-Widget

@@ -38,8 +38,6 @@ class Board:
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
 
-
-
     def get_cell_of_board(self, x, y):
         return self._board[x][y]
 

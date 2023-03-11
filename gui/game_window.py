@@ -5,13 +5,16 @@ from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QMessageBox, QPushBut
 from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
+from message_box import MessageBox
+import sys, os
 
 class GameWindow(QDialog):
-    def __init__(self, player_1_name, player_2_name):
+    def __init__(self, widget, player_1_name, player_2_name):
 
         super(GameWindow, self).__init__()
         loadUi("resource_ui_files/game.ui", self)
 
+        self.widget = widget
         self.game = Game()
 
         self.boardWidget: QWidget = self.gameBoard
@@ -26,21 +29,31 @@ class GameWindow(QDialog):
         self.player_1_current_capture_cell = 0
         self.player_2_current_capture_cell = 0
 
-        self.player1Surrender.clicked.connect(lambda: self.surrender_message_box(self.player2Name.text()))
-        self.player2Surrender.clicked.connect(lambda: self.surrender_message_box(self.player1Name.text()))
+        self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text()))
+        self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text()))
 
-        self.player1DrawRequest.clicked.connect(lambda: self.draw_request_message_box(self.player2Name.text()))
-        self.player2DrawRequest.clicked.connect(lambda: self.draw_request_message_box(self.player1Name.text()))
+        self.player1DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player2Name.text()))
+        self.player2DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player1Name.text()))
 
         self.makePlayer1Surrender.clicked.connect(lambda:
-                                                  self.make_enemy_surrender_message_box(self.player1Name.text()))
+                                                  MessageBox.make_enemy_surrender_message_box(self,
+                                                                                              self.player2Name.text(),
+                                                                                              self.player1Name.text()))
         self.makePlayer2Surrender.clicked.connect(lambda:
-                                                  self.make_enemy_surrender_message_box(self.player2Name.text()))
+                                                  MessageBox.make_enemy_surrender_message_box(self,
+                                                                                              self.player1Name.text(),
+                                                                                              self.player2Name.text()))
 
         self.step_progress = 1
 
-    def printer(self, megyen):
-        print(megyen)
+    def printer(self, widget, name1, name2):
+
+        current = self
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.removeWidget(self)
+        current.__init__(widget, name1, name2)
+        widget.addWidget(current)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def fill_name_labels(self,  player_1_name, player_2_name):
         if GameWindow.get_first_player(player_1_name, player_2_name) == player_1_name:
@@ -89,6 +102,7 @@ class GameWindow(QDialog):
 
                 if pixmap is not None:
                     item.setPixmap(pixmap)
+
     @staticmethod
     def get_first_player(player_1_name, player_2_name):
         names = [player_1_name, player_2_name]
@@ -120,7 +134,7 @@ class GameWindow(QDialog):
                         current_check_counter_start = self.game.contains_start_cell(cells, cell)
 
                         if current_check_counter_start is None:
-                            self.still_check_message_box()
+                            MessageBox.still_check_message_box()
                             return
 
                         else:
@@ -185,11 +199,11 @@ class GameWindow(QDialog):
 
                 if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
                         target_cell.get_piece().get_piece_x() == enemy_border:
-                    self.promote_message_box(target_cell, target)
+                    MessageBox.promote_message_box(self, target_cell, target)
                     print(target_cell.get_piece().get_piece_type())
 
                 if self.game.is_stalemate():
-                    self.stalemate_message_box()
+                    MessageBox.stalemate_message_box()
 
                 if self.game.is_king_targeted(self.game.get_current_player()):
                     for i in self.colored_cells:
@@ -199,9 +213,9 @@ class GameWindow(QDialog):
                     if len(self.game.steps_if_king_is_targeted()) == 0:
                         winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                             else self.player1Name.text()
-                        self.checkmate_message_box(winner)
+                        MessageBox.checkmate_message_box(winner)
 
-                    self.check_message_box()
+                    MessageBox.check_message_box(self)
 
             self.step_progress = 1
 
@@ -230,187 +244,6 @@ class GameWindow(QDialog):
 
         item = target_board.itemAtPosition(x_coord, y_coord).widget()
         item.setPixmap(target_pixmap)
-
-    def promote_message_box(self, cell, gui_cell):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Promotion")
-        msgbox.setText('Choose the type of piece you would like to promote the pawn to')
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        queen_b = QPushButton("Queen")
-        rook_b = QPushButton("Rook")
-        bishop_b = QPushButton("Bishop")
-        knight_b = QPushButton("Knight")
-
-        msgbox.addButton(queen_b, QMessageBox.YesRole)
-        msgbox.addButton(rook_b, QMessageBox.NoRole)
-        msgbox.addButton(bishop_b, QMessageBox.RejectRole)
-        msgbox.addButton(knight_b, QMessageBox.AcceptRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == queen_b:
-
-            self.game.promote_pawn(cell, PieceType.QUEEN)
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_queen.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_queen.png")
-            gui_cell.setPixmap(pixmap)
-
-        elif msgbox.clickedButton() == rook_b:
-
-            self.game.promote_pawn(cell, PieceType.ROOK)
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_rook.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_rook.png")
-            gui_cell.setPixmap(pixmap)
-
-        elif msgbox.clickedButton() == bishop_b:
-
-            self.game.promote_pawn(cell, PieceType.BISHOP)
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_bishop.png")
-            gui_cell.setPixmap(pixmap)
-
-        elif msgbox.clickedButton() == knight_b:
-
-            self.game.promote_pawn(cell, PieceType.KNIGHT)
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_knight.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_knight.png")
-            gui_cell.setPixmap(pixmap)
-
-    def surrender_message_box(self, enemy_player_name):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Surrender?")
-        msgbox.setText('Do you really want to surrender?')
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        yes_button = QPushButton("Yes")
-        no_button = QPushButton("No")
-
-        msgbox.addButton(yes_button, QMessageBox.YesRole)
-        msgbox.addButton(no_button, QMessageBox.NoRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == yes_button:
-            self.end_game_message_box(enemy_player_name)
-
-    def check_message_box(self):
-
-        name = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
-            else self.player2Name.text()
-
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Warning ")
-        msgbox.setText(name + "! Your king is in check.")
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        msgbox.addButton(QPushButton("OK"), QMessageBox.YesRole)
-
-        msgbox.exec_()
-
-    def still_check_message_box(self):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Warning")
-        msgbox.setText("Your king is in check. You can't step with this piece.")
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        msgbox.addButton(QPushButton("OK"), QMessageBox.YesRole)
-
-        msgbox.exec_()
-
-
-    def make_enemy_surrender_message_box(self, player_name):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Agree to surrender?")
-        msgbox.setText('Do you agree to surrender?')
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        yes_button = QPushButton("Yes")
-        no_button = QPushButton("No")
-
-        msgbox.addButton(yes_button, QMessageBox.YesRole)
-        msgbox.addButton(no_button, QMessageBox.NoRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == yes_button:
-            self.end_game_message_box(player_name)
-
-
-    def draw_request_message_box(self, enemy_player_name):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Draw?")
-        msgbox.setText("Do " + enemy_player_name + " agree with a draw?")
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        yes_button = QPushButton("Yes")
-        no_button = QPushButton("No")
-
-        msgbox.addButton(yes_button, QMessageBox.YesRole)
-        msgbox.addButton(no_button, QMessageBox.NoRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == yes_button:
-            self.end_game_message_box("Draw")
-
-    def checkmate_message_box(self, game_result):
-        if game_result != "Draw":
-            game_result = game_result + "'s victory"
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("CheckMate!")
-        msgbox.setText('The result of the game is: ' + game_result)
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        return_btn = QPushButton("Return to main page")
-
-        msgbox.addButton(return_btn, QMessageBox.YesRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == return_btn:
-            print("Game finished")
-
-    def end_game_message_box(self, game_result):
-        if game_result != "Draw":
-            game_result = game_result + "'s victory"
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Game Finished")
-        msgbox.setText('The result of the game is: ' + game_result)
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        return_btn = QPushButton("Return to main page")
-
-        msgbox.addButton(return_btn, QMessageBox.YesRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == return_btn:
-            print("Game finished")
-
-
-    def stalemate_message_box(self):
-        msgbox = QMessageBox()
-        msgbox.setWindowTitle("Stalemate")
-        msgbox.setText('The result of the game is stalemate')
-        msgbox.setWindowModality(QtCore.Qt.ApplicationModal)
-
-        return_btn = QPushButton("Return to main page")
-
-        msgbox.addButton(return_btn, QMessageBox.YesRole)
-
-        msgbox.exec_()
-
-        if msgbox.clickedButton() == return_btn:
-            print("Game finished")
 
     def mark_possible_steps(self, cells):
 
