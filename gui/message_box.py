@@ -8,6 +8,11 @@ class MessageBox:
 
     @staticmethod
     def stalemate_message_box(game):
+        """
+        The message box to be shown in case of stalemate
+
+        :param game: the object to represent the current game
+        """
 
         msgbox = MyDualMessageBox("The result of the game is stalemate",
                                   b1_text="Start a new game",
@@ -21,6 +26,12 @@ class MessageBox:
 
     @staticmethod
     def checkmate_message_box(game, game_result):
+        """
+        The message box to be shown in case of checkmate
+
+        :param game: the object to represent the current game
+        :param game_result: the result of current game
+        """
 
         game_result = game_result + "'s victory"
 
@@ -36,6 +47,12 @@ class MessageBox:
 
     @staticmethod
     def end_game_message_box(game, game_result):
+        """
+        The message box to be shown in case the game finishes by a button being pressed
+
+        :param game: the object to represent the current game
+        :param game_result: the result of current game
+        """
 
         if game_result != "Draw":
             game_result = game_result + "'s victory"
@@ -52,11 +69,22 @@ class MessageBox:
 
     @staticmethod
     def make_enemy_surrender_message_box(game, player_name, enemy_player_name):
+        """
+        The message box to be shown in case someone asks the other player if he/she would like to surrender
+
+        :param game: the object to represent the current game
+        :param player_name: the name of the initiating person
+        :param enemy_player_name: the name of the opponent
+        """
 
         msgbox = MyDualMessageBox("Do " + enemy_player_name + " want to surrender?")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
         def on_btn1_click():
+            """
+            The actions in case btn1 is clicked
+            """
+
             msgbox.close()
             MessageBox.end_game_message_box(game, player_name)
 
@@ -66,11 +94,21 @@ class MessageBox:
 
     @staticmethod
     def draw_request_message_box(game, enemy_player_name):
+        """
+        The message box to be shown in case someone asks the other player for a draw
+
+        :param game: the object to represent the current game
+        :param enemy_player_name: the name of the opponent
+        """
 
         msgbox = MyDualMessageBox("Do " + enemy_player_name + " agree with a draw?")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
         def on_btn1_click():
+            """
+            The actions in case btn1 is clicked
+            """
+
             msgbox.close()
             MessageBox.end_game_message_box(game, "Draw")
 
@@ -80,11 +118,21 @@ class MessageBox:
 
     @staticmethod
     def surrender_message_box(game, enemy_player_name):
+        """
+        The message box to be shown in case someone would like to surrender
+
+        :param game: the object to represent the current game
+        :param enemy_player_name: the name of the opponent
+        """
 
         msgbox = MyDualMessageBox("Do you really want to surrender?")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
         def on_btn1_click():
+            """
+            The actions in case btn1 is clicked
+            """
+
             msgbox.close()
             MessageBox.end_game_message_box(game, enemy_player_name)
 
@@ -94,6 +142,9 @@ class MessageBox:
 
     @staticmethod
     def still_check_message_box():
+        """
+        The message box to be shown in case stepping with the selected piece would not free the king from check
+        """
 
         msgbox = MySingleMessageBox("Your king is in check.\nYou can't step with this piece.")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
@@ -102,6 +153,11 @@ class MessageBox:
 
     @staticmethod
     def check_message_box(game):
+        """
+        The message box to be shown in case the current player's king is in check
+
+        :param game: the object to represent the current game
+        """
 
         name = game.player1Name.text() if game.game.get_current_player() == game.game.get_white_player() \
             else game.player2Name.text()
@@ -113,13 +169,24 @@ class MessageBox:
 
     @staticmethod
     def promote_message_box(game, cell, gui_cell):
+        """
+        The message box to be shown in case a pawn must be promoted
+
+        :param game: the object to represent the current game
+        :param cell: the cell of the pawn
+        :param gui_cell: the cell's representation in GUI
+        """
 
         msgbox = MyQuadrupleMessageBox("Choose the type of piece you would like to promote the pawn to")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
         def on_btn1_clicked():
+            """
+            The actions in case btn1 is clicked
+            """
 
             game.game.promote_pawn(cell, PieceType.QUEEN)
+
             if cell.get_piece().get_direction() == 1:
                 pixmap = QPixmap("./resource_images/pieces/w_queen.png")
             else:
@@ -129,8 +196,12 @@ class MessageBox:
             msgbox.close()
 
         def on_btn2_clicked():
+            """
+            The actions in case btn2 is clicked
+            """
 
             game.game.promote_pawn(cell, PieceType.ROOK)
+
             if cell.get_piece().get_direction() == 1:
                 pixmap = QPixmap("./resource_images/pieces/w_rook.png")
             else:
@@ -140,8 +211,12 @@ class MessageBox:
             msgbox.close()
 
         def on_btn3_clicked():
+            """
+            The actions in case btn3 is clicked
+            """
 
             game.game.promote_pawn(cell, PieceType.BISHOP)
+
             if cell.get_piece().get_direction() == 1:
                 pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
             else:
@@ -151,8 +226,12 @@ class MessageBox:
             msgbox.close()
 
         def on_btn4_clicked():
+            """
+            The actions in case btn4 is clicked
+            """
 
             game.game.promote_pawn(cell, PieceType.KNIGHT)
+
             if cell.get_piece().get_direction() == 1:
                 pixmap = QPixmap("./resource_images/pieces/w_knight.png")
             else:
@@ -170,6 +249,12 @@ class MessageBox:
 
     @staticmethod
     def __start_new_game(game, msgbox):
+        """
+        Starts a new game
+
+        :param game: the object to represent the current game
+        :param msgbox: the message box to be closed
+        """
 
         msgbox.close()
 
@@ -186,6 +271,12 @@ class MessageBox:
 
     @staticmethod
     def __return_to_main_menu(widget, msgbox):
+        """
+        Starts a new game
+
+        :param widget: the widget containing the representation of the current game
+        :param msgbox: the message box to be closed
+        """
 
         msgbox.close()
 

@@ -7,12 +7,15 @@ class Board:
 
     def __init__(self):
         self._board = list()
-        self.fill_board()
+        self.__fill_board()
 
     def get_board(self):
         return self._board
 
-    def fill_board(self):
+    def __fill_board(self):
+        """
+        Fills the board with piece cells
+        """
         self._board = [[Cell(Piece(0, 0, PieceType.ROOK, -1)), Cell(Piece(0, 1, PieceType.KNIGHT, -1)),
                         Cell(Piece(0, 2, PieceType.BISHOP, -1)), Cell(Piece(0, 3, PieceType.QUEEN, -1)),
                         Cell(Piece(0, 4, PieceType.KING, -1)), Cell(Piece(0, 5, PieceType.BISHOP, -1)),
@@ -37,24 +40,3 @@ class Board:
                                Cell(Piece(6, 2, PieceType.PAWN, 1)), Cell(Piece(6, 3, PieceType.PAWN, 1)),
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
-
-    def get_cell_of_board(self, x, y):
-        return self._board[x][y]
-
-
-
-    def print_board(self):
-        for i in range(0,8):
-            for j in range(0,8):
-                self.print_coords(self._board[i][j].get_piece())
-            print()
-
-
-    def print_piece_data(self, cell):
-        piece = cell.get_piece()
-        print(piece.get_piece_x(), piece.get_piece_y(), piece.get_piece_type(), piece.get_direction())
-
-
-
-    def print_coords(self, piece):
-            print(piece.get_piece_type(), piece.get_direction(), end=" ")

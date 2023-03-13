@@ -10,4 +10,9 @@ class ClickableLabel(QLabel):
         QLabel.__init__(self, parent=parent)
 
     def mousePressEvent(self, event):
+        """
+        A function to perceive when a mouse event happens
+
+        :param event: the event that occured
+        """
         self.clicked.emit()

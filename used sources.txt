@@ -9,3 +9,4 @@ Sources I used as samples, and references for my project, and borrowed ideas fro
 - https://www.youtube.com/watch?v=imRXqTORkSs&t=383s
 - https://stackoverflow.com/questions/35333236/how-to-round-qwidget-corners
 - https://www.qtcentre.org/threads/2351-Transparent-TextEdit-or-Widget
+- https://doc.qt.io/qtforpython-5/PySide2/QtWidgets/QStackedLayout.html

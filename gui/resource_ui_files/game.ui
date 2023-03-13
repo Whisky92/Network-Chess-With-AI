@@ -1454,7 +1454,7 @@ border: 1px solid black;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1475,7 +1475,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1496,7 +1496,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1518,7 +1518,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1539,7 +1539,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1560,7 +1560,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1581,7 +1581,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1602,7 +1602,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1623,7 +1623,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1644,7 +1644,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1665,7 +1665,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1686,7 +1686,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1707,7 +1707,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1728,7 +1728,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color:#FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1750,7 +1750,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1771,7 +1771,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1792,7 +1792,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1813,7 +1813,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1834,7 +1834,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1855,7 +1855,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1876,7 +1876,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -1897,7 +1897,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1918,7 +1918,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1939,7 +1939,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1960,7 +1960,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -1981,7 +1981,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2002,7 +2002,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2023,7 +2023,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2044,7 +2044,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2065,7 +2065,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2086,7 +2086,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2107,7 +2107,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2128,7 +2128,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2149,7 +2149,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2170,7 +2170,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2192,7 +2192,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2213,7 +2213,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2234,7 +2234,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2255,7 +2255,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2276,7 +2276,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2297,7 +2297,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2318,7 +2318,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2340,7 +2340,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2361,7 +2361,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2383,7 +2383,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2404,7 +2404,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2425,7 +2425,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2446,7 +2446,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2467,7 +2467,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2489,7 +2489,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2508,7 +2508,7 @@ background-color: #FFDBAC;</string>
          </sizepolicy>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #704214;
+         <string notr="true">background-color: #FFDBAC;
 border-top: 5px solid black;
 border-right: 1px solid black;
 border-left: 5px solid black;</string>
@@ -2532,7 +2532,7 @@ border-left: 5px solid black;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2553,7 +2553,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2574,7 +2574,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2595,7 +2595,7 @@ background-color: #704214;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 5px solid black;
 border-right: 1px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2616,7 +2616,7 @@ background-color: #FFDBAC;</string>
         <property name="styleSheet">
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2638,7 +2638,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2661,7 +2661,7 @@ background-color: #704214;</string>
 border-right: 1px solid black;
 border-left: 5px solid black;
 border-bottom: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2683,7 +2683,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2705,7 +2705,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2727,7 +2727,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2749,7 +2749,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>
@@ -2771,7 +2771,7 @@ background-color: #704214;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 1px solid black;
 border-bottom: 5px solid black;
-background-color: #FFDBAC;</string>
+background-color: #704214;</string>
         </property>
         <property name="text">
          <string/>
@@ -2793,7 +2793,7 @@ background-color: #FFDBAC;</string>
          <string notr="true">border-top: 1px solid black;
 border-right: 5px solid black;
 border-bottom: 5px solid black;
-background-color: #704214;</string>
+background-color: #FFDBAC;</string>
         </property>
         <property name="text">
          <string/>

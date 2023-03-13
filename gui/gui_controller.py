@@ -15,6 +15,9 @@ class MainWindow(QDialog):
         self.local_pvp_button.clicked.connect(self.play_local_pvp)
 
     def play_local_pvp(self):
+        """
+        The actions to be done in case the local pvp button was pressed
+        """
 
         screen = PlayerOneNameChoose()
         widget.addWidget(screen)
@@ -31,15 +34,23 @@ class PlayerOneNameChoose(QDialog):
         self.submitButton.clicked.connect(self.submit)
 
     def back_to_previous_page(self):
+        """
+        The actions to be done in case the back button was pressed
+        """
 
         current = widget.currentWidget()
         widget.setCurrentIndex(widget.currentIndex() - 1)
         widget.removeWidget(current)
 
     def submit(self):
+        """
+        The actions to be done in case the submit button was pressed
+        """
 
         text = self.nameField.text()
+
         if text != "":
+
             screen = PlayerTwoNameChoose(text)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
@@ -57,15 +68,23 @@ class PlayerTwoNameChoose(QDialog):
         self.submitButton.clicked.connect(lambda: self.submit(player_1_name))
 
     def back_to_previous_page(self):
+        """
+        The actions to be done in case the back button was pressed
+        """
 
         current = widget.currentWidget()
         widget.setCurrentIndex(widget.currentIndex() - 1)
         widget.removeWidget(current)
 
     def submit(self, player_1_name):
+        """
+        The actions to be done in case submit button was pressed
+        """
 
         text = self.nameField.text()
+
         if text != "" and player_1_name != text:
+
             screen = GameWindow(widget, player_1_name, text)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
