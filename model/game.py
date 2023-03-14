@@ -10,13 +10,17 @@ import copy
 
 class Game:
 
-    def __init__(self):
+    def __init__(self, *args):
 
         self._white_player = Player(Color.WHITE, 1)
         self._black_player = Player(Color.BLACK, -1)
         self._current_player = self._white_player
 
-        self._board = Board()
+        if len(args) == 0:
+            self._board = Board()
+        else:
+            self._board = Board(args[0])
+
         self._last_step = None
 
         self.__add_to_player_pieces()
@@ -94,7 +98,6 @@ class Game:
             self._current_player.set_can_stalemate(True)
 
         self.change_current_player()
-
 
     def promote_pawn(self, cell, p_type):
         """
@@ -260,7 +263,7 @@ class Game:
 
         if target_cell in self._castling_step:
 
-           self.move_piece_in_case_of_castling(x_target_coord, target_cell)
+            self.move_piece_in_case_of_castling(x_target_coord, target_cell)
 
         elif target_cell.get_piece().get_direction() != 0:
 
@@ -268,7 +271,6 @@ class Game:
 
         elif piece_to_move.get_en_passant_step() is not None \
                 and target_cell == piece_to_move.get_en_passant_step():
-
             self.move_piece_in_case_of_en_passant(piece_to_move, target_cell)
 
         if (piece_to_move.get_piece_x() == target_cell.get_piece().get_piece_x() - 2

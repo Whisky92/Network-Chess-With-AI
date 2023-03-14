@@ -1,11 +1,14 @@
 import random
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QMessageBox, QPushButton
+from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout
+
+import model.tests.test_tables
 from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
 from message_box import MessageBox
+
 
 class GameWindow(QDialog):
     def __init__(self, widget, player_1_name, player_2_name):
@@ -14,7 +17,7 @@ class GameWindow(QDialog):
         loadUi("resource_ui_files/game.ui", self)
 
         self.widget = widget
-        self.game = Game()
+        self.game = Game(model.tests.test_tables.TestTables.table2_for_steps_if_king_is_targeted)
 
         self._boardWidget: QWidget = self.gameBoard
         self._board: QGridLayout = self.gameLayout
@@ -42,7 +45,6 @@ class GameWindow(QDialog):
                                                   MessageBox.make_enemy_surrender_message_box(self,
                                                                                               self.player1Name.text(),
                                                                                               self.player2Name.text()))
-
         self._step_progress = 1
 
     def __fill_name_labels(self, player_1_name, player_2_name):
@@ -126,17 +128,13 @@ class GameWindow(QDialog):
         pos_x = pos[0]
         pos_y = pos[1]
 
-        cells = self.game.steps_if_king_is_targeted()
-
         if self._step_progress == 1:
-            self.__if_step_progress_is_one(target, pos_x, pos_y, cells)
+            self.__if_step_progress_is_one(target, pos_x, pos_y)
 
         else:
             self.__if_step_progress_is_two(target, pos_x, pos_y)
 
-        print(self._step_progress)
-
-    def __if_step_progress_is_one(self, target, pos_x, pos_y, cells):
+    def __if_step_progress_is_one(self, target, pos_x, pos_y):
         """
         Does the necessary processes if 'self.step_progress' is 1
 
@@ -151,6 +149,8 @@ class GameWindow(QDialog):
             if self.game.is_king_targeted(self.game.get_current_player()):
 
                 cell = self.game.get_board_table()[pos_x][pos_y]
+
+                cells = self.game.steps_if_king_is_targeted()
 
                 if len(cells) != 0:
 
@@ -290,6 +290,7 @@ class GameWindow(QDialog):
                 winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                     else self.player1Name.text()
                 MessageBox.checkmate_message_box(self, winner)
+                return
 
             MessageBox.check_message_box(self)
 

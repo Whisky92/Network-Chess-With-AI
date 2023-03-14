@@ -5,9 +5,14 @@ from model.cell import Cell
 
 class Board:
 
-    def __init__(self):
-        self._board = list()
-        self.__fill_board()
+    def __init__(self, *args):
+
+        if len(args) == 0:
+            self._board = list()
+            self.__fill_board()
+
+        elif type(args[0]) == list:
+            self._board = args[0]
 
     def get_board(self):
         return self._board
@@ -34,9 +39,41 @@ class Board:
             self._board.insert(i, [Cell(Piece(i, 0, PieceType.NO_TYPE, 0)), Cell(Piece(i, 1, PieceType.NO_TYPE, 0)),
                                    Cell(Piece(i, 2, PieceType.NO_TYPE, 0)), Cell(Piece(i, 3, PieceType.NO_TYPE, 0)),
                                    Cell(Piece(i, 4, PieceType.NO_TYPE, 0)), Cell(Piece(i, 5, PieceType.NO_TYPE, 0)),
-                                   Cell(Piece(i, 6, PieceType.NO_TYPE, 0)), Cell(Piece(i, 7, PieceType.NO_TYPE, 0))])
+                                   Cell(Piece(i, 6, PieceType.NO_TYPE, 0)),
+                                   Cell(Piece(i, 7, PieceType.NO_TYPE, 0))])
 
         self._board.insert(6, [Cell(Piece(6, 0, PieceType.PAWN, 1)), Cell(Piece(6, 1, PieceType.PAWN, 1)),
                                Cell(Piece(6, 2, PieceType.PAWN, 1)), Cell(Piece(6, 3, PieceType.PAWN, 1)),
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
+
+
+
+
+    def print_board(self):
+        for i in range(0,8):
+            for j in range(0,8):
+                self.print_coords(self._board[i][j].get_piece())
+            print()
+
+    def print_coords(self, piece):
+            print(piece.get_piece_type(), piece.get_direction(), end=" ")
+
+
+
+    def __eq__(self, other):
+        for i in range(0, 8):
+            for j in range(0, 8):
+
+                if self._board[i][j].get_piece().get_piece_x() \
+                        != other[i][j].get_piece().get_piece_x() or \
+                        self._board[i][j].get_piece().get_piece_y() \
+                        != other[i][j].get_piece().get_piece_y() or \
+                        self._board[i][j].get_piece().get_piece_type() != \
+                        other[i][j].get_piece().get_piece_type() or \
+                        self._board[i][j].get_piece().get_direction() != \
+                        other[i][j].get_piece().get_direction():
+
+                    return False
+
+        return True
