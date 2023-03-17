@@ -1,8 +1,8 @@
 import random
 from PyQt5.uic import loadUi
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout
-
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QSizePolicy, QLabel
+from PyQt5.QtCore import QEvent
 import model.tests.test_tables
 from model.game import Game
 from model.piece_type import PieceType
@@ -28,6 +28,9 @@ class GameWindow(QDialog):
         self._colored_cells = []
         self._current_piece = None
 
+        self.player1Name: QLabel
+        self.player2Name: QLabel
+
         self._player_1_current_capture_cell = 0
         self._player_2_current_capture_cell = 0
 
@@ -45,6 +48,8 @@ class GameWindow(QDialog):
                                                   MessageBox.make_enemy_surrender_message_box(self,
                                                                                               self.player1Name.text(),
                                                                                               self.player2Name.text()))
+        self.player1Name.resizeEvent = self.resizeText
+
         self._step_progress = 1
 
     def __fill_name_labels(self, player_1_name, player_2_name):
@@ -349,3 +354,23 @@ class GameWindow(QDialog):
             if pos_x == i.get_piece_x() and pos_y == i.get_piece_y():
                 return True
         return False
+
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.player1Name.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        self.player2Name.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+
+        self.player1Name.setFont(f)
+        self.player2Name.setFont(f)

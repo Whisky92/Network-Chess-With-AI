@@ -1,6 +1,8 @@
 import sys
 from PyQt5.uic import loadUi
+from PyQt5.QtGui import QFont
 from PyQt5 import QtWidgets
+from PyQt5.QtCore import QEvent
 from PyQt5.QtWidgets import QApplication, QDialog, QPushButton
 from game_window import GameWindow
 
@@ -12,7 +14,9 @@ class MainWindow(QDialog):
         loadUi("resource_ui_files/main_menu.ui", self)
 
         self.local_pvp_button = self.findChild(QPushButton, "localPlayerVsPlayerButton")
+
         self.local_pvp_button.clicked.connect(self.play_local_pvp)
+        self.local_pvp_button.resizeEvent = self.resizeText
 
     def play_local_pvp(self):
         """
@@ -23,6 +27,25 @@ class MainWindow(QDialog):
         widget.addWidget(screen)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.local_pvp_button.setFont(f)
+        self.matchHistoryButton.setFont(f)
+        self.playerVsAiButton.setFont(f)
+        self.onlinePlayerVsPlayerButton.setFont(f)
+
 
 class PlayerOneNameChoose(QDialog):
     def __init__(self):
@@ -32,6 +55,7 @@ class PlayerOneNameChoose(QDialog):
 
         self.backButton.clicked.connect(self.back_to_previous_page)
         self.submitButton.clicked.connect(self.submit)
+        self.submitButton.resizeEvent = self.resizeText
 
     def back_to_previous_page(self):
         """
@@ -56,6 +80,23 @@ class PlayerOneNameChoose(QDialog):
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")
 
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.backButton.setFont(f)
+        self.submitButton.setFont(f)
+
 
 class PlayerTwoNameChoose(QDialog):
 
@@ -66,6 +107,7 @@ class PlayerTwoNameChoose(QDialog):
 
         self.backButton.clicked.connect(self.back_to_previous_page)
         self.submitButton.clicked.connect(lambda: self.submit(player_1_name))
+        self.submitButton.resizeEvent = self.resizeText
 
     def back_to_previous_page(self):
         """
@@ -89,6 +131,23 @@ class PlayerTwoNameChoose(QDialog):
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")
+
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.backButton.setFont(f)
+        self.submitButton.setFont(f)
 
 
 app = QApplication(sys.argv)
