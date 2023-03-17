@@ -147,7 +147,6 @@ class MessageBox:
         """
 
         msgbox = MySingleMessageBox("Your king is in check.\nYou can't step with this piece.")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
         msgbox.exec_()
 
@@ -163,8 +162,6 @@ class MessageBox:
             else game.player2Name.text()
 
         msgbox = MySingleMessageBox(name + "!\nYour king is in check.")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
-
         msgbox.exec_()
 
     @staticmethod

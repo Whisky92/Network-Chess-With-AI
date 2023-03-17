@@ -72,58 +72,6 @@ class Game:
     def set_self_checkmate(self):
         self._self_checkmate = False
 
-    def __add_to_player_pieces(self):
-        """
-        Adds the pieces on board to the corresponding player's owned pieces list
-        """
-        for i in range(0, 8):
-            for j in range(0, 8):
-                this_piece = self._board.get_board()[i][j].get_piece()
-                if this_piece.get_direction() == self._white_player.get_direction():
-                    self._white_player.add_to_pieces_on_board(this_piece)
-                elif this_piece.get_direction() == self._black_player.get_direction():
-                    self._black_player.add_to_pieces_on_board(this_piece)
-
-    def move_piece(self, cell_to_move_from: Cell, target_cell: Cell):
-        """
-        Moves the piece from start cell to target cell, checks for stalemate and changes current player
-
-        :param cell_to_move_from: the cell to move the piece from
-        :param target_cell: the cell to move to
-        """
-
-        self.move(cell_to_move_from, target_cell)
-
-        if self.is_stalemate():
-            self._current_player.set_can_stalemate(True)
-
-        self.change_current_player()
-
-    def promote_pawn(self, cell, p_type):
-        """
-        Promotes a pawn to the selected piece type
-
-        :param cell: the cell of the pawn
-        :param p_type: the type to promote to
-        """
-        piece = cell.get_piece()
-        piece.set_piece_type(p_type)
-
-    def is_king_targeted(self, player):
-        """
-        Returns whether the given player's king is targeted
-
-        :param player: the player whose king is to be checked
-
-        :return: the logical value whether the player's king is checked
-        """
-        enemy_player = self._black_player if player == self._white_player else self._white_player
-        king_cell = KingStepChecker.get_king_cell(self.get_board_table(), player)
-
-        return KingStepChecker.is_cell_targeted(self.get_board_table(), king_cell, enemy_player, self._white_player,
-                                                self._black_player, self._last_step, self._castling_step,
-                                                self._castling_rook, self._rook_target)
-
     def filter_wrong_moves(self, x, y):
         """
         Selects the legal moves from the moves of piece indexed by the given coordinates,
@@ -154,100 +102,23 @@ class Game:
         """
         cell = self.get_board_table()[x][y]
         return cell.get_piece().get_possible_steps(self._board.get_board(), self._last_step, self._white_player,
-                           self._black_player, self._castling_step, self._castling_rook,
-                           self._rook_target)
+                                                   self._black_player, self._castling_step, self._castling_rook,
+                                                   self._rook_target)
 
-    def is_stalemate(self):
+    def move_piece(self, cell_to_move_from: Cell, target_cell: Cell):
         """
-        Returns whether the current state of the game is a stalemate
+        Moves the piece from start cell to target cell, checks for stalemate and changes current player
 
-        :return: logical value whether the current state of the game is a stalemate
-        """
-
-        if self.is_king_targeted(self.get_current_player()):
-            return False
-
-        for i in self._current_player.get_pieces_on_board():
-
-            steps = self.get_possible_steps(i.get_piece_x(), i.get_piece_y())
-
-            if i.get_piece_type() != PieceType.KING:
-                if len(steps) != 0 and not self.__cause_king_to_be_targeted(i, steps[0]):
-                    return False
-            else:
-                if len(steps) != 0:
-                    return False
-
-        return True
-
-    def __cause_king_to_be_targeted(self, piece, target):
-        """
-        Returns whether the current step would cause the king to be targeted
-
-        :param piece: the piece to step with
-        :param target: the target of the step
-
-        :return: the logical value whether the step would cause the king to be targeted
+        :param cell_to_move_from: the cell to move the piece from
+        :param target_cell: the cell to move to
         """
 
-        piece_x = piece.get_piece_x()
-        piece_y = piece.get_piece_y()
+        self.move(cell_to_move_from, target_cell)
 
-        target_x = target.get_piece().get_piece_x()
-        target_y = target.get_piece().get_piece_y()
+        if self.is_stalemate():
+            self._current_player.set_can_stalemate(True)
 
-        test_game = copy.deepcopy(self)
-
-        cell_to_move_from = test_game.get_board_table()[piece_x][piece_y]
-        target_cell = test_game.get_board_table()[target_x][target_y]
-
-        test_game.move(cell_to_move_from, target_cell)
-
-        if test_game.is_king_targeted(test_game.get_current_player()):
-            return True
-        return False
-
-
-    def steps_if_king_is_targeted(self):
-        """
-        Returns a list of tuples in which there are the possible pieces and the corresponding
-        legal moves that would save the king from check
-
-        :return: the list of tuples with the pieces and the corresponding legal moves
-        """
-
-        steps = []
-
-        for i in self._current_player.get_pieces_on_board():
-
-            piece_x = i.get_piece_x()
-            piece_y = i.get_piece_y()
-
-            start_c = None
-            dest_c = []
-
-            for j in self.get_possible_steps(piece_x, piece_y):
-
-                target_x = j.get_piece().get_piece_x()
-                target_y = j.get_piece().get_piece_y()
-
-                test_game = copy.deepcopy(self)
-
-                piece_to_move = test_game.get_board_table()[piece_x][piece_y]
-                target_piece = test_game.get_board_table()[target_x][target_y]
-
-                test_game.move(piece_to_move, target_piece)
-
-                if not test_game.is_king_targeted(test_game.get_current_player()):
-
-                    start_c = self.get_board_table()[piece_x][piece_y]
-                    dest_c.append(self.get_board_table()[target_x][target_y])
-
-            if start_c is not None:
-                tup = (start_c, dest_c)
-                steps.append(tup)
-
-        return steps
+        self.change_current_player()
 
     def move(self, cell_to_move_from: Cell, target_cell: Cell):
         """
@@ -345,6 +216,112 @@ class Game:
         current_player.remove_from_pieces_on_board(cell_to_capture_from.get_piece())
         cell_to_capture_from.set_piece(Piece(target_x, target_y, PieceType.NO_TYPE, 0))
 
+    def __cause_king_to_be_targeted(self, piece, target):
+        """
+        Returns whether the current step would cause the king to be targeted
+
+        :param piece: the piece to step with
+        :param target: the target of the step
+
+        :return: the logical value whether the step would cause the king to be targeted
+        """
+
+        piece_x = piece.get_piece_x()
+        piece_y = piece.get_piece_y()
+
+        target_x = target.get_piece().get_piece_x()
+        target_y = target.get_piece().get_piece_y()
+
+        test_game = copy.deepcopy(self)
+
+        cell_to_move_from = test_game.get_board_table()[piece_x][piece_y]
+        target_cell = test_game.get_board_table()[target_x][target_y]
+
+        test_game.move(cell_to_move_from, target_cell)
+
+        if test_game.is_king_targeted(test_game.get_current_player()):
+            return True
+        return False
+
+    def steps_if_king_is_targeted(self):
+        """
+        Returns a list of tuples in which there are the possible pieces and the corresponding
+        legal moves that would save the king from check
+
+        :return: the list of tuples with the pieces and the corresponding legal moves
+        """
+
+        steps = []
+
+        for i in self._current_player.get_pieces_on_board():
+
+            piece_x = i.get_piece_x()
+            piece_y = i.get_piece_y()
+
+            start_c = None
+            dest_c = []
+
+            for j in self.get_possible_steps(piece_x, piece_y):
+
+                target_x = j.get_piece().get_piece_x()
+                target_y = j.get_piece().get_piece_y()
+
+                test_game = copy.deepcopy(self)
+
+                piece_to_move = test_game.get_board_table()[piece_x][piece_y]
+                target_piece = test_game.get_board_table()[target_x][target_y]
+
+                test_game.move(piece_to_move, target_piece)
+
+                if not test_game.is_king_targeted(test_game.get_current_player()):
+
+                    start_c = self.get_board_table()[piece_x][piece_y]
+                    dest_c.append(self.get_board_table()[target_x][target_y])
+
+            if start_c is not None:
+                tup = (start_c, dest_c)
+                steps.append(tup)
+
+        return steps
+
+    def is_king_targeted(self, player):
+        """
+        Returns whether the given player's king is targeted
+
+        :param player: the player whose king is to be checked
+
+        :return: the logical value whether the player's king is checked
+        """
+        enemy_player = self._black_player if player == self._white_player else self._white_player
+        king_cell = KingStepChecker.get_king_cell(self.get_board_table(), player)
+
+        return KingStepChecker.is_cell_targeted(self.get_board_table(), king_cell, enemy_player, self._white_player,
+                                                self._black_player, self._last_step, self._castling_step,
+                                                self._castling_rook, self._rook_target)
+
+    def is_stalemate(self):
+        """
+        Returns whether the current state of the game is a stalemate
+
+        :return: logical value whether the current state of the game is a stalemate
+        """
+
+        if self.is_king_targeted(self.get_current_player()):
+            return False
+
+        for i in self._current_player.get_pieces_on_board():
+
+            steps = self.get_possible_steps(i.get_piece_x(), i.get_piece_y())
+
+            if i.get_piece_type() != PieceType.KING:
+                if len(steps) != 0 and not self.__cause_king_to_be_targeted(i, steps[0]):
+                    return False
+            else:
+                if len(steps) != 0:
+                    return False
+
+        return True
+
     def contains_start_cell(self, lst, target):
         """
         Returns the correct tuple if the list contains the target,
@@ -361,6 +338,16 @@ class Game:
                 return i
         return None
 
+    def promote_pawn(self, cell, p_type):
+        """
+        Promotes a pawn to the selected piece type
+
+        :param cell: the cell of the pawn
+        :param p_type: the type to promote to
+        """
+        piece = cell.get_piece()
+        piece.set_piece_type(p_type)
+
     @staticmethod
     def get_index_of_item(lst, item):
         """
@@ -376,4 +363,14 @@ class Game:
                 return i
         return -1
 
-
+    def __add_to_player_pieces(self):
+        """
+        Adds the pieces on board to the corresponding player's owned pieces list
+        """
+        for i in range(0, 8):
+            for j in range(0, 8):
+                this_piece = self._board.get_board()[i][j].get_piece()
+                if this_piece.get_direction() == self._white_player.get_direction():
+                    self._white_player.add_to_pieces_on_board(this_piece)
+                elif this_piece.get_direction() == self._black_player.get_direction():
+                    self._black_player.add_to_pieces_on_board(this_piece)

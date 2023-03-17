@@ -10,13 +10,13 @@ class TestGame(unittest.TestCase):
 
         game = Game()
 
-        self.assertEqual(game.get_current_player(), game.get_white_player())
+        self.assertEqual(game.get_white_player(), game.get_current_player())
 
         game.change_current_player()
-        self.assertEqual(game.get_current_player(), game.get_black_player())
+        self.assertEqual(game.get_black_player(), game.get_current_player())
 
         game.change_current_player()
-        self.assertEqual(game.get_current_player(), game.get_white_player())
+        self.assertEqual(game.get_white_player(), game.get_current_player())
 
     def test_move_piece_with_normal_move(self):
 
@@ -33,12 +33,12 @@ class TestGame(unittest.TestCase):
         game.move_piece(cell_to_move_from, cell_to_move_to)
 
         self.assertEqual(piece, cell_to_move_to.get_piece())
-        self.assertEqual(game.get_board(), TestTables.table_for_game_test_one)
+        self.assertEqual(TestTables.table_for_game_test_one, game.get_board())
 
         self.assertFalse(piece.get_is_first_step())
 
-        self.assertEqual(cell_to_move_to.get_piece().get_piece_x(), 4)
-        self.assertEqual(cell_to_move_to.get_piece().get_piece_y(), 0)
+        self.assertEqual(4, cell_to_move_to.get_piece().get_piece_x())
+        self.assertEqual(0, cell_to_move_to.get_piece().get_piece_y())
 
     def test_move_piece_in_case_of_castling(self):
 
@@ -55,17 +55,17 @@ class TestGame(unittest.TestCase):
         game.get_possible_steps(7, 4)
         game.move_piece(cell_to_move_from, cell_to_move_to)
 
-        self.assertEqual(rook_start_cell.get_piece().get_piece_type(), PieceType.NO_TYPE)
-        self.assertEqual(rook_start_cell.get_piece().get_direction(), 0)
+        self.assertEqual(PieceType.NO_TYPE, rook_start_cell.get_piece().get_piece_type())
+        self.assertEqual(0, rook_start_cell.get_piece().get_direction())
 
-        self.assertEqual(cell_to_move_from.get_piece().get_piece_type(), PieceType.NO_TYPE)
-        self.assertEqual(cell_to_move_from.get_piece().get_direction(), 0)
+        self.assertEqual(PieceType.NO_TYPE, cell_to_move_from.get_piece().get_piece_type())
+        self.assertEqual(0, cell_to_move_from.get_piece().get_direction())
 
-        self.assertEqual(cell_to_move_to.get_piece(), piece)
+        self.assertEqual(piece, cell_to_move_to.get_piece())
 
-        self.assertEqual(game.get_board_table()[7][3].get_piece(), rook)
+        self.assertEqual(rook, game.get_board_table()[7][3].get_piece())
 
-        self.assertEqual(game.get_board(), TestTables.table2_for_game_test_castling)
+        self.assertEqual(TestTables.table2_for_game_test_castling, game.get_board())
 
     def test_move_piece_in_case_target_cell_is_occupied(self):
 
@@ -82,14 +82,14 @@ class TestGame(unittest.TestCase):
         game.get_possible_steps(4, 0)
         game.move_piece(cell_to_move_from, cell_to_move_to)
 
-        self.assertEqual(cell_to_move_from.get_piece().get_piece_type(), PieceType.NO_TYPE)
-        self.assertEqual(cell_to_move_from.get_piece().get_direction(), 0)
+        self.assertEqual(PieceType.NO_TYPE, cell_to_move_from.get_piece().get_piece_type())
+        self.assertEqual(0, cell_to_move_from.get_piece().get_direction())
 
         self.assertTrue(target_piece not in game.get_current_player().get_pieces_on_board())
 
-        self.assertEqual(cell_to_move_to.get_piece(), piece)
+        self.assertEqual(piece, cell_to_move_to.get_piece())
 
-        self.assertEqual(game.get_board(), TestTables.table2_for_game_test_when_target_cell_is_occupied)
+        self.assertEqual(TestTables.table2_for_game_test_when_target_cell_is_occupied, game.get_board())
 
     def test_move_piece_in_case_of_en_passant(self):
 
@@ -106,7 +106,7 @@ class TestGame(unittest.TestCase):
 
         game.move_piece(game.get_board_table()[1][1], enemy_pawn_cell)
 
-        self.assertEqual(game.get_last_step(), enemy_pawn_cell)
+        self.assertEqual(enemy_pawn_cell, game.get_last_step())
 
         target_piece = enemy_pawn_cell.get_piece()
 
@@ -114,15 +114,15 @@ class TestGame(unittest.TestCase):
 
         game.move_piece(cell_to_move_from, cell_to_move_to)
 
-        self.assertEqual(game.get_board(), TestTables.table2_for_game_test_in_case_of_en_passant_step)
+        self.assertEqual(TestTables.table2_for_game_test_in_case_of_en_passant_step, game.get_board())
 
-        self.assertEqual(enemy_pawn_cell.get_piece().get_piece_type(), PieceType.NO_TYPE)
-        self.assertEqual(enemy_pawn_cell.get_piece().get_direction(), 0)
+        self.assertEqual(PieceType.NO_TYPE, enemy_pawn_cell.get_piece().get_piece_type())
+        self.assertEqual(0, enemy_pawn_cell.get_piece().get_direction())
 
-        self.assertEqual(cell_to_move_to.get_piece(), piece)
+        self.assertEqual(piece, cell_to_move_to.get_piece())
 
-        self.assertEqual(cell_to_move_from.get_piece().get_piece_type(), PieceType.NO_TYPE)
-        self.assertEqual(cell_to_move_from.get_piece().get_direction(), 0)
+        self.assertEqual(PieceType.NO_TYPE, cell_to_move_from.get_piece().get_piece_type())
+        self.assertEqual(0, cell_to_move_from.get_piece().get_direction())
 
         self.assertTrue(target_piece not in game.get_current_player().get_pieces_on_board())
 
@@ -135,11 +135,11 @@ class TestGame(unittest.TestCase):
 
         game.move_piece(game.get_board_table()[1][0], cell_to_move_to)
 
-        self.assertEqual(cell_to_move_to.get_piece().get_piece_type(), PieceType.PAWN)
+        self.assertEqual(PieceType.PAWN, cell_to_move_to.get_piece().get_piece_type())
 
         game.promote_pawn(cell_to_move_to, PieceType.QUEEN)
 
-        self.assertEqual(cell_to_move_to.get_piece().get_piece_type(), PieceType.QUEEN)
+        self.assertEqual(PieceType.QUEEN, cell_to_move_to.get_piece().get_piece_type())
 
     def test_is_king_targeted(self):
 
@@ -156,12 +156,12 @@ class TestGame(unittest.TestCase):
         game = Game(TestTables.table_for_game_test_filter_wrong_moves)
         moves = game.filter_wrong_moves(6, 4)
 
-        self.assertEqual(moves, [])
+        self.assertEqual([], moves)
 
         game2 = Game(TestTables.table2_for_game_test_filter_wrong_moves)
         moves = game2.filter_wrong_moves(6, 5)
 
-        self.assertEqual(moves, [game2.get_board_table()[5][5], game2.get_board_table()[4][5]])
+        self.assertEqual([game2.get_board_table()[5][5], game2.get_board_table()[4][5]], moves)
 
     def test_get_possible_steps(self):
 
@@ -171,7 +171,7 @@ class TestGame(unittest.TestCase):
 
         moves = game.get_possible_steps(1, 0)
 
-        self.assertEqual(moves, [game.get_board_table()[2][0], game.get_board_table()[3][0]])
+        self.assertEqual([game.get_board_table()[2][0], game.get_board_table()[3][0]], moves)
 
     def test_is_stalemate_when_king_is_targeted(self):
 
@@ -201,7 +201,7 @@ class TestGame(unittest.TestCase):
 
         game = Game(TestTables.table_for_steps_if_king_is_targeted)
 
-        self.assertEqual(game.steps_if_king_is_targeted(), [])
+        self.assertEqual([], game.steps_if_king_is_targeted())
 
     def test_steps_if_king_is_targeted_and_no_checkmate(self):
 
@@ -213,7 +213,7 @@ class TestGame(unittest.TestCase):
 
         steps = game.steps_if_king_is_targeted()
 
-        self.assertEqual(steps, expected_steps)
+        self.assertEqual(expected_steps, steps)
 
     def test_contains_start_cell_when_cell_contains_it(self):
 
@@ -221,8 +221,8 @@ class TestGame(unittest.TestCase):
 
         steps = game.steps_if_king_is_targeted()
 
-        self.assertEqual(game.contains_start_cell(steps, game.get_board_table()[7][5]),
-                         (game.get_board_table()[7][5], [game.get_board_table()[5][7]]))
+        self.assertEqual((game.get_board_table()[7][5], [game.get_board_table()[5][7]]),
+                         game.contains_start_cell(steps, game.get_board_table()[7][5]))
 
     def test_contains_start_cell_when_cell_does_not_contain_it(self):
 
@@ -253,6 +253,7 @@ class TestGame(unittest.TestCase):
         expected_index = -1
 
         self.assertEqual(expected_index, index)
+
 
 if __name__ == "__main__":
     unittest.main()

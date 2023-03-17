@@ -6,7 +6,9 @@ from model.piece import Piece
 from model.piece_type import PieceType
 from model.board import Board
 
+
 def main():
+    # Main class is just for testing
     game = Game(model.tests.test_tables.TestTables.table_for_game_test_castling)
     board = game.get_board()
     table = game.get_board_table()
@@ -17,6 +19,7 @@ def main():
     game.get_possible_steps(7, 4)
     game.move_piece(game.get_board_table()[7][4], game.get_board_table()[7][2])
     board.print_board()
+
 
 if __name__ == "__main__":
     main()

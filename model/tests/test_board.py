@@ -9,7 +9,7 @@ class TestBoard(unittest.TestCase):
 
     def test_fill_board(self):
 
-        sample_board = [[Cell(Piece(0, 0, PieceType.ROOK, -1)), Cell(Piece(0, 1, PieceType.KNIGHT, -1)),
+        expected_board = [[Cell(Piece(0, 0, PieceType.ROOK, -1)), Cell(Piece(0, 1, PieceType.KNIGHT, -1)),
                          Cell(Piece(0, 2, PieceType.BISHOP, -1)), Cell(Piece(0, 3, PieceType.QUEEN, -1)),
                          Cell(Piece(0, 4, PieceType.KING, -1)), Cell(Piece(0, 5, PieceType.BISHOP, -1)),
                          Cell(Piece(0, 6, PieceType.KNIGHT, -1)), Cell(Piece(0, 7, PieceType.ROOK, -1))],
@@ -51,7 +51,7 @@ class TestBoard(unittest.TestCase):
 
         test_board = Board()
 
-        self.assertEqual(sample_board, test_board)
+        self.assertEqual(expected_board, test_board)
 
 
 if __name__ == "__main__":
