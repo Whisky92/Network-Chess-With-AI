@@ -17,7 +17,7 @@ class GameWindow(QDialog):
         loadUi("resource_ui_files/game.ui", self)
 
         self.widget = widget
-        self.game = Game(model.tests.test_tables.TestTables.table_for_possible_queen_steps)
+        self.game = Game()
 
         self._boardWidget: QWidget = self.gameBoard
         self._board: QGridLayout = self.gameLayout
