@@ -5,6 +5,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
 from PyQt5.QtWidgets import QApplication, QDialog, QPushButton
 from game_window import GameWindow
+from online_play_controller import MultiPlayerMenu
 
 
 class MainWindow(QDialog):
@@ -14,9 +15,12 @@ class MainWindow(QDialog):
         loadUi("resource_ui_files/main_menu.ui", self)
 
         self.local_pvp_button = self.findChild(QPushButton, "localPlayerVsPlayerButton")
+        self.online_pvp_button = self.findChild(QPushButton, "onlinePlayerVsPlayerButton")
 
         self.local_pvp_button.clicked.connect(self.play_local_pvp)
         self.local_pvp_button.resizeEvent = self.resizeText
+
+        self.online_pvp_button.clicked.connect(self.play_online_pvp)
 
     def play_local_pvp(self):
         """
@@ -26,6 +30,16 @@ class MainWindow(QDialog):
         screen = PlayerOneNameChoose()
         widget.addWidget(screen)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+    def play_online_pvp(self):
+        """
+        The actions to be done in case the online pvp button was pressed
+        """
+
+        screen = MultiPlayerMenu(widget)
+        widget.addWidget(screen)
+        widget.setCurrentIndex(widget.currentIndex() + 1)
+
 
     def resizeText(self, event: QEvent):
         """
