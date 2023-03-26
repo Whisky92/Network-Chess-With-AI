@@ -11,3 +11,6 @@ Sources I used as samples, and references for my project, and borrowed ideas fro
 - https://www.qtcentre.org/threads/2351-Transparent-TextEdit-or-Widget
 - https://doc.qt.io/qtforpython-5/PySide2/QtWidgets/QStackedLayout.html
 - https://learndataanalysis.org/how-to-resize-qpushbutton-text-when-resizing-window-pyqt5-tutorial/
+- https://youtube.com/playlist?list=PLzMcBGfZo4-kR7Rh-7JCVDN8lm3Utumvq
+- https://stackoverflow.com/questions/36281103/change-checkbox-state-to-not-checked-when-other-checkbox-is-checked-pyqt
+- https://betterprogramming.pub/how-to-poll-sockets-using-python-3e1af3b047

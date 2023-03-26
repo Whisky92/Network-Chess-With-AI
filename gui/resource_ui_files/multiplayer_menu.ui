@@ -24,7 +24,23 @@
 	background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #e6a163, stop: 1 #b5651d);
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout" rowstretch="10,7,2,7,0,1" columnstretch="3,4,3">
+  <layout class="QGridLayout" name="gridLayout" rowstretch="10,5,1,5,0,1,5" columnstretch="3,4,3">
+   <item row="3" column="1">
+    <widget class="QPushButton" name="joinByIpButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
+     </property>
+     <property name="text">
+      <string>Join By IPv4</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0" colspan="3">
     <widget class="QLabel" name="label_3">
      <property name="sizePolicy">
@@ -44,6 +60,22 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="1">
+    <widget class="QPushButton" name="hostButton">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
+     </property>
+     <property name="text">
+      <string>Host A Game</string>
+     </property>
+    </widget>
+   </item>
    <item row="5" column="1">
     <spacer name="verticalSpacer">
      <property name="orientation">
@@ -57,29 +89,26 @@
      </property>
     </spacer>
    </item>
-   <item row="1" column="0" rowspan="3">
-    <widget class="QLabel" name="label_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+   <item row="2" column="1">
+    <spacer name="verticalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <property name="text">
-      <string/>
+     <property name="sizeType">
+      <enum>QSizePolicy::Ignored</enum>
      </property>
-     <property name="pixmap">
-      <pixmap>../resource_images/w_pawn.png</pixmap>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>40</height>
+      </size>
      </property>
-     <property name="scaledContents">
-      <bool>true</bool>
-     </property>
-    </widget>
+    </spacer>
    </item>
-   <item row="1" column="1">
-    <widget class="QPushButton" name="hostButton">
+   <item row="6" column="1">
+    <widget class="QPushButton" name="backButton">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -88,11 +117,11 @@
       <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
      </property>
      <property name="text">
-      <string>Host A Game</string>
+      <string>Back</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="2" rowspan="3">
+   <item row="1" column="2" rowspan="6">
     <widget class="QLabel" name="label_4">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
@@ -111,37 +140,24 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QPushButton" name="joinByIpButton">
+   <item row="1" column="0" rowspan="6">
+    <widget class="QLabel" name="label_2">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
-     </property>
      <property name="text">
-      <string>Join By IPv4</string>
+      <string/>
+     </property>
+     <property name="pixmap">
+      <pixmap>../resource_images/w_pawn.png</pixmap>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
      </property>
     </widget>
-   </item>
-   <item row="2" column="1">
-    <spacer name="verticalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Ignored</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>20</width>
-       <height>40</height>
-      </size>
-     </property>
-    </spacer>
    </item>
   </layout>
  </widget>
