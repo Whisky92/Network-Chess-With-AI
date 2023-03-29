@@ -187,26 +187,28 @@ class ReadyMenu(QDialog):
 
         super(ReadyMenu, self).__init__()
         loadUi("resource_ui_files/ready_menu.ui", self)
-        self.p1_checkbox = self.findChild(QCheckBox, "player1_cb")
+        self.p1_checkbox: QCheckBox = self.findChild(QCheckBox, "player1_cb")
         self.p1_checkbox.setText(players[0])
 
         self.p2_checkbox: QCheckBox = self.findChild(QCheckBox, "player2_cb")
 
         if players[1] != "":
             current_player = "p2"
+            owned_checkbox = self.p2_checkbox
+            not_owned_checkbox = self.p1_checkbox
+            not_owned_checkbox.setDisabled(True)
             self.p2_checkbox.setText(players[1])
+            server_network.connect()
+            start_new_thread(self.check_ready, (owned_checkbox, not_owned_checkbox))
         else:
             current_player = "p1"
+            owned_checkbox = self.p1_checkbox
+            not_owned_checkbox = self.p2_checkbox
+            not_owned_checkbox.setDisabled(True)
             print("megyenget")
-            start_new_thread(self.wait_for_other_player, ())
+            start_new_thread(self.wait_for_other_player, (owned_checkbox, not_owned_checkbox))
 
-        not_owned_checkbox = self.p2_checkbox if current_player == "p1" else self.p1_checkbox
-        not_owned_checkbox.setDisabled(True)
-
-        owned_checkbox = self.p1_checkbox if not_owned_checkbox == self.p2_checkbox else self.p1_checkbox
-        owned_checkbox.clicked.connect(lambda: self.on_click(not_owned_checkbox))
-
-    def wait_for_other_player(self):
+    def wait_for_other_player(self, owned_checkbox, not_owned_checkbox):
         while True:
             try:
                 sleep(1)
@@ -221,12 +223,22 @@ class ReadyMenu(QDialog):
 
             except:
                 break
+        self.check_ready(owned_checkbox, not_owned_checkbox)
 
-    @QtCore.pyqtSlot()
-    def on_click(self, not_owned_checkbox):
-        print(self.sender().isChecked())
-        is_enemy_ready = server_network.send_object(MyString(self.sender().isChecked()))
-        not_owned_checkbox.setChecked(is_enemy_ready)
+    def check_ready(self, owned_checkbox, not_owned_checkbox):
+        while True:
+            try:
+                sleep(0.5)
+
+                state = "checked" if owned_checkbox.isChecked() else "unchecked"
+                print(state)
+                arr = server_network.send_object(MyString(state)).get_string()
+                box_checked = True if arr == "checked" else False
+                not_owned_checkbox.setChecked(box_checked)
+                not_owned_checkbox.update()
+            except:
+                break
+
 
 
 

@@ -27,7 +27,6 @@ def start_server():
     s.listen(2)
 
     def threaded_client(conn, index):
-
         conn.send(pickle.dumps(True))
         while True:
             try:
@@ -35,15 +34,14 @@ def start_server():
                 print(data)
                 if not data:
                     continue
-                #elif type(data) == bool:
-                 #   print("jesz")
-                  #  if conn == connections[0]:
-                   #     conn.send(pickle.dumps(ready_boxes[1]))
-                    #    ready_boxes[0] = data
-                    #else:
-                     #   conn.send(pickle.dumps(ready_boxes[0]))
-                      #  ready_boxes[1] = data
-
+                elif type(data) == MyString and data.get_string() in ["checked", "unchecked"]:
+                    if conn == connections[0]:
+                        ready_boxes[0] = data.get_string()
+                        conn.send(pickle.dumps(MyString(ready_boxes[1])))
+                        print(connections[0], connections[1], "hmm")
+                    else:
+                        ready_boxes[1] = data.get_string()
+                        conn.send(pickle.dumps(MyString(ready_boxes[0])))
                 elif type(data) == MyString and data.get_string() == "wait":
                     print("ez ilyen")
                     conn.send(pickle.dumps(player_names))
@@ -61,6 +59,7 @@ def start_server():
             except:
                 break
         conn.close()
+        connections.remove(conn)
 
     while True:
         conn, addr = s.accept()
