@@ -1,6 +1,7 @@
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QFont
 from PyQt5 import QtWidgets
+from PyQt5 import QtCore
 from PyQt5.QtCore import QEvent, QEventLoop, QTimer, pyqtSlot
 from PyQt5.QtWidgets import QApplication, QDialog, QPushButton, QCheckBox
 import network.server as server
@@ -191,13 +192,19 @@ class ReadyMenu(QDialog):
 
         self.p2_checkbox: QCheckBox = self.findChild(QCheckBox, "player2_cb")
 
-        self.p1_checkbox.clicked.connect(self.on_click)
-
         if players[1] != "":
+            current_player = "p2"
             self.p2_checkbox.setText(players[1])
         else:
+            current_player = "p1"
             print("megyenget")
             start_new_thread(self.wait_for_other_player, ())
+
+        not_owned_checkbox = self.p2_checkbox if current_player == "p1" else self.p1_checkbox
+        not_owned_checkbox.setDisabled(True)
+
+        owned_checkbox = self.p1_checkbox if not_owned_checkbox == self.p2_checkbox else self.p1_checkbox
+        owned_checkbox.clicked.connect(lambda: self.on_click(not_owned_checkbox))
 
     def wait_for_other_player(self):
         while True:
@@ -215,11 +222,12 @@ class ReadyMenu(QDialog):
             except:
                 break
 
-    @pyqtSlot()
-    def on_click(self):
+    @QtCore.pyqtSlot()
+    def on_click(self, not_owned_checkbox):
+        print(self.sender().isChecked())
+        is_enemy_ready = server_network.send_object(MyString(self.sender().isChecked()))
+        not_owned_checkbox.setChecked(is_enemy_ready)
 
-        self.p1_checkbox.setChecked(False)
 
-    def p2_join(self, p2_name):
-        self.p2_checkbox.setText(p2_name)
+
 

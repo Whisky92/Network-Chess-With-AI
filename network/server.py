@@ -12,6 +12,7 @@ def start_server():
     ip = "0.0.0.0"
     port = 5555
 
+    ready_boxes = [False, False]
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     connections = []
 
@@ -34,6 +35,15 @@ def start_server():
                 print(data)
                 if not data:
                     continue
+                #elif type(data) == bool:
+                 #   print("jesz")
+                  #  if conn == connections[0]:
+                   #     conn.send(pickle.dumps(ready_boxes[1]))
+                    #    ready_boxes[0] = data
+                    #else:
+                     #   conn.send(pickle.dumps(ready_boxes[0]))
+                      #  ready_boxes[1] = data
+
                 elif type(data) == MyString and data.get_string() == "wait":
                     print("ez ilyen")
                     conn.send(pickle.dumps(player_names))
