@@ -17,6 +17,7 @@ def start_server():
     connections = []
 
     player_names = ["", ""]
+    ready_to_play = ["no"]
     index = 0
 
     try:
@@ -45,6 +46,11 @@ def start_server():
                 elif type(data) == MyString and data.get_string() == "wait":
                     print("ez ilyen")
                     conn.send(pickle.dumps(player_names))
+                elif type(data) == MyString and data.get_string() == "start_game":
+                    conn.send(pickle.dumps(MyString(ready_to_play[0])))
+                elif type(data) == MyString and data.get_string() == "ready":
+                    ready_to_play[0] = "yes"
+                    conn.send(pickle.dumps(MyString("OK")))
                 elif type(data) == MyString:
                     index_to_check = 0 if index == 1 else 1
                     other_player_name = player_names[index_to_check]
