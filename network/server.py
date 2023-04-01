@@ -3,6 +3,7 @@ from _thread import *
 from network.network_messages import NetworkMessages
 import pickle
 from network.my_string import MyString
+from gui.game_window import GameWindow
 
 def start_server():
 
@@ -18,6 +19,8 @@ def start_server():
 
     player_names = ["", ""]
     ready_to_play = ["no"]
+    rolled_players = ["", ""]
+
     index = 0
 
     try:
@@ -48,6 +51,8 @@ def start_server():
                     conn.send(pickle.dumps(player_names))
                 elif type(data) == MyString and data.get_string() == "start_game":
                     conn.send(pickle.dumps(MyString(ready_to_play[0])))
+                elif type(data) == MyString and data.get_string() == "get_rolls":
+                    conn.send(pickle.dumps(rolled_players))
                 elif type(data) == MyString and data.get_string() == "ready":
                     ready_to_play[0] = "yes"
                     conn.send(pickle.dumps(MyString("OK")))
@@ -59,6 +64,14 @@ def start_server():
 
                     if correct:
                         player_names[index] = data.get_string()
+
+                    if index == 1:
+
+                        first = GameWindow.get_first_player(player_names[0], player_names[1])
+                        second = player_names[0] if first != player_names[0] else player_names[1]
+
+                        rolled_players[0] = first
+                        rolled_players[1] = second
 
                     print(player_names)
                     conn.send(pickle.dumps(player_names))

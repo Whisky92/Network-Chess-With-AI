@@ -186,6 +186,7 @@ class IpChooseMenu(QDialog):
 
 class ReadyMenu(QDialog):
 
+    rolled_players = []
     socketSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, widget, players):
@@ -205,6 +206,8 @@ class ReadyMenu(QDialog):
         self.socketSignal.connect(self.change_for_second_player)
 
         self.stop = False
+
+        self.rolls = ["", ""]
 
         if players[1] != "":
             current_player = "p2"
@@ -237,7 +240,8 @@ class ReadyMenu(QDialog):
             self.start()
 
     def start(self):
-        screen = GameWindow(self.widget, self.players[0], self.players[1])
+
+        screen = GameWindow(self.widget, self.rolls[0], self.rolls[1], False)
         self.widget.addWidget(screen)
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 
@@ -259,6 +263,10 @@ class ReadyMenu(QDialog):
         return self.check_ready(owned_checkbox, not_owned_checkbox)
 
     def check_ready(self, owned_checkbox, not_owned_checkbox):
+        server_network.connect()
+        rolls = server_network.send_object(MyString("get_rolls"))
+        self.rolls[0] = rolls[0]
+        self.rolls[1] = rolls[1]
         while True:
             try:
                 sleep(0.5)

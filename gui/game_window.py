@@ -11,7 +11,7 @@ from message_box import MessageBox
 
 
 class GameWindow(QDialog):
-    def __init__(self, widget, player_1_name, player_2_name):
+    def __init__(self, widget, player_1_name, player_2_name, yet_to_decide):
 
         super(GameWindow, self).__init__()
         loadUi("resource_ui_files/game.ui", self)
@@ -22,7 +22,7 @@ class GameWindow(QDialog):
         self._boardWidget: QWidget = self.gameBoard
         self._board: QGridLayout = self.gameLayout
 
-        self.__fill_name_labels(player_1_name, player_2_name)
+        self.__fill_name_labels(player_1_name, player_2_name, yet_to_decide)
         self.__fill_board()
 
         self._colored_cells = []
@@ -52,14 +52,15 @@ class GameWindow(QDialog):
 
         self._step_progress = 1
 
-    def __fill_name_labels(self, player_1_name, player_2_name):
+    def __fill_name_labels(self, player_1_name, player_2_name, yet_to_decide):
         """
         Fills the name labels with the appropriate player's name
 
         :param player_1_name: the name of the 1'st player
         :param player_2_name: the name of the 2'nd player
         """
-        if GameWindow.__get_first_player(player_1_name, player_2_name) == player_1_name:
+
+        if (GameWindow.get_first_player(player_1_name, player_2_name) == player_1_name) or (not yet_to_decide):
             self.player1Name.setText(player_1_name)
             self.player2Name.setText(player_2_name)
         else:
@@ -110,7 +111,7 @@ class GameWindow(QDialog):
                     item.setPixmap(pixmap)
 
     @staticmethod
-    def __get_first_player(player_1_name, player_2_name):
+    def get_first_player(player_1_name, player_2_name):
         """
         Rolls the first player between player1 and player2
 

@@ -141,7 +141,7 @@ class PlayerTwoNameChoose(QDialog):
 
         if text != "" and player_1_name != text:
 
-            screen = GameWindow(widget, player_1_name, text)
+            screen = GameWindow(widget, player_1_name, text, True)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")
