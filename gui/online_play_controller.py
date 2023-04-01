@@ -13,6 +13,7 @@ from time import sleep
 from network.network_messages import NetworkMessages
 from network.my_string import MyString
 from gui.game_window import GameWindow
+import threading
 
 server_network = Network("localhost")
 
@@ -184,6 +185,9 @@ class IpChooseMenu(QDialog):
 
 
 class ReadyMenu(QDialog):
+
+    socketSignal = QtCore.pyqtSignal(object)
+
     def __init__(self, widget, players):
 
         super(ReadyMenu, self).__init__()
@@ -195,6 +199,11 @@ class ReadyMenu(QDialog):
 
         self.submit_btn = self.findChild(QPushButton, "submitButton")
 
+        self.widget = widget
+        self.players = players
+
+        self.socketSignal.connect(self.change_for_second_player)
+
         self.stop = False
 
         if players[1] != "":
@@ -203,32 +212,36 @@ class ReadyMenu(QDialog):
             not_owned_checkbox = self.p1_checkbox
             not_owned_checkbox.setDisabled(True)
             self.p2_checkbox.setText(players[1])
+            self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             server_network.connect()
-            start_new_thread(self.check_ready, (owned_checkbox, not_owned_checkbox))
+            thread = threading.Thread(target=self.check_ready, args=(owned_checkbox, not_owned_checkbox), daemon=True)
+            thread.start()
+
         else:
             current_player = "p1"
             owned_checkbox = self.p1_checkbox
             not_owned_checkbox = self.p2_checkbox
             not_owned_checkbox.setDisabled(True)
+            self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             print("megyenget")
-            start_new_thread(self.wait_for_other_player, (owned_checkbox, not_owned_checkbox, widget, players))
+            start_new_thread(self.wait_for_other_player, (owned_checkbox, not_owned_checkbox))
 
-        self.submit_btn.clicked.connect(lambda: self.start_game(widget, players, current_player))
+    def change_for_second_player(self, value):
+        self.start()
 
-    def start_game(self, widget, players, current_player):
+    def start_game(self, current_player):
         if current_player == "p1" and self.p1_checkbox.isChecked() and self.p2_checkbox.isChecked():
             print("asdasdasdasdads")
             server_network.send_object(MyString("ready"))
             self.stop = True
-            self.start(widget, players)
+            self.start()
 
-    def start(self, widget, players):
-        sleep(2)
-        screen = GameWindow(widget, players[0], players[1])
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+    def start(self):
+        screen = GameWindow(self.widget, self.players[0], self.players[1])
+        self.widget.addWidget(screen)
+        self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 
-    def wait_for_other_player(self, owned_checkbox, not_owned_checkbox, widget, players):
+    def wait_for_other_player(self, owned_checkbox, not_owned_checkbox):
         while True:
             try:
                 sleep(1)
@@ -243,9 +256,9 @@ class ReadyMenu(QDialog):
 
             except:
                 break
-        return self.check_ready(owned_checkbox, not_owned_checkbox, widget, players)
+        return self.check_ready(owned_checkbox, not_owned_checkbox)
 
-    def check_ready(self, owned_checkbox, not_owned_checkbox, widget, players):
+    def check_ready(self, owned_checkbox, not_owned_checkbox):
         while True:
             try:
                 sleep(0.5)
@@ -255,18 +268,20 @@ class ReadyMenu(QDialog):
                 state = "checked" if owned_checkbox.isChecked() else "unchecked"
                 print(state)
                 arr = server_network.send_object(MyString(state)).get_string()
+                box_checked = True if arr == "checked" else False
+                not_owned_checkbox.setChecked(box_checked)
+                not_owned_checkbox.update()
 
                 sleep(0.5)
                 if owned_checkbox == self.p2_checkbox:
                     arr2 = server_network.send_object(MyString("start_game")).get_string()
                     if arr2 == "yes":
-                        start_new_thread(self.start, (widget, players))
-                        return
-                box_checked = True if arr == "checked" else False
-                not_owned_checkbox.setChecked(box_checked)
-                not_owned_checkbox.update()
+                        print("halóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóó")
+                        self.socketSignal.emit("asdd")
+                        break
             except:
                 break
+        return
 
 
 
