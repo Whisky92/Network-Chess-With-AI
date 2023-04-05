@@ -8,6 +8,7 @@ from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
 from message_box import MessageBox
+from clickable_label import ClickableLabel
 
 
 class GameWindow(QDialog):
@@ -19,20 +20,23 @@ class GameWindow(QDialog):
         self.widget = widget
         self.game = Game()
 
-        self._boardWidget: QWidget = self.gameBoard
-        self._board: QGridLayout = self.gameLayout
+        self.boardWidget: QWidget = self.gameBoard
+        self.board: QGridLayout = self.gameLayout
 
         self.__fill_name_labels(player_1_name, player_2_name, yet_to_decide)
-        self.__fill_board()
+        self.fill_board()
 
-        self._colored_cells = []
-        self._current_piece = None
+        self.colored_cells = []
+        self.current_piece = None
 
         self.player1Name: QLabel
         self.player2Name: QLabel
 
-        self._player_1_current_capture_cell = 0
-        self._player_2_current_capture_cell = 0
+        self.player_1_current_capture_cell = 0
+        self.player_2_current_capture_cell = 0
+
+        self.current_step_cells = []
+        self.step_was_made = False
 
         self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text()))
         self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text()))
@@ -50,7 +54,7 @@ class GameWindow(QDialog):
                                                                                               self.player2Name.text()))
         self.player1Name.resizeEvent = self.resizeText
 
-        self._step_progress = 1
+        self.step_progress = 1
 
     def __fill_name_labels(self, player_1_name, player_2_name, yet_to_decide):
         """
@@ -67,7 +71,7 @@ class GameWindow(QDialog):
             self.player1Name.setText(player_2_name)
             self.player2Name.setText(player_1_name)
 
-    def __fill_board(self):
+    def fill_board(self):
         """
         Fills the game board with piece images
         """
@@ -75,10 +79,11 @@ class GameWindow(QDialog):
         for i in range(0, 8):
             for j in range(0, 8):
 
-                item = self._board.itemAtPosition(i, j).widget()
+                item = self.board.itemAtPosition(i, j).widget()
+                print(type(item))
                 cell_type = self.game.get_board_table()[i][j].get_piece().get_piece_type()
                 direction = self.game.get_board_table()[i][j].get_piece().get_direction()
-                item.clicked.connect(self.__make_step)
+                item.clicked.connect(self.make_step)
 
                 pixmap = None
 
@@ -124,17 +129,17 @@ class GameWindow(QDialog):
         return random.choice(names)
 
     @QtCore.pyqtSlot()
-    def __make_step(self):
+    def make_step(self):
         """
         Moves the selected piece to the desired cell, if it is possible
         """
         target = self.sender()
 
-        pos = self._board.getItemPosition(self._board.indexOf(target))
+        pos = self.board.getItemPosition(self.board.indexOf(target))
         pos_x = pos[0]
         pos_y = pos[1]
 
-        if self._step_progress == 1:
+        if self.step_progress == 1:
             self.__if_step_progress_is_one(target, pos_x, pos_y)
 
         else:
@@ -147,7 +152,6 @@ class GameWindow(QDialog):
         :param target: the selected cell
         :param pos_x: the target's x coordinate
         :param pos_y: the target's y coordinate
-        :param cells: the markable cells
         """
 
         if self.__is_correct_position(pos_x, pos_y):
@@ -171,12 +175,12 @@ class GameWindow(QDialog):
 
             else:
                 self.__mark_possible_steps(self.game.filter_wrong_moves(pos_x, pos_y))
-            self._step_progress = 2
-            self._current_piece = target
+            self.step_progress = 2
+            self.current_piece = target
 
     def __if_step_progress_is_two(self, target, pos_x, pos_y):
         """
-        Does the necessary processes if 'self.step_progress' is 1
+        Does the necessary processes if 'self.step_progress' is 2
 
         :param target: the selected cell
         :param pos_x: the target's x coordinate
@@ -184,20 +188,14 @@ class GameWindow(QDialog):
         """
 
         if "background-color: #3F704D" in target.styleSheet():
-            start_pos = self._board.getItemPosition(self._board.indexOf(self._current_piece))
+            start_pos = self.board.getItemPosition(self.board.indexOf(self.current_piece))
 
             start_cell = self.game.get_board_table()[start_pos[0]][start_pos[1]]
             target_cell = self.game.get_board_table()[pos_x][pos_y]
 
-            if start_cell.get_piece().get_en_passant_step() is not None and target_cell == \
-                    start_cell.get_piece().get_en_passant_step():
-
-                self.__step_in_case_of_en_passant_step(start_cell, target_cell)
-            elif target_cell in self.game.get_castling_step():
-
-                self.__step_in_case_of_castling_step(start_cell, target_cell)
-
-            self.__normal_step(start_cell, target_cell, target)
+            self.make_move(start_pos[0], start_pos[1], pos_x, pos_y)
+            self.current_step_cells = [start_pos[0], start_pos[1], pos_x, pos_y]
+            self.step_was_made = True
 
             if target_cell.get_piece().get_direction() == 1:
                 enemy_border = 0
@@ -211,11 +209,26 @@ class GameWindow(QDialog):
 
             self.__check_game_ending_conditions()
 
-        self._step_progress = 1
+        self.step_progress = 1
 
-        for i in self._colored_cells:
+        for i in self.colored_cells:
             i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
-        self._colored_cells = []
+        self.colored_cells = []
+
+    def make_move(self, start_x, start_y, target_x, target_y):
+
+        start_cell = self.game.get_board_table()[start_x][start_y]
+        target_cell = self.game.get_board_table()[target_x][target_y]
+
+        if start_cell.get_piece().get_en_passant_step() is not None and target_cell == \
+                start_cell.get_piece().get_en_passant_step():
+
+            self.__step_in_case_of_en_passant_step(start_cell, target_cell)
+        elif target_cell in self.game.get_castling_step():
+
+            self.__step_in_case_of_castling_step(start_cell, target_cell)
+
+        self.__normal_step(start_x, start_y, target_x, target_y)
 
     def __step_in_case_of_en_passant_step(self, start_cell, target_cell):
         """
@@ -229,7 +242,7 @@ class GameWindow(QDialog):
         cell_to_capture_from_x = target_cell.get_piece().get_piece_x() + 1 \
                                  * start_cell.get_piece().get_direction()
 
-        cell_to_capture_from = self._board.itemAtPosition(cell_to_capture_from_x, cell_to_capture_from_y) \
+        cell_to_capture_from = self.board.itemAtPosition(cell_to_capture_from_x, cell_to_capture_from_y) \
             .widget()
 
         self.__capture(cell_to_capture_from.pixmap())
@@ -249,16 +262,16 @@ class GameWindow(QDialog):
         x = start_cell.get_piece().get_piece_x()
 
         rook_start_y = self.game.get_castling_rook()[index].get_piece().get_piece_y()
-        rook_start_pos = self._board.itemAtPosition(x, rook_start_y).widget()
+        rook_start_pos = self.board.itemAtPosition(x, rook_start_y).widget()
 
         rook_target_y = self.game.get_rook_target()[index].get_piece().get_piece_y()
-        rook_target_pos = self._board.itemAtPosition(x, rook_target_y).widget()
+        rook_target_pos = self.board.itemAtPosition(x, rook_target_y).widget()
 
         rook_target_pos.setPixmap(rook_start_pos.pixmap())
         rook_start_pos.clear()
         rook_start_pos.update()
 
-    def __normal_step(self, start_cell, target_cell, target):
+    def __normal_step(self, start_x, start_y, target_x, target_y):
         """
         Moves the target piece from the 'start_cell' to 'target_cell'
 
@@ -267,15 +280,24 @@ class GameWindow(QDialog):
         :param target: the target cell's representation in the GUI
         """
 
-        pixmap = self._current_piece.pixmap()
-        target_pixmap = target.pixmap()
+        start_cell = self.game.get_board_table()[start_x][start_y]
+        start_c = self.board.itemAtPosition(start_x, start_y).widget()
+
+        target_cell = self.game.get_board_table()[target_x][target_y]
+        target_c = self.board.itemAtPosition(target_x, target_y).widget()
+
+        print(start_c, "start_c")
+        print(target_c, "target_c")
+
+        start_pixmap = start_c.pixmap()
+        target_pixmap = target_c.pixmap()
 
         if target_pixmap is not None:
             self.__capture(target_pixmap)
 
-        target.setPixmap(pixmap)
-        self._current_piece.clear()
-        self._current_piece.update()
+        target_c.setPixmap(start_pixmap)
+        start_c.clear()
+        start_c.update()
 
         self.game.move_piece(start_cell, target_cell)
 
@@ -288,9 +310,9 @@ class GameWindow(QDialog):
             MessageBox.stalemate_message_box(self)
 
         if self.game.is_king_targeted(self.game.get_current_player()):
-            for i in self._colored_cells:
+            for i in self.colored_cells:
                 i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
-            self._colored_cells = []
+            self.colored_cells = []
 
             if len(self.game.steps_if_king_is_targeted()) == 0:
                 winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
@@ -312,16 +334,16 @@ class GameWindow(QDialog):
             self.player2CapturedPiecesLayout
 
         if target_board == self.player1CapturedPiecesLayout:
-            x_coord = self._player_1_current_capture_cell // 4
-            y_coord = self._player_1_current_capture_cell % 4
+            x_coord = self.player_1_current_capture_cell // 4
+            y_coord = self.player_1_current_capture_cell % 4
 
-            self._player_1_current_capture_cell += 1
+            self.player_1_current_capture_cell += 1
 
         else:
-            x_coord = self._player_2_current_capture_cell // 4
-            y_coord = self._player_2_current_capture_cell % 4
+            x_coord = self.player_2_current_capture_cell // 4
+            y_coord = self.player_2_current_capture_cell % 4
 
-            self._player_2_current_capture_cell += 1
+            self.player_2_current_capture_cell += 1
 
         item = target_board.itemAtPosition(x_coord, y_coord).widget()
         item.setPixmap(target_pixmap)
@@ -335,9 +357,9 @@ class GameWindow(QDialog):
 
         for i in cells:
             piece = i.get_piece()
-            item = self._board.itemAtPosition(piece.get_piece_x(), piece.get_piece_y()).widget()
+            item = self.board.itemAtPosition(piece.get_piece_x(), piece.get_piece_y()).widget()
             item.setStyleSheet(item.styleSheet() + "background-color: #3F704D")
-            self._colored_cells.append(item)
+            self.colored_cells.append(item)
 
     def __is_correct_position(self, pos_x, pos_y):
         """

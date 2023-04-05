@@ -47,7 +47,8 @@ class Board:
                                Cell(Piece(6, 4, PieceType.PAWN, 1)), Cell(Piece(6, 5, PieceType.PAWN, 1)),
                                Cell(Piece(6, 6, PieceType.PAWN, 1)), Cell(Piece(6, 7, PieceType.PAWN, 1))])
 
-
+    def set_board(self, board):
+        self._board = board
 
 
     def print_board(self):
@@ -58,8 +59,6 @@ class Board:
 
     def print_coords(self, piece):
             print(piece.get_piece_type(), piece.get_direction(), end=" ")
-
-
 
     def __eq__(self, other):
         for i in range(0, 8):

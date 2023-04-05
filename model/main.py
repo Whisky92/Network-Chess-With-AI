@@ -17,8 +17,12 @@ def main():
     game.get_possible_steps(7, 4)
     game.get_possible_steps(7, 4)
     game.get_possible_steps(7, 4)
+    game.move_piece(game.get_board_table()[1][0], game.get_board_table()[3][0])
     game.move_piece(game.get_board_table()[7][4], game.get_board_table()[7][2])
     board.print_board()
+    game.set_board(Board().get_board())
+    print("--------------------------")
+    game.get_board().print_board()
 
 
 if __name__ == "__main__":

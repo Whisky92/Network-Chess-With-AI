@@ -19,10 +19,10 @@ class Network:
         except:
             print("An error occurred in connection")
 
-    def send(self, string):
+    def send_board(self, board):
         try:
-            self.client.send(str.encode(string))
-            return pickle.loads(self.client.recv(4096))
+            self.client.send(pickle.dumps(board))
+            return pickle.loads(self.client.recv(4096*2))
         except socket.error as e:
             print(e)
 

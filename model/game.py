@@ -57,6 +57,7 @@ class Game:
     def get_last_step(self):
         return self._last_step
 
+
     def get_castling_step(self):
         return self._castling_step
 
@@ -71,6 +72,9 @@ class Game:
 
     def set_self_checkmate(self):
         self._self_checkmate = False
+
+    def set_board(self, board):
+        self._board.set_board(board)
 
     def filter_wrong_moves(self, x, y):
         """

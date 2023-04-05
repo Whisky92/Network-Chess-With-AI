@@ -13,6 +13,7 @@ from time import sleep
 from network.network_messages import NetworkMessages
 from network.my_string import MyString
 from gui.game_window import GameWindow
+from gui.network_game_window import NetworkGameWindow
 import threading
 
 server_network = Network("localhost")
@@ -211,23 +212,23 @@ class ReadyMenu(QDialog):
 
         if players[1] != "":
             current_player = "p2"
-            owned_checkbox = self.p2_checkbox
+            self.owned_checkbox = self.p2_checkbox
             not_owned_checkbox = self.p1_checkbox
             not_owned_checkbox.setDisabled(True)
             self.p2_checkbox.setText(players[1])
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             server_network.connect()
-            thread = threading.Thread(target=self.check_ready, args=(owned_checkbox, not_owned_checkbox), daemon=True)
+            thread = threading.Thread(target=self.check_ready, args=(self.owned_checkbox, not_owned_checkbox), daemon=True)
             thread.start()
 
         else:
             current_player = "p1"
-            owned_checkbox = self.p1_checkbox
+            self.owned_checkbox = self.p1_checkbox
             not_owned_checkbox = self.p2_checkbox
             not_owned_checkbox.setDisabled(True)
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             print("megyenget")
-            start_new_thread(self.wait_for_other_player, (owned_checkbox, not_owned_checkbox))
+            start_new_thread(self.wait_for_other_player, (self.owned_checkbox, not_owned_checkbox))
 
     def change_for_second_player(self, value):
         self.start()
@@ -241,7 +242,8 @@ class ReadyMenu(QDialog):
 
     def start(self):
 
-        screen = GameWindow(self.widget, self.rolls[0], self.rolls[1], False)
+        screen = NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
+                                   self.owned_checkbox.text(), False, server_network)
         self.widget.addWidget(screen)
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 
@@ -273,6 +275,7 @@ class ReadyMenu(QDialog):
                 print(self.stop)
                 if self.stop:
                     print("kiléépés")
+                    break
                 state = "checked" if owned_checkbox.isChecked() else "unchecked"
                 print(state)
                 arr = server_network.send_object(MyString(state)).get_string()
