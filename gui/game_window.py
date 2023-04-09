@@ -205,7 +205,7 @@ class GameWindow(QDialog):
             if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
                     target_cell.get_piece().get_piece_x() == enemy_border:
 
-                MessageBox.promote_message_box(self, target_cell, target)
+                self.promote_pawn(target_cell, target)
 
             self.__check_game_ending_conditions()
 
@@ -214,6 +214,9 @@ class GameWindow(QDialog):
         for i in self.colored_cells:
             i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
         self.colored_cells = []
+
+    def promote_pawn(self, target_cell, target):
+        MessageBox.promote_message_box(self, target_cell, target)
 
     def make_move(self, start_x, start_y, target_x, target_y):
 

@@ -184,11 +184,7 @@ class MessageBox:
 
             game.game.promote_pawn(cell, PieceType.QUEEN)
 
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_queen.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_queen.png")
-            gui_cell.setPixmap(pixmap)
+            MessageBox.promote_to_queen(cell, gui_cell)
 
             msgbox.close()
 
@@ -199,11 +195,7 @@ class MessageBox:
 
             game.game.promote_pawn(cell, PieceType.ROOK)
 
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_rook.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_rook.png")
-            gui_cell.setPixmap(pixmap)
+            MessageBox.promote_to_rook(cell, gui_cell)
 
             msgbox.close()
 
@@ -214,11 +206,7 @@ class MessageBox:
 
             game.game.promote_pawn(cell, PieceType.BISHOP)
 
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_bishop.png")
-            gui_cell.setPixmap(pixmap)
+            MessageBox.promote_to_bishop(cell, gui_cell)
 
             msgbox.close()
 
@@ -229,11 +217,7 @@ class MessageBox:
 
             game.game.promote_pawn(cell, PieceType.KNIGHT)
 
-            if cell.get_piece().get_direction() == 1:
-                pixmap = QPixmap("./resource_images/pieces/w_knight.png")
-            else:
-                pixmap = QPixmap("./resource_images/pieces/b_knight.png")
-            gui_cell.setPixmap(pixmap)
+            MessageBox.promote_to_knight(cell, gui_cell)
 
             msgbox.close()
 
@@ -282,3 +266,39 @@ class MessageBox:
             current = widget.currentWidget()
             widget.setCurrentIndex(widget.currentIndex() - 1)
             widget.removeWidget(current)
+
+    @staticmethod
+    def promote_to_queen(cell, gui_cell):
+
+        if cell.get_piece().get_direction() == 1:
+            pixmap = QPixmap("./resource_images/pieces/w_queen.png")
+        else:
+            pixmap = QPixmap("./resource_images/pieces/b_queen.png")
+        gui_cell.setPixmap(pixmap)
+
+    @staticmethod
+    def promote_to_rook(cell, gui_cell):
+
+        if cell.get_piece().get_direction() == 1:
+            pixmap = QPixmap("./resource_images/pieces/w_rook.png")
+        else:
+            pixmap = QPixmap("./resource_images/pieces/b_rook.png")
+        gui_cell.setPixmap(pixmap)
+
+    @staticmethod
+    def promote_to_bishop(cell, gui_cell):
+
+        if cell.get_piece().get_direction() == 1:
+            pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
+        else:
+            pixmap = QPixmap("./resource_images/pieces/b_bishop.png")
+        gui_cell.setPixmap(pixmap)
+
+    @staticmethod
+    def promote_to_knight(cell, gui_cell):
+
+        if cell.get_piece().get_direction() == 1:
+            pixmap = QPixmap("./resource_images/pieces/w_knight.png")
+        else:
+            pixmap = QPixmap("./resource_images/pieces/b_knight.png")
+        gui_cell.setPixmap(pixmap)
