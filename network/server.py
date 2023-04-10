@@ -5,6 +5,7 @@ from model.board import Board
 import pickle
 from network.my_string import MyString
 from gui.game_window import GameWindow
+from gui.my_message_box import *
 
 def start_server():
 
@@ -24,6 +25,8 @@ def start_server():
     rolled_players = ["", ""]
     steps = [[]]
 
+    current_message_box = []
+
     index = 0
 
     try:
@@ -33,15 +36,40 @@ def start_server():
 
     s.listen(2)
 
+    def get_first_enemy_player_message_box(name):
+        for i in current_message_box:
+            if i[1] != name:
+                current = i
+                current_message_box.remove(i)
+                return [current[2]]
+        return []
+
+    def contains_name(name):
+        for i in current_message_box:
+            if i[1] == name:
+                return True
+        return False
+
     def threaded_client(conn, index):
         conn.send(pickle.dumps(True))
         while True:
             try:
                 data = pickle.loads(conn.recv(4096))
+                print(data, " ez ez itt")
                 if not data:
                     continue
                 elif in_game[0]:
-                    if type(data) == list:
+                    print(type(data), "adatttt")
+                    if type(data) == list and type(data[0]) == str and data[1] in player_names:
+                        print(data[0], data[1], data[2])
+                        if not contains_name(data[1]):
+                            current_message_box.append(data)
+                        print("nééééééééééééééééééééézzzz ideeeeeeeeee")
+                        conn.send(pickle.dumps(MyString("OK")))
+                    elif type(data) == MyString and data.get_string() in player_names:
+                        print("helloka")
+                        conn.send(pickle.dumps(get_first_enemy_player_message_box(data.get_string())))
+                    elif type(data) == list:
                         print("ez az adat jött be na ez itt naaaajóóóó: ", data)
                         steps[0] = data
                         conn.send(pickle.dumps(MyString("OK")))

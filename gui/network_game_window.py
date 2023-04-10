@@ -18,17 +18,31 @@ from gui.clickable_label import ClickableLabel
 class NetworkGameWindow(GameWindow):
 
     socketSignal = QtCore.pyqtSignal(object)
+
     def __init__(self, widget, player_1_name, player_2_name, owned_player_name, yet_to_decide, server_network):
         GameWindow.__init__(self, widget, player_1_name, player_2_name, yet_to_decide)
 
         self.owned_player_name = owned_player_name
         self.server_network = server_network
 
-        self.socketSignal.connect(self.make_move_for_other_player)
         self.current_received_steps = []
         self.pawn_type = []
 
+        self.socketSignal.connect(self.do_it)
+
         start_new_thread(self.check_board_of_other_player, ())
+
+        self.makePlayer1Surrender.clicked.disconnect()
+        self.makePlayer1Surrender.clicked.connect(self.on_make_enemy_surrender)
+
+        self.makePlayer2Surrender.clicked.disconnect()
+        self.makePlayer2Surrender.clicked.connect(self.on_make_enemy_surrender)
+
+        self.player1DrawRequest.clicked.disconnect()
+        self.player1DrawRequest.clicked.connect(self.on_draw_request)
+
+        self.player2DrawRequest.clicked.disconnect()
+        self.player2DrawRequest.clicked.connect(self.on_draw_request)
 
     @QtCore.pyqtSlot()
     def make_step(self):
@@ -46,6 +60,26 @@ class NetworkGameWindow(GameWindow):
                 self.pawn_type = []
 
             print("valaki mondja már el hogy mi van itt áááááááááááááááááááá")
+
+    def do_it(self, message):
+        print(message, "message ez itt")
+        enemy = self.player1Name.text() if self.owned_player_name == self.player2Name.text() \
+            else self.player2Name.text()
+        print("nézzük itt az enemyt")
+        print("owned: ", self.owned_player_name)
+        print(enemy)
+        if message == "make_enemy_surrender":
+            MessageBox.surrender_message_box(self, enemy)
+        elif message == "draw_request":
+            MessageBox.draw_request_message_box(self, enemy)
+
+    def on_draw_request(self):
+
+        self.server_network.send_object(["Do you agree with a draw?", self.owned_player_name, "draw_request"])
+
+    def on_make_enemy_surrender(self):
+
+        self.server_network.send_object(["Do you want to surrender?", self.owned_player_name, "make_enemy_surrender"])
 
     def check_board_of_other_player(self):
 
@@ -68,19 +102,12 @@ class NetworkGameWindow(GameWindow):
                                         self.game.get_board_table()[received_steps[0][2]][received_steps[0][3]],
                                         self.board.itemAtPosition(received_steps[0][2], received_steps[0][3]).widget())
 
-            current_player_name = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+            message = self.server_network.send_object(MyString(self.owned_player_name))
+            if len(message) != 0:
+                self.socketSignal.emit(message[0])
+            current_player_name = self.player1Name.text() if self.game .get_current_player() == self.game.get_white_player() \
                 else self.player2Name.text()
             print("Current player:", current_player_name)
-
-    def make_move_for_other_player(self, received_steps):
-        if len(received_steps) != 0 and received_steps[1] != self.owned_player_name and \
-                received_steps != self.current_received_steps:
-            print("helooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
-                  "")
-            print("feltétel igaz")
-            self.current_received_steps = received_steps
-            self.make_move(received_steps[0][0], received_steps[0][1], received_steps[0][2], received_steps[0][3])
-        return
 
     def promote_pawn(self, target_cell, target):
         GameWindow.promote_pawn(self, target_cell, target)

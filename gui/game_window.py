@@ -47,7 +47,8 @@ class GameWindow(QDialog):
         self.makePlayer1Surrender.clicked.connect(lambda:
                                                   MessageBox.make_enemy_surrender_message_box(self,
                                                                                               self.player2Name.text(),
-                                                                                              self.player1Name.text()))
+                                                                                              self.player1Name.text(),
+))
         self.makePlayer2Surrender.clicked.connect(lambda:
                                                   MessageBox.make_enemy_surrender_message_box(self,
                                                                                               self.player1Name.text(),

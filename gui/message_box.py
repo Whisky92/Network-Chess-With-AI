@@ -2,6 +2,10 @@ from my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMess
 from model.piece_type import PieceType
 from PyQt5.QtGui import QPixmap
 from PyQt5 import QtCore
+import pickle
+from _thread import *
+
+from network.my_string import MyString
 
 
 class MessageBox:
