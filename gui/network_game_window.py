@@ -105,8 +105,8 @@ class NetworkGameWindow(GameWindow):
         elif message == "check":
             MessageBox.check_message_box(self)
         elif message == "checkmate":
-            winner = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
-                else self.player2Name.text()
+            winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+                else self.player1Name.text()
             MessageBox.checkmate_message_box(self, winner)
         elif message == "stalemate":
             MessageBox.stalemate_message_box(self)
