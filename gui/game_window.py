@@ -321,7 +321,7 @@ class GameWindow(QDialog):
             if len(self.game.steps_if_king_is_targeted()) == 0:
                 winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                     else self.player1Name.text()
-                MessageBox.checkmate_message_box(self, winner)
+                MessageBox.checkmate_message_box(self, winner).exec_()
                 return
 
             MessageBox.check_message_box(self)

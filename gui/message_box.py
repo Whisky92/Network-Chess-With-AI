@@ -47,7 +47,7 @@ class MessageBox:
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
 
-        msgbox.exec_()
+        return msgbox
 
     @staticmethod
     def end_game_message_box(game, game_result):
@@ -253,6 +253,8 @@ class MessageBox:
         current.__init__(widget, name1, name2)
         widget.addWidget(current)
         widget.setCurrentIndex(widget.currentIndex() + 1)
+
+
 
     @staticmethod
     def __return_to_main_menu(widget, msgbox):
