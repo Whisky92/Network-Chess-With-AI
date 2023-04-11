@@ -208,7 +208,7 @@ class GameWindow(QDialog):
 
                 self.promote_pawn(target_cell, target)
 
-            self.__check_game_ending_conditions()
+            self.check_game_ending_conditions()
 
         self.step_progress = 1
 
@@ -305,7 +305,7 @@ class GameWindow(QDialog):
 
         self.game.move_piece(start_cell, target_cell)
 
-    def __check_game_ending_conditions(self):
+    def check_game_ending_conditions(self):
         """
         Checks whether the game reached a state in which a game finishes, like stalemate and checkmate
         """

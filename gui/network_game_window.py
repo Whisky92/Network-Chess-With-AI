@@ -70,7 +70,7 @@ class NetworkGameWindow(GameWindow):
 
             print("valaki mondja már el hogy mi van itt áááááááááááááááááááá")
 
-    def __check_game_ending_conditions(self):
+    def check_game_ending_conditions(self):
         """
         Checks whether the game reached a state in which a game finishes, like stalemate and checkmate
         """
@@ -104,7 +104,7 @@ class NetworkGameWindow(GameWindow):
             MessageBox.draw_request_message_box(self, enemy)
         elif message == "check":
             MessageBox.check_message_box(self)
-        elif message == "checkmate":    
+        elif message == "checkmate":
             winner = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                 else self.player2Name.text()
             MessageBox.checkmate_message_box(self, winner)
