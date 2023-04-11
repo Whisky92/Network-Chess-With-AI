@@ -7,7 +7,7 @@ class Network:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         #self.client.settimeout(2)
         self.server = ip
-        self.port = 5555
+        self.port = 9999
         self.address = (self.server, self.port)
 
     def connect(self):

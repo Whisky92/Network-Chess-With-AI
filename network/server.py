@@ -9,12 +9,11 @@ from gui.my_message_box import *
 
 def start_server():
 
-    ip = socket.gethostbyname(socket.gethostname())
-    port = 5555
+    ip = "25.75.191.239"
+    port = 9999
 
     ready_boxes = [False, False]
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     connections = []
 
     in_game = [False]
