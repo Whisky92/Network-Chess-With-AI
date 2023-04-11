@@ -18,7 +18,6 @@ class MyDualMessageBox(QtWidgets.QDialog):
         self.questionLabel: QTextEdit
         self.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.questionLabel.setText(title)
-        self.questionLabel.setReadOnly(True)
 
         self.btn1.setText(b1_text)
         self.btn2.setText(b2_text)
@@ -30,6 +29,7 @@ class MyDualMessageBox(QtWidgets.QDialog):
         self.questionLabel.setPalette(p)
 
         self.questionLabel.setText(title)
+        self.questionLabel.setReadOnly(True)
 
         radius = 20
         path = QtGui.QPainterPath()
@@ -54,7 +54,6 @@ class MySingleMessageBox(QtWidgets.QDialog):
         self.questionLabel: QTextEdit
         self.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.questionLabel.setText(title)
-        self.questionLabel.setReadOnly(True)
 
         self.btn.setText("OK")
 
@@ -65,6 +64,7 @@ class MySingleMessageBox(QtWidgets.QDialog):
         self.questionLabel.setPalette(p)
 
         self.questionLabel.setText(title)
+        self.questionLabel.setReadOnly(True)
 
         radius = 20
         path = QtGui.QPainterPath()
@@ -89,7 +89,6 @@ class MyQuadrupleMessageBox(QtWidgets.QDialog):
         self.questionLabel: QTextEdit
         self.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.questionLabel.setText(title)
-        self.questionLabel.setReadOnly(True)
 
         self.questionLabel.setFrameStyle(QFrame.NoFrame)
         self.questionLabel.viewport().setAutoFillBackground(False)
@@ -98,6 +97,7 @@ class MyQuadrupleMessageBox(QtWidgets.QDialog):
         self.questionLabel.setPalette(p)
 
         self.questionLabel.setText(title)
+        self.questionLabel.setReadOnly(True)
 
         radius = 20
         path = QtGui.QPainterPath()

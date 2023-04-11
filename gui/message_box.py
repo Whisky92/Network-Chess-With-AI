@@ -23,8 +23,8 @@ class MessageBox:
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        msgbox.btn1.clicked.connect(lambda: MessageBox.start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
         msgbox.exec_()
 
@@ -44,8 +44,8 @@ class MessageBox:
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        msgbox.btn1.clicked.connect(lambda: MessageBox.start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
         return msgbox
 
@@ -66,8 +66,8 @@ class MessageBox:
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        msgbox.btn1.clicked.connect(lambda: MessageBox.start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.__return_to_main_menu(game.widget, msgbox))
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
         msgbox.exec_()
 
@@ -233,7 +233,7 @@ class MessageBox:
         msgbox.exec_()
 
     @staticmethod
-    def start_new_game(game, msgbox):
+    def __start_new_game(game, msgbox):
         """
         Starts a new game
 
@@ -250,14 +250,12 @@ class MessageBox:
 
         widget.setCurrentIndex(widget.currentIndex() - 1)
         widget.removeWidget(game)
-        current.__init__(widget, name1, name2)
+        current.__init__(widget, name1, name2, True)
         widget.addWidget(current)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
-
-
     @staticmethod
-    def __return_to_main_menu(widget, msgbox):
+    def return_to_main_menu(widget, msgbox):
         """
         Starts a new game
 

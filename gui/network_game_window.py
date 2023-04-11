@@ -126,7 +126,7 @@ class NetworkGameWindow(GameWindow):
         box.btn2.clicked.disconnect()
 
         def on_btn1_click():
-            MessageBox.start_new_game(self, box)
+            MessageBox.return_to_main_menu(self, box)
 
         self.btn1.clicked.connect(on_btn1_click)
 
