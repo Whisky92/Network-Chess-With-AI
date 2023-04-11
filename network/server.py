@@ -9,8 +9,6 @@ from gui.my_message_box import *
 
 def start_server():
 
-    hostname = socket.gethostname()
-
     ip = "0.0.0.0"
     port = 5555
 
@@ -38,17 +36,11 @@ def start_server():
 
     def get_first_enemy_player_message_box(name):
         for i in current_message_box:
-            if i[1] != name:
+            if i[0] != name:
                 current = i
                 current_message_box.remove(i)
-                return [current[2]]
+                return [current[1]]
         return []
-
-    def contains_name(name):
-        for i in current_message_box:
-            if i[1] == name:
-                return True
-        return False
 
     def threaded_client(conn, index):
         conn.send(pickle.dumps(True))
@@ -60,9 +52,9 @@ def start_server():
                     continue
                 elif in_game[0]:
                     print(type(data), "adatttt")
-                    if type(data) == list and type(data[0]) == str and data[1] in player_names:
-                        print(data[0], data[1], data[2])
-                        if not contains_name(data[1]):
+                    if type(data) == list and type(data[0]) == str and data[0] in player_names:
+                        print(data[0], data[1])
+                        if len(current_message_box) == 0:
                             current_message_box.append(data)
                         print("nééééééééééééééééééééézzzz ideeeeeeeeee")
                         conn.send(pickle.dumps(MyString("OK")))

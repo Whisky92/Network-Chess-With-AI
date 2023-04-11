@@ -25,6 +25,9 @@ class NetworkGameWindow(GameWindow):
         self.owned_player_name = owned_player_name
         self.server_network = server_network
 
+        self.player_1_name = player_1_name
+        self.player_2_name = player_2_name
+
         self.current_received_steps = []
         self.pawn_type = []
 
@@ -44,6 +47,12 @@ class NetworkGameWindow(GameWindow):
         self.player2DrawRequest.clicked.disconnect()
         self.player2DrawRequest.clicked.connect(self.on_draw_request)
 
+        self.player1Surrender.clicked.disconnect()
+        self.player1Surrender.clicked.connect(self.on_surrender)
+
+        self.player2Surrender.clicked.disconnect()
+        self.player2Surrender.clicked.connect(self.on_surrender)
+
     @QtCore.pyqtSlot()
     def make_step(self):
         print("Owned player:", self.owned_player_name)
@@ -61,6 +70,27 @@ class NetworkGameWindow(GameWindow):
 
             print("valaki mondja már el hogy mi van itt áááááááááááááááááááá")
 
+    def __check_game_ending_conditions(self):
+        """
+        Checks whether the game reached a state in which a game finishes, like stalemate and checkmate
+        """
+
+        if self.game.is_stalemate():
+            self.server_network.send_object([self.owned_player_name, "stalemate"])
+
+        if self.game.is_king_targeted(self.game.get_current_player()):
+            for i in self.colored_cells:
+                i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
+            self.colored_cells = []
+
+            if len(self.game.steps_if_king_is_targeted()) == 0:
+                winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+                    else self.player1Name.text()
+                self.server_network.send_object([self.owned_player_name, "checkmate"])
+                return
+
+            self.server_network.send_object([self.owned_player_name, "check"])
+
     def do_it(self, message):
         print(message, "message ez itt")
         enemy = self.player1Name.text() if self.owned_player_name == self.player2Name.text() \
@@ -72,14 +102,45 @@ class NetworkGameWindow(GameWindow):
             MessageBox.surrender_message_box(self, enemy)
         elif message == "draw_request":
             MessageBox.draw_request_message_box(self, enemy)
+        elif message == "check":
+            MessageBox.check_message_box(self)
+        elif message == "checkmate":    
+            winner = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
+                else self.player2Name.text()
+            MessageBox.checkmate_message_box(self, winner)
+        elif message == "stalemate":
+            MessageBox.stalemate_message_box(self)
 
+    @QtCore.pyqtSlot()
     def on_draw_request(self):
+        target = self.sender()
 
-        self.server_network.send_object(["Do you agree with a draw?", self.owned_player_name, "draw_request"])
+        if (target == self.player1DrawRequest and self.owned_player_name == self.player_1_name) or \
+                (target == self.player2DrawRequest and self.owned_player_name == self.player_2_name):
 
+            self.server_network.send_object([self.owned_player_name, "draw_request"])
+
+    @QtCore.pyqtSlot()
     def on_make_enemy_surrender(self):
+        target = self.sender()
 
-        self.server_network.send_object(["Do you want to surrender?", self.owned_player_name, "make_enemy_surrender"])
+        if (target == self.makePlayer2Surrender and self.owned_player_name == self.player_1_name) or \
+                (target == self.makePlayer1Surrender and self.owned_player_name == self.player_2_name):
+
+            self.server_network.send_object([self.owned_player_name, "make_enemy_surrender"])
+
+    @QtCore.pyqtSlot()
+    def on_surrender(self):
+
+        target = self.sender()
+
+        if (target == self.player1Surrender and self.owned_player_name == self.player_1_name) or \
+                (target == self.player2Surrender and self.owned_player_name == self.player_2_name):
+
+            enemy = self.player1Name.text() if self.owned_player_name == self.player2Name.text() \
+                else self.player2Name.text()
+
+            MessageBox.surrender_message_box(self, enemy)
 
     def check_board_of_other_player(self):
 
