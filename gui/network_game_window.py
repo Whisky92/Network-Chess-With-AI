@@ -103,22 +103,31 @@ class NetworkGameWindow(GameWindow):
         print("nézzük itt az enemyt")
         print("owned: ", self.owned_player_name)
         print(enemy)
-        if message == "make_enemy_surrender":
-            MessageBox.surrender_message_box(self, enemy)
-        elif message == "draw_request":
-            MessageBox.draw_request_message_box(self, enemy)
-        elif message == "check":
+        if message[0] == "make_enemy_surrender":
+            box = MessageBox.surrender_message_box(self, enemy)
+
+            self.manage_box(box, enemy)
+
+        elif message[0] == "draw_request":
+            box = MessageBox.draw_request_message_box(self, enemy)
+
+            self.manage_box(box, enemy)
+
+        elif message[0] == "check":
             MessageBox.check_message_box(self)
-        elif message == "checkmate":
+        elif message[0] == "end_of_game":
+            MessageBox.end_game_message_box(self, message[1]).exec_()
+        elif message[0] == "checkmate":
             winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                 else self.player1Name.text()
             self.server_network.send_object([self.owned_player_name, "checkmate"])
             box = MessageBox.checkmate_message_box(self, winner)
             self.return_to_main_menu(box)
 
-        elif message == "stalemate":
+        elif message[0] == "stalemate":
             self.server_network.send_object([self.owned_player_name, "stalemate"])
-            MessageBox.stalemate_message_box(self)
+            box = MessageBox.stalemate_message_box(self)
+            self.return_to_main_menu(box)
 
     def return_to_main_menu(self, box):
 
@@ -126,9 +135,10 @@ class NetworkGameWindow(GameWindow):
         box.btn2.clicked.disconnect()
 
         def on_btn1_click():
-            MessageBox.return_to_main_menu(self, box)
+            self.server_network.client.close()
+            MessageBox.return_to_main_menu(self.widget, box)
 
-        self.btn1.clicked.connect(on_btn1_click)
+        box.btn2.clicked.connect(on_btn1_click)
 
         box.exec_()
 
@@ -161,7 +171,27 @@ class NetworkGameWindow(GameWindow):
             enemy = self.player1Name.text() if self.owned_player_name == self.player2Name.text() \
                 else self.player2Name.text()
 
-            MessageBox.surrender_message_box(self, enemy)
+            box = MessageBox.surrender_message_box(self, enemy)
+
+            self.manage_box(box, enemy)
+
+    def manage_box(self, box, enemy):
+        box.btn1.clicked.disconnect()
+
+        if box.questionLabel.toPlainText() == ("Do " + enemy + " agree with a draw?"):
+            enemy = "Draw"
+
+        print(enemy)
+
+        def surrender_with_button():
+            box.close()
+
+            start_new_thread(self.server_network.send_object, ([self.owned_player_name, "end_of_game", enemy],))
+            MessageBox.end_game_message_box(self, enemy).exec_()
+
+        box.btn1.clicked.connect(surrender_with_button)
+
+        box.exec_()
 
     def check_board_of_other_player(self):
         while True:
@@ -185,7 +215,7 @@ class NetworkGameWindow(GameWindow):
 
             message = self.server_network.send_object(MyString(self.owned_player_name))
             if len(message) != 0:
-                self.socketSignal.emit(message[0])
+                self.socketSignal.emit(message)
                 if message[0] in ["checkmate", "stalemate"]:
                     return
             current_player_name = self.player1Name.text() if self.game .get_current_player() == self.game.get_white_player() \

@@ -1,5 +1,6 @@
 import socket
 import pickle
+import sys
 
 
 class Network:
@@ -16,8 +17,12 @@ class Network:
             return pickle.loads(self.client.recv(4096))
         except socket.timeout:
             print("Timeout error")
-        except:
+        except Exception as e:
+            print(e)
             print("An error occurred in connection")
+        except:
+            print("Unexpected error:", sys.exc_info()[0])
+            raise
 
     def send_board(self, board):
         try:

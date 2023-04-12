@@ -26,7 +26,7 @@ class MessageBox:
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
-        msgbox.exec_()
+        return msgbox
 
     @staticmethod
     def checkmate_message_box(game, game_result):
@@ -69,7 +69,7 @@ class MessageBox:
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
-        msgbox.exec_()
+        return msgbox
 
     @staticmethod
     def make_enemy_surrender_message_box(game, player_name, enemy_player_name):
@@ -90,7 +90,7 @@ class MessageBox:
             """
 
             msgbox.close()
-            MessageBox.end_game_message_box(game, player_name)
+            MessageBox.end_game_message_box(game, player_name).exec_()
 
         msgbox.btn1.clicked.connect(on_btn1_click)
 
@@ -114,11 +114,11 @@ class MessageBox:
             """
 
             msgbox.close()
-            MessageBox.end_game_message_box(game, "Draw")
+            MessageBox.end_game_message_box(game, "Draw").exec_()
 
         msgbox.btn1.clicked.connect(on_btn1_click)
 
-        msgbox.exec_()
+        return msgbox
 
     @staticmethod
     def surrender_message_box(game, enemy_player_name):
@@ -138,11 +138,11 @@ class MessageBox:
             """
 
             msgbox.close()
-            MessageBox.end_game_message_box(game, enemy_player_name)
+            MessageBox.end_game_message_box(game, enemy_player_name).exec_()
 
         msgbox.btn1.clicked.connect(on_btn1_click)
 
-        msgbox.exec_()
+        return msgbox
 
     @staticmethod
     def still_check_message_box():

@@ -16,7 +16,7 @@ from gui.game_window import GameWindow
 from gui.network_game_window import NetworkGameWindow
 import threading
 
-server_network = Network("25.75.191.239")
+server_network = Network("localhost")
 
 
 class MultiPlayerMenu(QDialog):
@@ -217,7 +217,6 @@ class ReadyMenu(QDialog):
             not_owned_checkbox.setDisabled(True)
             self.p2_checkbox.setText(players[1])
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
-            server_network.connect()
             thread = threading.Thread(target=self.check_ready, args=(self.owned_checkbox, not_owned_checkbox), daemon=True)
             thread.start()
 

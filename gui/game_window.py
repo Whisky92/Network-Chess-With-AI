@@ -38,11 +38,15 @@ class GameWindow(QDialog):
         self.current_step_cells = []
         self.step_was_made = False
 
-        self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text()))
-        self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text()))
+        self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text())
+                                              .exec_())
+        self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text())
+                                              .exec_())
 
-        self.player1DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player2Name.text()))
-        self.player2DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player1Name.text()))
+        self.player1DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player2Name.text())
+                                                .exec_())
+        self.player2DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player1Name.text())
+                                                .exec_())
 
         self.makePlayer1Surrender.clicked.connect(lambda:
                                                   MessageBox.make_enemy_surrender_message_box(self,
@@ -311,7 +315,7 @@ class GameWindow(QDialog):
         """
 
         if self.game.is_stalemate():
-            MessageBox.stalemate_message_box(self)
+            MessageBox.stalemate_message_box(self).exec_()
 
         if self.game.is_king_targeted(self.game.get_current_player()):
             for i in self.colored_cells:

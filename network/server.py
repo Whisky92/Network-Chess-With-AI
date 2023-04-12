@@ -9,7 +9,7 @@ from gui.my_message_box import *
 
 def start_server():
 
-    ip = "25.75.191.239"
+    ip = "0.0.0.0"
     port = 9999
 
     ready_boxes = [False, False]
@@ -25,7 +25,7 @@ def start_server():
 
     current_message_box = []
 
-    index = 0
+    index = [0]
 
     try:
         s.bind((ip, port))
@@ -39,17 +39,19 @@ def start_server():
             if i[0] != name:
                 current = i
                 current_message_box.remove(i)
+                if current[1] == "end_of_game":
+                    return [current[1], current[2]]
                 return [current[1]]
         return []
 
-    def threaded_client(conn, index):
+    def threaded_client(conn, ind):
         conn.send(pickle.dumps(True))
         while True:
             try:
                 data = pickle.loads(conn.recv(4096))
                 print(data, " ez ez itt")
                 if not data:
-                    continue
+                    break
                 elif in_game[0]:
                     print(type(data), "adatttt")
                     if type(data) == list and type(data[0]) == str and data[0] in player_names:
@@ -89,15 +91,15 @@ def start_server():
                         ready_to_play[0] = "yes"
                         conn.send(pickle.dumps(MyString("OK")))
                     elif type(data) == MyString:
-                        index_to_check = 0 if index == 1 else 1
+                        index_to_check = 0 if ind == 1 else 1
                         other_player_name = player_names[index_to_check]
 
                         correct = other_player_name != data.get_string()
 
                         if correct:
-                            player_names[index] = data.get_string()
+                            player_names[ind] = data.get_string()
 
-                        if index == 1:
+                        if ind == 1:
 
                             first = GameWindow.get_first_player(player_names[0], player_names[1])
                             second = player_names[0] if first != player_names[0] else player_names[1]
@@ -108,14 +110,24 @@ def start_server():
                         conn.send(pickle.dumps(player_names))
             except:
                 break
+
         conn.close()
         connections.remove(conn)
+        if len(connections) == 0:
+            ready_boxes[0] = False
+            ready_boxes[1] = False
+            in_game[0] = False
+            player_names[0] = ""
+            player_names[1] = ""
+            ready_to_play[0] = "no"
+            rolled_players[0] = ""
+            rolled_players[1] = ""
+            steps[0] = []
+            index[0] = 0
 
     while True:
         conn, addr = s.accept()
         connections.append(conn)
 
-        start_new_thread(threaded_client, (conn, index))
-        index += 1
-
-
+        start_new_thread(threaded_client, (conn, index[0]))
+        index[0] += 1
