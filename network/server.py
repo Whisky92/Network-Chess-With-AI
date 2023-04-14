@@ -9,7 +9,8 @@ from gui.my_message_box import *
 
 def start_server():
 
-    ip = "0.0.0.0"
+    ip = str(socket.gethostbyname(socket.gethostname()))
+    print(ip)
     port = 9999
 
     ready_boxes = [False, False]

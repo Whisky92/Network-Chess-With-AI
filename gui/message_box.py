@@ -1,6 +1,7 @@
 from my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMessageBox
 from model.piece_type import PieceType
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QSizePolicy
 from PyQt5 import QtCore
 import pickle
 from _thread import *
@@ -11,7 +12,7 @@ from network.my_string import MyString
 class MessageBox:
 
     @staticmethod
-    def stalemate_message_box(game):
+    def stalemate_message_box(game, is_offline=True):
         """
         The message box to be shown in case of stalemate
 
@@ -26,10 +27,13 @@ class MessageBox:
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
+        if not is_offline:
+            MessageBox.__set_button_stretch(msgbox)
+
         return msgbox
 
     @staticmethod
-    def checkmate_message_box(game, game_result):
+    def checkmate_message_box(game, game_result, is_offline=True):
         """
         The message box to be shown in case of checkmate
 
@@ -47,10 +51,13 @@ class MessageBox:
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
+        if not is_offline:
+            MessageBox.__set_button_stretch(msgbox)
+
         return msgbox
 
     @staticmethod
-    def end_game_message_box(game, game_result):
+    def end_game_message_box(game, game_result, is_offline=True):
         """
         The message box to be shown in case the game finishes by a button being pressed
 
@@ -68,6 +75,9 @@ class MessageBox:
 
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
+
+        if not is_offline:
+            MessageBox.__set_button_stretch(msgbox)
 
         return msgbox
 
@@ -306,3 +316,15 @@ class MessageBox:
         else:
             pixmap = QPixmap("./resource_images/pieces/b_knight.png")
         gui_cell.setPixmap(pixmap)
+
+    @staticmethod
+    def __set_button_stretch(msgbox):
+
+        msgbox.btn1.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+        msgbox.btn2.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
+
+        msgbox.horizontalLayout.setStretch(0, 0)
+        msgbox.horizontalLayout.setStretch(1, 0)
+        msgbox.horizontalLayout.setStretch(2, 1)
+        msgbox.horizontalLayout.setStretch(3, 2)
+        msgbox.horizontalLayout.setStretch(4, 1)

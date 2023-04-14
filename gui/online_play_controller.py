@@ -16,7 +16,8 @@ from gui.game_window import GameWindow
 from gui.network_game_window import NetworkGameWindow
 import threading
 
-server_network = Network("localhost")
+ip = str(socket.gethostbyname(socket.gethostname()))
+server_network = Network(ip)
 
 
 class MultiPlayerMenu(QDialog):

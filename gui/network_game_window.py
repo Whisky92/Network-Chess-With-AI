@@ -116,17 +116,17 @@ class NetworkGameWindow(GameWindow):
         elif message[0] == "check":
             MessageBox.check_message_box(self)
         elif message[0] == "end_of_game":
-            MessageBox.end_game_message_box(self, message[1]).exec_()
+            MessageBox.end_game_message_box(self, message[1], False).exec_()
         elif message[0] == "checkmate":
             winner = self.player2Name.text() if self.game.get_current_player() == self.game.get_white_player() \
                 else self.player1Name.text()
             self.server_network.send_object([self.owned_player_name, "checkmate"])
-            box = MessageBox.checkmate_message_box(self, winner)
+            box = MessageBox.checkmate_message_box(self, winner, False)
             self.return_to_main_menu(box)
 
         elif message[0] == "stalemate":
             self.server_network.send_object([self.owned_player_name, "stalemate"])
-            box = MessageBox.stalemate_message_box(self)
+            box = MessageBox.stalemate_message_box(self, False)
             self.return_to_main_menu(box)
 
     def return_to_main_menu(self, box):
@@ -187,7 +187,7 @@ class NetworkGameWindow(GameWindow):
             box.close()
 
             start_new_thread(self.server_network.send_object, ([self.owned_player_name, "end_of_game", enemy],))
-            MessageBox.end_game_message_box(self, enemy).exec_()
+            MessageBox.end_game_message_box(self, enemy, False).exec_()
 
         box.btn1.clicked.connect(surrender_with_button)
 
