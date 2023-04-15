@@ -16,9 +16,6 @@ from gui.game_window import GameWindow
 from gui.network_game_window import NetworkGameWindow
 import threading
 
-ip = str(socket.gethostbyname(socket.gethostname()))
-server_network = Network(ip)
-
 
 class MultiPlayerMenu(QDialog):
     def __init__(self, widget):
@@ -79,7 +76,7 @@ class PlayerOneNameChoose(QDialog):
     def __init__(self, widget):
 
         super(PlayerOneNameChoose, self).__init__()
-        loadUi("resource_ui_files/player1_name_choose.ui", self)
+        loadUi("resource_ui_files/join_ip.ui", self)
 
         self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
         self.submitButton.resizeEvent = self.resizeText
@@ -90,11 +87,12 @@ class PlayerOneNameChoose(QDialog):
         The actions to be done in case the submit button was pressed
         """
 
+        ip = self.ipField.text()
         text = self.nameField.text()
 
         if text != "":
-
-            start_new_thread(server.start_server, ())
+            server_network = Network(ip)
+            start_new_thread(server.start_server, (ip,))
 
             loop = QEventLoop()
             QTimer.singleShot(1500, loop.quit)
@@ -103,7 +101,7 @@ class PlayerOneNameChoose(QDialog):
             server_network.connect()
             names = server_network.send_object(MyString(text))
             print(names)
-            screen = ReadyMenu(widget, names)
+            screen = ReadyMenu(server_network, widget, names)
             print("hello")
             widget.addWidget(screen)
             print("megyen")
@@ -170,7 +168,7 @@ class IpChooseMenu(QDialog):
             print(names)
             if name != "" and names[0] != name:
                 print("megyenősös megyen")
-                screen = ReadyMenu(widget, names)
+                screen = ReadyMenu(client_network, widget, names)
                 widget.addWidget(screen)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
                 self.nameField.setText("")
@@ -191,10 +189,13 @@ class ReadyMenu(QDialog):
     rolled_players = []
     socketSignal = QtCore.pyqtSignal(object)
 
-    def __init__(self, widget, players):
+    def __init__(self, server_network, widget, players):
 
         super(ReadyMenu, self).__init__()
         loadUi("resource_ui_files/ready_menu.ui", self)
+
+        self.server_network = server_network
+
         self.p1_checkbox: QCheckBox = self.findChild(QCheckBox, "player1_cb")
         self.p1_checkbox.setText(players[0])
 
@@ -236,14 +237,14 @@ class ReadyMenu(QDialog):
     def start_game(self, current_player):
         if current_player == "p1" and self.p1_checkbox.isChecked() and self.p2_checkbox.isChecked():
             print("asdasdasdasdads")
-            server_network.send_object(MyString("ready"))
+            self.server_network.send_object(MyString("ready"))
             self.stop = True
             self.start()
 
     def start(self):
 
         screen = NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
-                                   self.owned_checkbox.text(), False, server_network)
+                                   self.owned_checkbox.text(), False, self.server_network)
         self.widget.addWidget(screen)
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 
@@ -252,7 +253,8 @@ class ReadyMenu(QDialog):
             try:
                 sleep(1)
                 print("amegyen")
-                arr = server_network.send_object(MyString("wait"))
+                print("amegyen")
+                arr = self.server_network.send_object(MyString("wait"))
                 print(arr)
                 if arr[1] != "":
                     print("letsgooo")
@@ -265,8 +267,7 @@ class ReadyMenu(QDialog):
         return self.check_ready(owned_checkbox, not_owned_checkbox)
 
     def check_ready(self, owned_checkbox, not_owned_checkbox):
-        server_network.connect()
-        rolls = server_network.send_object(MyString("get_rolls"))
+        rolls = self.server_network.send_object(MyString("get_rolls"))
         self.rolls[0] = rolls[0]
         self.rolls[1] = rolls[1]
         while True:
@@ -278,14 +279,14 @@ class ReadyMenu(QDialog):
                     break
                 state = "checked" if owned_checkbox.isChecked() else "unchecked"
                 print(state)
-                arr = server_network.send_object(MyString(state)).get_string()
+                arr = self.server_network.send_object(MyString(state)).get_string()
                 box_checked = True if arr == "checked" else False
                 not_owned_checkbox.setChecked(box_checked)
                 not_owned_checkbox.update()
 
                 sleep(0.5)
                 if owned_checkbox == self.p2_checkbox:
-                    arr2 = server_network.send_object(MyString("start_game")).get_string()
+                    arr2 = self.server_network.send_object(MyString("start_game")).get_string()
                     if arr2 == "yes":
                         print("halóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóó")
                         self.socketSignal.emit("asdd")

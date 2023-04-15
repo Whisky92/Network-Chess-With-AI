@@ -7,9 +7,9 @@ from network.my_string import MyString
 from gui.game_window import GameWindow
 from gui.my_message_box import *
 
-def start_server():
+def start_server(ip):
 
-    ip = str(socket.gethostbyname(socket.gethostname()))
+    ip = ip
     print(ip)
     port = 9999
 
