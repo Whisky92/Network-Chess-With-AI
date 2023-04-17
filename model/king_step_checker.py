@@ -210,7 +210,11 @@ class KingStepChecker:
             enemy_player = black_player if cell.get_piece().get_direction() == \
                                                  white_player.get_direction() else white_player
 
-            for i in range(min_y + 1, max_y):
+            print("MINIMUM_y:", min_y, max_y + 1)
+            range_min = min_y if min_y == 4 else min_y - 1
+            for i in range(range_min, max_y + 1):
+                if i == 4:
+                    continue
 
                 current_cell = board[target_x][i]
                 if current_cell.get_piece().get_piece_type() != PieceType.NO_TYPE:
@@ -223,7 +227,6 @@ class KingStepChecker:
                     return possible_steps
 
             if target_piece not in castling_step:
-
                 castling_rook.append(rook_cell)
                 castling_step.append(target_piece)
 
