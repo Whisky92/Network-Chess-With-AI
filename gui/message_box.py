@@ -1,12 +1,9 @@
-from my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMessageBox
+from gui.my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMessageBox
 from model.piece_type import PieceType
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QSizePolicy
 from PyQt5 import QtCore
-import pickle
-from _thread import *
-
-from network.my_string import MyString
+import sqlite3
 
 
 class MessageBox:
@@ -23,6 +20,8 @@ class MessageBox:
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+
+        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), "Stalemate")
 
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
@@ -48,6 +47,35 @@ class MessageBox:
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
+        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
+
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
+
+        if not is_offline:
+            MessageBox.__set_button_stretch(msgbox)
+
+        return msgbox
+
+    @staticmethod
+    def no_more_time_message_box(game, loser, is_offline=True):
+        """
+        The message box to be shown in case the game finishes by a button being pressed
+
+        :param game: the object to represent the current game
+        :param game_result: the result of current game
+        """
+        winner = game.player1Name.text() if loser == game.player2Name.text() else game.player2Name.text()
+        game_result = winner + "'s victory"
+
+        msgbox = MyDualMessageBox("Time is up! The result of the game is: " + game_result,
+                                  b1_text="Start a new game",
+                                  b2_text="Return to main menu")
+
+        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+
+        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
+
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
 
@@ -72,6 +100,8 @@ class MessageBox:
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
         msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+
+        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
 
         msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
         msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
@@ -328,3 +358,27 @@ class MessageBox:
         msgbox.horizontalLayout.setStretch(2, 1)
         msgbox.horizontalLayout.setStretch(3, 2)
         msgbox.horizontalLayout.setStretch(4, 1)
+
+    @staticmethod
+    def insert_to_database(p1, p2, result):
+        conn = sqlite3.connect('stats.db')
+        c = conn.cursor()
+
+        c.execute("""CREATE TABLE if not exists statistics(
+            id integer PRIMARY KEY,
+            p1 text NOT NULL,
+            p2 text NOT NULL,
+            game_result text NOT NULL
+        ); """)
+
+        insert_command = """INSERT INTO statistics
+                          (p1, p2, game_result) 
+                          VALUES (?, ?, ?);"""
+
+        c.execute(insert_command, (p1, p2, result))
+
+        conn.commit()
+        conn.close()
+
+
+

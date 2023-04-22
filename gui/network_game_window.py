@@ -7,7 +7,7 @@ import model.tests.test_tables
 from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
-from message_box import MessageBox
+from gui.message_box import MessageBox
 from time import sleep
 from gui.game_window import GameWindow
 from network.my_string import MyString
@@ -18,7 +18,6 @@ from gui.clickable_label import ClickableLabel
 class NetworkGameWindow(GameWindow):
 
     socketSignal = QtCore.pyqtSignal(object)
-    disconnectSignal = QtCore.pyqtSignal(object)
 
     def __init__(self, widget, player_1_name, player_2_name, owned_player_name, yet_to_decide, server_network):
         GameWindow.__init__(self, widget, player_1_name, player_2_name, yet_to_decide)
@@ -33,7 +32,6 @@ class NetworkGameWindow(GameWindow):
         self.pawn_type = []
 
         self.socketSignal.connect(self.do_it)
-        self.disconnectSignal.connect(self.disconnect_from_game)
 
         start_new_thread(self.check_board_of_other_player, ())
 
@@ -54,9 +52,6 @@ class NetworkGameWindow(GameWindow):
 
         self.player2Surrender.clicked.disconnect()
         self.player2Surrender.clicked.connect(self.on_surrender)
-
-    def disconnect_from_game(self, value):
-        self.server_network.disconnect()
 
     @QtCore.pyqtSlot()
     def make_step(self):
@@ -212,7 +207,7 @@ class NetworkGameWindow(GameWindow):
                     self.promote_in_gui(received_steps[2][0],
                                         self.game.get_board_table()[received_steps[0][2]][received_steps[0][3]],
                                         self.board.itemAtPosition(received_steps[0][2], received_steps[0][3]).widget())
-
+            self.timers[self.game.get_current_player()].start_timer()
             message = self.server_network.send_object(MyString(self.owned_player_name))
             if len(message) != 0:
                 self.socketSignal.emit(message)

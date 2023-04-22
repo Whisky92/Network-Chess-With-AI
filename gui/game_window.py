@@ -3,15 +3,21 @@ from PyQt5.uic import loadUi
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QSizePolicy, QLabel
 from PyQt5.QtCore import QEvent
-import model.tests.test_tables
 from model.game import Game
 from model.piece_type import PieceType
+from model.colors import Color
 from PyQt5 import QtCore
-from message_box import MessageBox
-from clickable_label import ClickableLabel
+from gui.message_box import MessageBox
+from gui.timer import MyTimer
+from ai.ai_logic import AiLogic
+from _thread import start_new_thread
+from time import sleep
 
 
 class GameWindow(QDialog):
+
+    timeCheck = QtCore.pyqtSignal(object)
+
     def __init__(self, widget, player_1_name, player_2_name, yet_to_decide):
 
         super(GameWindow, self).__init__()
@@ -38,6 +44,15 @@ class GameWindow(QDialog):
         self.current_step_cells = []
         self.step_was_made = False
 
+        self.p1_timer: MyTimer = MyTimer(15)
+        self.p2_timer: MyTimer = MyTimer(15)
+
+        self.timers = {self.game.get_white_player(): self.p1_timer,
+                       self.game.get_black_player(): self.p2_timer}
+
+        self.p1TimerSlot.addWidget(self.p1_timer, 0, 0)
+        self.p2TimerSlot.addWidget(self.p2_timer, 0, 0)
+
         self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text())
                                               .exec_())
         self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text())
@@ -59,7 +74,25 @@ class GameWindow(QDialog):
                                                                                               self.player2Name.text()))
         self.player1Name.resizeEvent = self.resizeText
 
+        if self.__class__.__name__ != "AiGameWindow":
+            self.timers[self.game.get_current_player()].start_timer()
+            self.timeCheck.connect(self.time_is_up)
+            start_new_thread(self.get_time, ())
+
         self.step_progress = 1
+
+    def time_is_up(self, player_name):
+        MessageBox.no_more_time_message_box(self, player_name, self.__class__.__name__ == "GameWindow").exec_()
+
+    def get_time(self):
+        while True:
+            sleep(1)
+            if self.timers[self.game.get_white_player()].get_remaining_time() == 0:
+                self.timeCheck.emit(self.player1Name.text())
+                break
+            if self.timers[self.game.get_black_player()].get_remaining_time() == 0:
+                self.timeCheck.emit(self.player2Name.text())
+                break
 
     def __fill_name_labels(self, player_1_name, player_2_name, yet_to_decide):
         """
@@ -85,7 +118,6 @@ class GameWindow(QDialog):
             for j in range(0, 8):
 
                 item = self.board.itemAtPosition(i, j).widget()
-                print(type(item))
                 cell_type = self.game.get_board_table()[i][j].get_piece().get_piece_type()
                 direction = self.game.get_board_table()[i][j].get_piece().get_direction()
                 item.clicked.connect(self.make_step)
@@ -148,7 +180,7 @@ class GameWindow(QDialog):
             self.__if_step_progress_is_one(target, pos_x, pos_y)
 
         else:
-            self.__if_step_progress_is_two(target, pos_x, pos_y)
+            self.if_step_progress_is_two(target, pos_x, pos_y)
 
     def __if_step_progress_is_one(self, target, pos_x, pos_y):
         """
@@ -166,6 +198,7 @@ class GameWindow(QDialog):
                 cell = self.game.get_board_table()[pos_x][pos_y]
 
                 cells = self.game.steps_if_king_is_targeted()
+                print(cells)
 
                 if len(cells) != 0:
 
@@ -183,7 +216,7 @@ class GameWindow(QDialog):
             self.step_progress = 2
             self.current_piece = target
 
-    def __if_step_progress_is_two(self, target, pos_x, pos_y):
+    def if_step_progress_is_two(self, target, pos_x, pos_y):
         """
         Does the necessary processes if 'self.step_progress' is 2
 
@@ -191,34 +224,45 @@ class GameWindow(QDialog):
         :param pos_x: the target's x coordinate
         :param pos_y: the target's y coordinate
         """
-
+        correct = []
         if "background-color: #3F704D" in target.styleSheet():
-            start_pos = self.board.getItemPosition(self.board.indexOf(self.current_piece))
-
-            start_cell = self.game.get_board_table()[start_pos[0]][start_pos[1]]
-            target_cell = self.game.get_board_table()[pos_x][pos_y]
-
-            self.make_move(start_pos[0], start_pos[1], pos_x, pos_y)
-            self.current_step_cells = [start_pos[0], start_pos[1], pos_x, pos_y]
-            self.step_was_made = True
-
-            if target_cell.get_piece().get_direction() == 1:
-                enemy_border = 0
-            else:
-                enemy_border = 7
-
-            if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
-                    target_cell.get_piece().get_piece_x() == enemy_border:
-
-                self.promote_pawn(target_cell, target)
-
-            self.check_game_ending_conditions()
+            self.if_correct_second_step(correct, target, pos_x, pos_y)
 
         self.step_progress = 1
 
         for i in self.colored_cells:
             i.setStyleSheet(i.styleSheet().replace("background-color: #3F704D", ""))
         self.colored_cells = []
+
+        return correct
+
+    def if_correct_second_step(self, correct,  target, pos_x, pos_y):
+        start_pos = self.board.getItemPosition(self.board.indexOf(self.current_piece))
+
+        start_cell = self.game.get_board_table()[start_pos[0]][start_pos[1]]
+        target_cell = self.game.get_board_table()[pos_x][pos_y]
+
+        if self.__class__.__name__ != "AiGameWindow":
+            self.timers[self.game.get_current_player()].stop_timer()
+
+        self.make_move(start_pos[0], start_pos[1], pos_x, pos_y)
+        self.current_step_cells = [start_pos[0], start_pos[1], pos_x, pos_y]
+        self.step_was_made = True
+
+        if self.__class__.__name__ != "AiGameWindow":
+            self.timers[self.game.get_current_player()].start_timer()
+
+        if target_cell.get_piece().get_direction() == 1:
+            enemy_border = 0
+        else:
+            enemy_border = 7
+
+        if target_cell.get_piece().get_piece_type() == PieceType.PAWN and \
+                target_cell.get_piece().get_piece_x() == enemy_border:
+            self.promote_pawn(target_cell, target)
+
+        correct.append(True)
+        self.check_game_ending_conditions()
 
     def promote_pawn(self, target_cell, target):
         MessageBox.promote_message_box(self, target_cell, target)
@@ -293,9 +337,6 @@ class GameWindow(QDialog):
 
         target_cell = self.game.get_board_table()[target_x][target_y]
         target_c = self.board.itemAtPosition(target_x, target_y).widget()
-
-        print(start_c, "start_c")
-        print(target_c, "target_c")
 
         start_pixmap = start_c.pixmap()
         target_pixmap = target_c.pixmap()
