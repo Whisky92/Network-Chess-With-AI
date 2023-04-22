@@ -15,3 +15,12 @@ Sources I used as samples, and references for my project, and borrowed ideas fro
 - https://stackoverflow.com/questions/36281103/change-checkbox-state-to-not-checked-when-other-checkbox-is-checked-pyqt
 - https://betterprogramming.pub/how-to-poll-sockets-using-python-3e1af3b047
 - https://stackoverflow.com/questions/18989446/execute-python-function-in-main-thread-from-call-in-dummy-thread
+- https://www.youtube.com/watch?v=RjdrFHEgV2o
+- https://www.youtube.com/watch?v=mYbrH1Cl3nw&t=13s
+- https://www.freecodecamp.org/news/simple-chess-ai-step-by-step-1d55a9266977/
+- https://github.com/guocheng2018/timer/blob/master/src/main/python/main.py
+- https://www.pythonguis.com/tutorials/qscrollarea/
+- https://pynative.com/python-sqlite-insert-into-table/
+- https://www.chess.com/openings/Sicilian-Defense
+- https://stackoverflow.com/questions/34198904/how-can-i-open-an-url-using-pyqt-when-clicking-on-a-button
+- https://www.youtube.com/watch?v=4wplGk935r8&list=PLCC34OHNcOtpmCA8s_dpPMvQLyHbvxocY&index=15

@@ -44,8 +44,8 @@ class GameWindow(QDialog):
         self.current_step_cells = []
         self.step_was_made = False
 
-        self.p1_timer: MyTimer = MyTimer(15)
-        self.p2_timer: MyTimer = MyTimer(15)
+        self.p1_timer: MyTimer = MyTimer(10)
+        self.p2_timer: MyTimer = MyTimer(10)
 
         self.timers = {self.game.get_white_player(): self.p1_timer,
                        self.game.get_black_player(): self.p2_timer}
@@ -72,6 +72,12 @@ class GameWindow(QDialog):
                                                   MessageBox.make_enemy_surrender_message_box(self,
                                                                                               self.player1Name.text(),
                                                                                               self.player2Name.text()))
+
+        self.player1StepInfo.clicked.connect(lambda:
+                                             MessageBox.step_recognition_box(self.game))
+        self.player2StepInfo.clicked.connect(lambda:
+                                             MessageBox.step_recognition_box(self.game))
+
         self.player1Name.resizeEvent = self.resizeText
 
         if self.__class__.__name__ != "AiGameWindow":

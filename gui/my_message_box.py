@@ -5,6 +5,14 @@ from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtCore import Qt
 
 
+class MyStepRecognitionMessageBox(QtWidgets.QDialog):
+
+    def __init__(self):
+
+        QtWidgets.QDialog.__init__(self)
+        uic.loadUi("resource_ui_files/step_show_box.ui", self)
+
+
 class MyDualMessageBox(QtWidgets.QDialog):
 
     def __init__(self, title, b1_text="Yes", b2_text="No"):

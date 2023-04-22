@@ -15,6 +15,7 @@ class Game:
         self._white_player = Player(Color.WHITE, 1)
         self._black_player = Player(Color.BLACK, -1)
         self._current_player = self._white_player
+        self._steps = []
 
         if len(args) == 0:
             self._board = Board()
@@ -48,6 +49,9 @@ class Game:
     def get_current_player(self):
         return self._current_player
 
+    def get_steps(self):
+        return self._steps
+
     def get_board(self):
         return self._board
 
@@ -56,7 +60,6 @@ class Game:
 
     def get_last_step(self):
         return self._last_step
-
 
     def get_castling_step(self):
         return self._castling_step
@@ -122,6 +125,14 @@ class Game:
         if self.is_stalemate():
             self._current_player.set_can_stalemate(True)
 
+        start_x = cell_to_move_from.get_piece().get_piece_x()
+        start_y = cell_to_move_from.get_piece().get_piece_y()
+        target_x = target_cell.get_piece().get_piece_x()
+        target_y = target_cell.get_piece().get_piece_y()
+
+        current_step = ((start_x, start_y), (target_x, target_y))
+
+        self._steps.append(current_step)
         self.change_current_player()
 
     def move(self, cell_to_move_from: Cell, target_cell: Cell):

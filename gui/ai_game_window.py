@@ -16,11 +16,28 @@ class AiGameWindow(GameWindow):
         self.ai_player = self.game.get_white_player() if self.ai_color == Color.WHITE \
             else self.game.get_black_player()
 
+        self.disable_checkboxes()
+
         AiLogic.set_ai_player(self.ai_color)
 
         print(self.ai_color)
         if self.ai_color == Color.WHITE:
             self.move_ai()
+
+    def disable_checkboxes(self):
+
+        self.makePlayer1Surrender.clicked.disconnect()
+        self.makePlayer2Surrender.clicked.disconnect()
+
+        self.player1DrawRequest.clicked.disconnect()
+        self.player2DrawRequest.clicked.disconnect()
+
+        if self.ai_color == Color.WHITE:
+            self.player1StepInfo.clicked.disconnect()
+            self.player1Surrender.clicked.disconnect()
+        else:
+            self.player2StepInfo.clicked.disconnect()
+            self.player2Surrender.clicked.disconnect()
 
     @QtCore.pyqtSlot()
     def make_step(self):

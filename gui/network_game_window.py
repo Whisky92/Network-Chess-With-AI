@@ -53,6 +53,12 @@ class NetworkGameWindow(GameWindow):
         self.player2Surrender.clicked.disconnect()
         self.player2Surrender.clicked.connect(self.on_surrender)
 
+        self.player1StepInfo.clicked.disconnect()
+        self.player1StepInfo.clicked.connect(self.on_step_info)
+
+        self.player2StepInfo.clicked.disconnect()
+        self.player2StepInfo.clicked.connect(self.on_step_info)
+
     @QtCore.pyqtSlot()
     def make_step(self):
         print("Owned player:", self.owned_player_name)
@@ -154,6 +160,17 @@ class NetworkGameWindow(GameWindow):
                 (target == self.makePlayer1Surrender and self.owned_player_name == self.player_2_name):
 
             self.server_network.send_object([self.owned_player_name, "make_enemy_surrender"])
+
+
+    @QtCore.pyqtSlot()
+    def on_step_info(self):
+        target = self.sender()
+
+        if (target == self.player1StepInfo and self.owned_player_name == self.player_1_name) or \
+                (target == self.player2StepInfo and self.owned_player_name == self.player_2_name):
+
+            MessageBox.step_recognition_box(self.game)
+
 
     @QtCore.pyqtSlot()
     def on_surrender(self):

@@ -1,12 +1,35 @@
-from gui.my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMessageBox
 from model.piece_type import PieceType
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtWidgets import QSizePolicy
+from gui.my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadrupleMessageBox, MyStepRecognitionMessageBox
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5.QtWidgets import QSizePolicy, QPushButton
 from PyQt5 import QtCore
+from step_recognition.step_recognition import StepRecognition
 import sqlite3
+import webbrowser
 
 
 class MessageBox:
+
+    @staticmethod
+    def step_recognition_box(game):
+        msgbox = MyStepRecognitionMessageBox()
+
+        game_steps = game.get_steps()
+
+        for key, value in StepRecognition.popular_openings.items():
+            if value[0] == game_steps:
+
+                btn = QPushButton(key, flat=True)
+
+                btn.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
+                btn.setFont(QFont("Times New Roman", 20))
+
+                btn.clicked.connect(lambda: webbrowser.open('https://www.chess.com/openings/' + value[1]))
+
+                msgbox.stepContainer.addWidget(btn)
+
+        msgbox.exec_()
+
 
     @staticmethod
     def stalemate_message_box(game, is_offline=True):
