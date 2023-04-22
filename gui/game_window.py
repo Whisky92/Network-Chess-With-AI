@@ -18,7 +18,7 @@ class GameWindow(QDialog):
 
     timeCheck = QtCore.pyqtSignal(object)
 
-    def __init__(self, widget, player_1_name, player_2_name, yet_to_decide):
+    def __init__(self, widget, player_1_name, player_2_name, time, yet_to_decide):
 
         super(GameWindow, self).__init__()
         loadUi("resource_ui_files/game.ui", self)
@@ -44,8 +44,8 @@ class GameWindow(QDialog):
         self.current_step_cells = []
         self.step_was_made = False
 
-        self.p1_timer: MyTimer = MyTimer(10)
-        self.p2_timer: MyTimer = MyTimer(10)
+        self.p1_timer: MyTimer = MyTimer(time)
+        self.p2_timer: MyTimer = MyTimer(time)
 
         self.timers = {self.game.get_white_player(): self.p1_timer,
                        self.game.get_black_player(): self.p2_timer}

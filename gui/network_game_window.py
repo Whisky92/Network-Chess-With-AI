@@ -19,8 +19,8 @@ class NetworkGameWindow(GameWindow):
 
     socketSignal = QtCore.pyqtSignal(object)
 
-    def __init__(self, widget, player_1_name, player_2_name, owned_player_name, yet_to_decide, server_network):
-        GameWindow.__init__(self, widget, player_1_name, player_2_name, yet_to_decide)
+    def __init__(self, widget, player_1_name, player_2_name, owned_player_name, time, yet_to_decide, server_network):
+        GameWindow.__init__(self, widget, player_1_name, player_2_name, time, yet_to_decide)
 
         self.owned_player_name = owned_player_name
         self.server_network = server_network

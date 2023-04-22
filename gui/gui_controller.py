@@ -167,10 +167,61 @@ class PlayVsAiNameChoose(QDialog):
 
         if text != "":
 
-            screen = AiGameWindow(widget, text, True)
+            screen = AiSetTime(text)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")
+
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.backButton.setFont(f)
+        self.submitButton.setFont(f)
+
+
+class AiSetTime(QDialog):
+    def __init__(self, p1_name):
+
+        super(AiSetTime, self).__init__()
+        loadUi("resource_ui_files/time_set.ui", self)
+
+        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.submitButton.clicked.connect(lambda: self.submit(p1_name))
+        self.submitButton.resizeEvent = self.resizeText
+
+    def back_to_previous_page(self):
+        """
+        The actions to be done in case the back button was pressed
+        """
+
+        current = widget.currentWidget()
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.removeWidget(current)
+
+    def submit(self, player_1_name):
+        """
+        The actions to be done in case submit button was pressed
+        """
+
+        if self.timeInMinutes.text() is not None and self.timeInMinutes.text().isdigit() and \
+            int(self.timeInMinutes.text()) > 0:
+
+            time = 120 if int(self.timeInMinutes.text()) > 120 else int(self.timeInMinutes.text())
+
+            screen = AiGameWindow(widget, player_1_name, time, True)
+            widget.addWidget(screen)
+            widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def resizeText(self, event: QEvent):
         """
@@ -270,10 +321,61 @@ class PlayerTwoNameChoose(QDialog):
 
         if text != "" and player_1_name != text:
 
-            screen = GameWindow(widget, player_1_name, text, True)
+            screen = TimeSet(player_1_name, text)
             widget.addWidget(screen)
             widget.setCurrentIndex(widget.currentIndex() + 1)
             self.nameField.setText("")
+
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        default_size = 9
+
+        if self.rect().width() // 40 > default_size:
+            f = QFont('', self.rect().width() // 40)
+        else:
+            f = QFont('', default_size)
+
+        self.backButton.setFont(f)
+        self.submitButton.setFont(f)
+
+class TimeSet(QDialog):
+
+    def __init__(self, p1_name, p2_name):
+
+        super(TimeSet, self).__init__()
+        loadUi("resource_ui_files/time_set.ui", self)
+
+        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.submitButton.clicked.connect(lambda: self.submit(p1_name, p2_name))
+        self.submitButton.resizeEvent = self.resizeText
+
+    def back_to_previous_page(self):
+        """
+        The actions to be done in case the back button was pressed
+        """
+
+        current = widget.currentWidget()
+        widget.setCurrentIndex(widget.currentIndex() - 1)
+        widget.removeWidget(current)
+
+    def submit(self, player_1_name, player_2_name):
+        """
+        The actions to be done in case submit button was pressed
+        """
+
+        if self.timeInMinutes.text() is not None and self.timeInMinutes.text().isdigit() and \
+            int(self.timeInMinutes.text()) > 0:
+
+            time = 120 if int(self.timeInMinutes.text()) > 120 else int(self.timeInMinutes.text())
+
+            screen = GameWindow(widget, player_1_name, player_2_name, time, True)
+            widget.addWidget(screen)
+            widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def resizeText(self, event: QEvent):
         """

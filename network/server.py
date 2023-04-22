@@ -22,6 +22,7 @@ def start_server(ip):
     player_names = ["", ""]
     ready_to_play = ["no"]
     rolled_players = ["", ""]
+    game_time = [None]
     steps = [[]]
 
     current_message_box = []
@@ -80,8 +81,13 @@ def start_server(ip):
                         else:
                             ready_boxes[1] = data.get_string()
                             conn.send(pickle.dumps(MyString(ready_boxes[0])))
+                    elif type(data) == MyString and data.get_string().isdigit():
+                        game_time[0] = data.get_string()
+                        conn.send(pickle.dumps(MyString("OK")))
                     elif type(data) == MyString and data.get_string() == "wait":
                         conn.send(pickle.dumps(player_names))
+                    elif type(data) == MyString and data.get_string() == "get_time":
+                        conn.send(pickle.dumps(MyString(game_time[0])))
                     elif type(data) == MyString and data.get_string() == "start_game":
                         if ready_to_play[0] == "yes":
                             in_game[0] = True

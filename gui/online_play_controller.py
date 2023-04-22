@@ -76,7 +76,7 @@ class PlayerOneNameChoose(QDialog):
     def __init__(self, widget):
 
         super(PlayerOneNameChoose, self).__init__()
-        loadUi("resource_ui_files/join_ip.ui", self)
+        loadUi("resource_ui_files/host_game.ui", self)
 
         self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
         self.submitButton.resizeEvent = self.resizeText
@@ -89,8 +89,10 @@ class PlayerOneNameChoose(QDialog):
 
         ip = self.ipField.text()
         text = self.nameField.text()
+        time = self.time.text()
 
-        if text != "":
+        if text != "" and time is not None and time.isdigit() and \
+            int(time) > 0:
             server_network = Network(ip)
             start_new_thread(server.start_server, (ip,))
 
@@ -101,7 +103,7 @@ class PlayerOneNameChoose(QDialog):
             server_network.connect()
             names = server_network.send_object(MyString(text))
             print(names)
-            screen = ReadyMenu(server_network, widget, names)
+            screen = ReadyMenu(server_network, widget, names, time)
             print("hello")
             widget.addWidget(screen)
             print("megyen")
@@ -189,7 +191,7 @@ class ReadyMenu(QDialog):
     rolled_players = []
     socketSignal = QtCore.pyqtSignal(object)
 
-    def __init__(self, server_network, widget, players):
+    def __init__(self, server_network, widget, players, time=None):
 
         super(ReadyMenu, self).__init__()
         loadUi("resource_ui_files/ready_menu.ui", self)
@@ -206,6 +208,8 @@ class ReadyMenu(QDialog):
         self.widget = widget
         self.players = players
 
+        self.time: str
+
         self.socketSignal.connect(self.change_for_second_player)
 
         self.stop = False
@@ -217,6 +221,7 @@ class ReadyMenu(QDialog):
             self.owned_checkbox = self.p2_checkbox
             not_owned_checkbox = self.p1_checkbox
             not_owned_checkbox.setDisabled(True)
+            self.time = int(self.server_network.send_object(MyString("get_time")).get_string())
             self.p2_checkbox.setText(players[1])
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             thread = threading.Thread(target=self.check_ready, args=(self.owned_checkbox, not_owned_checkbox), daemon=True)
@@ -227,6 +232,8 @@ class ReadyMenu(QDialog):
             self.owned_checkbox = self.p1_checkbox
             not_owned_checkbox = self.p2_checkbox
             not_owned_checkbox.setDisabled(True)
+            self.time = int(time)
+            self.server_network.send_object(MyString(time))
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
             print("megyenget")
             start_new_thread(self.wait_for_other_player, (self.owned_checkbox, not_owned_checkbox))
@@ -244,7 +251,7 @@ class ReadyMenu(QDialog):
     def start(self):
 
         screen = NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
-                                   self.owned_checkbox.text(), False, self.server_network)
+                                   self.owned_checkbox.text(), self.time, False, self.server_network)
         self.widget.addWidget(screen)
         self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
 
