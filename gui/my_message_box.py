@@ -62,7 +62,6 @@ class MySingleMessageBox(QtWidgets.QDialog):
         p = self.questionLabel.palette()
         p.setColor(QPalette.Base, QColor(0, 0, 0, 0))
         self.questionLabel.setPalette(p)
-
         self.questionLabel.setText(title)
         self.questionLabel.setReadOnly(True)
 
