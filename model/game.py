@@ -352,6 +352,19 @@ class Game:
         piece = cell.get_piece()
         piece.set_piece_type(p_type)
 
+    def is_king_alive(self, color):
+        player = self.get_white_player() if color == color.WHITE else self.get_black_player()
+
+        for i in player.get_pieces_on_board():
+            if i.get_piece_type() == PieceType.KING:
+                return True
+        return False
+
+    def print_possible_steps(self, x, y):
+        cell = self.get_board_table()[x][y]
+        for i in self.filter_wrong_moves(x, y):
+            print("(", i.get_piece().get_piece_x(), ", ", i.get_piece().get_piece_y(), ")")
+
     @staticmethod
     def get_index_of_item(lst, item):
         """
