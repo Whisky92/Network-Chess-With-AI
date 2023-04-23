@@ -77,6 +77,15 @@ class Game:
     def set_board(self, board):
         self._board.set_board(board)
 
+    def add_to_castling_step(self, cell):
+        self._castling_step.append(cell)
+
+    def add_to_castling_rook(self, cell):
+        self._castling_rook.append(cell)
+
+    def add_to_rook_target(self, cell):
+        self._rook_target.append(cell)
+
     def filter_wrong_moves(self, x, y):
         """
         Selects the legal moves from the moves of piece indexed by the given coordinates,

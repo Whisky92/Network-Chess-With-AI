@@ -27,6 +27,14 @@ class GameWindow(QDialog):
         self.game = Game()
 
         self.king_start_cells = [self.game.get_board_table()[0][4], self.game.get_board_table()[7][4]]
+        self.king_castling_cells = [[self.game.get_board_table()[0][6], self.game.get_board_table()[0][2]],
+                                    [self.game.get_board_table()[7][6], self.game.get_board_table()[7][2]]]
+        self.castling_rooks = [[self.game.get_board_table()[0][7], self.game.get_board_table()[0][0]],
+                               [self.game.get_board_table()[7][7], self.game.get_board_table()[7][0]]]
+        self.castling_rook_targets = [[self.game.get_board_table()[0][5], self.game.get_board_table()[0][3]],
+                                      [self.game.get_board_table()[7][5], self.game.get_board_table()[7][3]]]
+
+        self.is_castling = False
 
         self.boardWidget: QWidget = self.gameBoard
         self.board: QGridLayout = self.gameLayout
@@ -277,24 +285,32 @@ class GameWindow(QDialog):
 
     def make_move(self, start_x, start_y, target_x, target_y):
 
+        print(start_x, start_y, target_x, target_y)
+
         start_cell = self.game.get_board_table()[start_x][start_y]
         target_cell = self.game.get_board_table()[target_x][target_y]
+
+        print(start_cell)
+        print(target_cell)
+        print(self.king_start_cells)
 
         if start_cell.get_piece().get_en_passant_step() is not None and target_cell == \
                 start_cell.get_piece().get_en_passant_step():
             print("ide nem kéne belépni")
             self.__step_in_case_of_en_passant_step(start_cell, target_cell)
-        elif target_cell in self.game.get_castling_step() and start_cell in self.king_start_cells:
+        elif (target_cell in self.game.get_castling_step() and start_cell in self.king_start_cells) or self.is_castling:
+            if self.is_castling:
+                self.is_castling = False
             print("ide szintén nem kéne belépni")
             self.__step_in_case_of_castling_step(start_cell, target_cell)
         print("itt jár")
         print(self.board.itemAtPosition(start_x, start_y).widget().pixmap())
-        print()
         print(self.board.itemAtPosition(target_x, target_y).widget().pixmap())
-        print()
-        print(self.game.get_board().print_board())
+        self.game.get_board().print_board()
 
         self.__normal_step(start_x, start_y, target_x, target_y)
+        print("---")
+        self.game.get_board().print_board()
 
     def __step_in_case_of_en_passant_step(self, start_cell, target_cell):
         """
@@ -384,6 +400,19 @@ class GameWindow(QDialog):
                 return
 
             MessageBox.check_message_box(self)
+
+    def set_castling_properties(self, start_cell, target_cell):
+
+        index = Game.get_index_of_item(self.king_start_cells, start_cell)
+
+        if target_cell in self.king_castling_cells[index]:
+
+            self.is_castling = True
+            self.game.add_to_castling_step(target_cell)
+
+            castling_index = Game.get_index_of_item(self.king_castling_cells[index], target_cell)
+            self.game.add_to_castling_rook(self.castling_rooks[index][castling_index])
+            self.game.add_to_rook_target(self.castling_rook_targets[index][castling_index])
 
     def __capture(self, target_pixmap):
         """

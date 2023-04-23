@@ -68,6 +68,14 @@ class AiGameWindow(GameWindow):
         target_x = ai_step[2][0]
         target_y = ai_step[2][1]
 
+        start_cell = self.game.get_board()[start_x][start_y]
+
+        if start_cell in self.king_start_cells:
+
+            target_cell = self.game.get_board_table()[target_x][target_y]
+
+            self.set_castling_properties(start_cell, target_cell)
+
         print(start_x, start_y, target_x, target_y)
 
         print(self.board.itemAtPosition(start_x, start_y).widget().pixmap())

@@ -5,6 +5,7 @@ from time import sleep
 from gui.game_window import GameWindow
 from network.my_string import MyString
 from _thread import start_new_thread
+from model.game import Game
 
 
 class NetworkGameWindow(GameWindow):
@@ -196,6 +197,15 @@ class NetworkGameWindow(GameWindow):
                     received_steps != self.current_received_steps:
 
                 self.current_received_steps = received_steps
+
+                start_cell = self.game.get_board_table()[received_steps[0][0]][received_steps[0][1]]
+
+                if start_cell in self.king_start_cells:
+
+                    target_cell = self.game.get_board_table()[received_steps[0][2]][received_steps[0][3]]
+
+                    self.set_castling_properties(start_cell, target_cell)
+
                 self.make_move(received_steps[0][0], received_steps[0][1], received_steps[0][2], received_steps[0][3])
                 if len(received_steps[2]) != 0:
                     self.game.get_board_table()[received_steps[0][2]][received_steps[0][3]].get_piece()\
