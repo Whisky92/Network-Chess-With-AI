@@ -1,10 +1,3 @@
-import random
-from PyQt5.uic import loadUi
-from PyQt5.QtGui import QPixmap, QFont
-from PyQt5.QtWidgets import QDialog, QWidget, QGridLayout, QSizePolicy, QLabel
-from PyQt5.QtCore import QEvent
-import model.tests.test_tables
-from model.game import Game
 from model.piece_type import PieceType
 from PyQt5 import QtCore
 from gui.message_box import MessageBox
@@ -12,7 +5,6 @@ from time import sleep
 from gui.game_window import GameWindow
 from network.my_string import MyString
 from _thread import start_new_thread
-from gui.clickable_label import ClickableLabel
 
 
 class NetworkGameWindow(GameWindow):
@@ -61,11 +53,10 @@ class NetworkGameWindow(GameWindow):
 
     @QtCore.pyqtSlot()
     def make_step(self):
-        print("Owned player:", self.owned_player_name)
 
         current_player_name = self.player1Name.text() if self.game.get_current_player() == self.game.get_white_player() \
             else self.player2Name.text()
-        print("Current player:", current_player_name)
+
         if current_player_name == self.owned_player_name:
             GameWindow.make_step(self)
 
@@ -73,8 +64,6 @@ class NetworkGameWindow(GameWindow):
                 self.step_was_made = False
                 self.server_network.send_object([self.current_step_cells, self.owned_player_name, self.pawn_type])
                 self.pawn_type = []
-
-            print("valaki mondja már el hogy mi van itt áááááááááááááááááááá")
 
     def check_game_ending_conditions(self):
         """
@@ -98,12 +87,9 @@ class NetworkGameWindow(GameWindow):
             self.server_network.send_object([self.owned_player_name, "check"])
 
     def do_it(self, message):
-        print(message, "message ez itt")
         enemy = self.player1Name.text() if self.owned_player_name == self.player2Name.text() \
             else self.player2Name.text()
-        print("nézzük itt az enemyt")
-        print("owned: ", self.owned_player_name)
-        print(enemy)
+
         if message[0] == "make_enemy_surrender":
             box = MessageBox.surrender_message_box(self, enemy)
 
@@ -161,7 +147,6 @@ class NetworkGameWindow(GameWindow):
 
             self.server_network.send_object([self.owned_player_name, "make_enemy_surrender"])
 
-
     @QtCore.pyqtSlot()
     def on_step_info(self):
         target = self.sender()
@@ -170,7 +155,6 @@ class NetworkGameWindow(GameWindow):
                 (target == self.player2StepInfo and self.owned_player_name == self.player_2_name):
 
             MessageBox.step_recognition_box(self.game)
-
 
     @QtCore.pyqtSlot()
     def on_surrender(self):
@@ -193,8 +177,6 @@ class NetworkGameWindow(GameWindow):
         if box.questionLabel.toPlainText() == ("Do " + enemy + " agree with a draw?"):
             enemy = "Draw"
 
-        print(enemy)
-
         def surrender_with_button():
             box.close()
 
@@ -209,13 +191,10 @@ class NetworkGameWindow(GameWindow):
         while True:
             sleep(1)
             received_steps = self.server_network.send_board(MyString("get_steps"))
-            print("beérkezett: ", received_steps)
-            print(type(received_steps))
 
             if len(received_steps) != 0 and received_steps[1] != self.owned_player_name and \
                     received_steps != self.current_received_steps:
-                print("helooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
-                print("feltétel igaz")
+
                 self.current_received_steps = received_steps
                 self.make_move(received_steps[0][0], received_steps[0][1], received_steps[0][2], received_steps[0][3])
                 if len(received_steps[2]) != 0:
@@ -230,9 +209,6 @@ class NetworkGameWindow(GameWindow):
                 self.socketSignal.emit(message)
                 if message[0] in ["checkmate", "stalemate"]:
                     return
-            current_player_name = self.player1Name.text() if self.game .get_current_player() == self.game.get_white_player() \
-                else self.player2Name.text()
-            print("Current player:", current_player_name)
 
     def promote_pawn(self, target_cell, target):
         GameWindow.promote_pawn(self, target_cell, target)

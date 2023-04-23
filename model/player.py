@@ -1,4 +1,8 @@
 class Player:
+    """
+    A class to represent a player in the game
+    """
+
     def __init__(self, color, direction):
         self._color = color
         self._direction = direction
@@ -24,7 +28,17 @@ class Player:
         return self._pieces_on_board
 
     def add_to_pieces_on_board(self, piece):
+        """
+        Adds a piece to the list that stores the owned pieces
+
+        :param piece: the piece to add
+        """
         self._pieces_on_board.append(piece)
 
     def remove_from_pieces_on_board(self, piece):
+        """
+        Removes a piece from the list that stores the owned pieces
+
+        :param piece: the piece to remove
+        """
         self._pieces_on_board.remove(piece)

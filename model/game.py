@@ -9,6 +9,9 @@ import copy
 
 
 class Game:
+    """
+    A class to represent the functionalities of the game and manage its progress
+    """
 
     def __init__(self, *args):
 
@@ -30,6 +33,7 @@ class Game:
         self._castling_rook = []
         self._rook_target = []
         self._self_checkmate = False
+        self.king_start_cells = [self.get_board_table()[0][4], self.get_board_table()[7][4]]
 
     def change_current_player(self):
         """
@@ -69,12 +73,6 @@ class Game:
 
     def get_rook_target(self):
         return self._rook_target
-
-    def get_self_checkmate(self):
-        return self._self_checkmate
-
-    def set_self_checkmate(self):
-        self._self_checkmate = False
 
     def set_board(self, board):
         self._board.set_board(board)
@@ -147,7 +145,7 @@ class Game:
         x_target_coord = target_cell.get_piece().get_piece_x()
         y_target_coord = target_cell.get_piece().get_piece_y()
 
-        if target_cell in self._castling_step:
+        if target_cell in self._castling_step and cell_to_move_from in self.king_start_cells:
 
             self.move_piece_in_case_of_castling(x_target_coord, target_cell)
 
@@ -258,7 +256,7 @@ class Game:
             return True
         return False
 
-    def steps_if_king_is_targeted(self):
+    def steps_if_king_is_targeted(self, player=None):
         """
         Returns a list of tuples in which there are the possible pieces and the corresponding
         legal moves that would save the king from check
@@ -268,7 +266,9 @@ class Game:
 
         steps = []
 
-        for i in self._current_player.get_pieces_on_board():
+        player_to_check = self._current_player if player is None else player
+
+        for i in player_to_check.get_pieces_on_board():
 
             piece_x = i.get_piece_x()
             piece_y = i.get_piece_y()
@@ -278,15 +278,7 @@ class Game:
 
             for j in self.get_possible_steps(piece_x, piece_y):
 
-                target_x = j.get_piece().get_piece_x()
-                target_y = j.get_piece().get_piece_y()
-
-                test_game = copy.deepcopy(self)
-
-                piece_to_move = test_game.get_board_table()[piece_x][piece_y]
-                target_piece = test_game.get_board_table()[target_x][target_y]
-
-                test_game.move(piece_to_move, target_piece)
+                test_game, target_x, target_y = Game.move_in_test_game(piece_x, piece_y, j, self)
 
                 if not test_game.is_king_targeted(test_game.get_current_player()):
 
@@ -364,6 +356,12 @@ class Game:
         piece.set_piece_type(p_type)
 
     def is_king_alive(self, color):
+        """
+        Returns whether the king indicated by the given color is alive or not
+
+        :param color: the color of the king to check
+        :return: logical value whether the king is alive
+        """
         player = self.get_white_player() if color == color.WHITE else self.get_black_player()
 
         for i in player.get_pieces_on_board():
@@ -375,6 +373,21 @@ class Game:
         cell = self.get_board_table()[x][y]
         for i in self.filter_wrong_moves(x, y):
             print("(", i.get_piece().get_piece_x(), ", ", i.get_piece().get_piece_y(), ")")
+
+    @staticmethod
+    def move_in_test_game(piece_x, piece_y, cell, game):
+
+        target_x = cell.get_piece().get_piece_x()
+        target_y = cell.get_piece().get_piece_y()
+
+        test_game = copy.deepcopy(game)
+
+        piece_to_move = test_game.get_board_table()[piece_x][piece_y]
+        target_piece = test_game.get_board_table()[target_x][target_y]
+
+        test_game.move(piece_to_move, target_piece)
+
+        return test_game, target_x, target_y
 
     @staticmethod
     def get_index_of_item(lst, item):

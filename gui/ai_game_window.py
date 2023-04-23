@@ -9,8 +9,8 @@ from PyQt5 import QtCore
 
 class AiGameWindow(GameWindow):
 
-    def __init__(self, widget, player_name, time, yet_to_decide):
-        GameWindow.__init__(self, widget, player_name, "AI", time, yet_to_decide)
+    def __init__(self, widget, player_name, yet_to_decide):
+        GameWindow.__init__(self, widget, player_name, "AI", 10, yet_to_decide)
 
         self.ai_color = Color.WHITE if self.player1Name.text() == "AI" else Color.BLACK
         self.ai_player = self.game.get_white_player() if self.ai_color == Color.WHITE \

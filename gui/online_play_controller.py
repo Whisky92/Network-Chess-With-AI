@@ -1,18 +1,14 @@
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QFont
-from PyQt5 import QtWidgets
 from PyQt5 import QtCore
-from PyQt5.QtCore import QEvent, QEventLoop, QTimer, pyqtSlot
-from PyQt5.QtWidgets import QApplication, QDialog, QPushButton, QCheckBox
+from PyQt5.QtCore import QEvent, QEventLoop, QTimer
+from PyQt5.QtWidgets import QDialog, QPushButton, QCheckBox
 import network.server as server
 from network.network import Network
 from _thread import *
 import re
-import socket
 from time import sleep
-from network.network_messages import NetworkMessages
 from network.my_string import MyString
-from gui.game_window import GameWindow
 from gui.network_game_window import NetworkGameWindow
 import threading
 
@@ -101,12 +97,11 @@ class PlayerOneNameChoose(QDialog):
             loop.exec_()
 
             server_network.connect()
+
             names = server_network.send_object(MyString(text))
-            print(names)
             screen = ReadyMenu(server_network, widget, names, time)
-            print("hello")
+
             widget.addWidget(screen)
-            print("megyen")
             widget.setCurrentIndex(widget.currentIndex() + 1)
 
     def back_to_previous_page(self, widget):
@@ -156,7 +151,6 @@ class IpChooseMenu(QDialog):
 
         if ip != "" and \
                 (re.search("((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}", ip) or ip == "localhost"):
-            print("true")
 
             client_network = Network(ip)
             client_network.connect()
@@ -167,12 +161,12 @@ class IpChooseMenu(QDialog):
 
             names = client_network.send_object(MyString(name))
 
-            print(names)
             if name != "" and names[0] != name:
-                print("megyenősös megyen")
+
                 screen = ReadyMenu(client_network, widget, names)
                 widget.addWidget(screen)
                 widget.setCurrentIndex(widget.currentIndex() + 1)
+
                 self.nameField.setText("")
                 self.ipField.setText("")
 
@@ -235,7 +229,7 @@ class ReadyMenu(QDialog):
             self.time = int(time)
             self.server_network.send_object(MyString(time))
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
-            print("megyenget")
+
             start_new_thread(self.wait_for_other_player, (self.owned_checkbox, not_owned_checkbox))
 
     def change_for_second_player(self, value):
@@ -243,7 +237,7 @@ class ReadyMenu(QDialog):
 
     def start_game(self, current_player):
         if current_player == "p1" and self.p1_checkbox.isChecked() and self.p2_checkbox.isChecked():
-            print("asdasdasdasdads")
+
             self.server_network.send_object(MyString("ready"))
             self.stop = True
             self.start()
@@ -259,12 +253,9 @@ class ReadyMenu(QDialog):
         while True:
             try:
                 sleep(1)
-                print("amegyen")
-                print("amegyen")
                 arr = self.server_network.send_object(MyString("wait"))
-                print(arr)
+
                 if arr[1] != "":
-                    print("letsgooo")
                     self.p2_checkbox.setText(arr[1])
                     self.p2_checkbox.update()
                     break
@@ -280,12 +271,9 @@ class ReadyMenu(QDialog):
         while True:
             try:
                 sleep(0.5)
-                print(self.stop)
                 if self.stop:
-                    print("kiléépés")
                     break
                 state = "checked" if owned_checkbox.isChecked() else "unchecked"
-                print(state)
                 arr = self.server_network.send_object(MyString(state)).get_string()
                 box_checked = True if arr == "checked" else False
                 not_owned_checkbox.setChecked(box_checked)
@@ -295,7 +283,6 @@ class ReadyMenu(QDialog):
                 if owned_checkbox == self.p2_checkbox:
                     arr2 = self.server_network.send_object(MyString("start_game")).get_string()
                     if arr2 == "yes":
-                        print("halóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóóó")
                         self.socketSignal.emit("asdd")
                         break
             except:

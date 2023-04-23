@@ -4,6 +4,9 @@ from model.cell import Cell
 
 
 class Board:
+    """
+    A class for representing the game board
+    """
 
     def __init__(self, *args):
 

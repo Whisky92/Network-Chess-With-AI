@@ -2,6 +2,9 @@ from model.piece_type import PieceType
 
 
 class KingStepChecker:
+    """
+    A class to check the possible steps of the king piece
+    """
 
     @staticmethod
     def check_king_steps(board, x, y, white_player, black_player, last_step, castling_step, castling_rook, rook_target):

@@ -9,17 +9,34 @@ from model.game import Game
 
 
 class AiLogic:
+    """
+    A class to store the logic of the Artificial Intelligence
+    """
 
     ai_player_color: Color
     enemy_color: Color
 
     @staticmethod
     def set_ai_player(color):
+        """
+        A setter method for ai_player_color
+
+        :param color: the color to set
+        """
         AiLogic.ai_player_color = color
         AiLogic.enemy_color = color.WHITE if color == color.BLACK else color.WHITE
 
     @staticmethod
     def minimax(board, depth, color, game):
+        """
+        MiniMax algorithm to decide the most beneficial step for the AI
+
+        :param board: the current game board
+        :param depth: the number of rounds to examine all possible step combinations
+        :param color: the color of the player to be checked
+        :param game: the current game
+        :return: the value and the start and target coordinates of the best step
+        """
 
         if depth == 0 \
                 or not game.is_king_alive(AiLogic.enemy_color) \
@@ -57,6 +74,14 @@ class AiLogic:
 
     @staticmethod
     def get_all_moves(color, game):
+        """
+        Returns all possible moves of the player indicated by the given color
+
+        :param color: the color the player
+        :param game: the current game
+        :return: the list of possible moves
+        """
+
         moves = []
 
         player = game.get_white_player() if color == Color.WHITE \
@@ -66,7 +91,7 @@ class AiLogic:
         piece_list = player.get_pieces_on_board()
 
         if targeted:
-            piece_list = AiLogic.get_pieces_if_targeted(game)
+            piece_list = AiLogic.get_pieces_if_targeted(game, player)
 
         for piece in piece_list:
 
@@ -76,41 +101,57 @@ class AiLogic:
             move_list = game.filter_wrong_moves(piece_x, piece_y)
 
             if targeted:
-                move_list = AiLogic.steps_of_piece_if_king_is_targeted(game, piece)
+                move_list = AiLogic.steps_of_piece_if_king_is_targeted(game, player, piece)
 
             for cell in move_list:
 
-                target_x = cell.get_piece().get_piece_x()
-                target_y = cell.get_piece().get_piece_y()
-
-                test_game = copy.deepcopy(game)
-
-                piece_to_move = test_game.get_board_table()[piece_x][piece_y]
-                target_piece = test_game.get_board_table()[target_x][target_y]
-
-                test_game.move(piece_to_move, target_piece)
+                test_game, target_x, target_y = Game.move_in_test_game(piece_x, piece_y, cell, game)
 
                 moves.append((test_game, (piece_x, piece_y), (target_x, target_y)))
 
         return moves
 
     @staticmethod
-    def get_pieces_if_targeted(game):
+    def get_pieces_if_targeted(game, player):
+        """
+        Returns the possible movable pieces in case the king is targeted
+
+        :param game: the current game
+        :param player: the player whose king is about to be checked
+
+        :return: list of possible moves
+        """
         lst = []
 
-        for i in game.steps_if_king_is_targeted():
+        for i in game.steps_if_king_is_targeted(player):
             lst.append(i[0].get_piece())
         return lst
 
     @staticmethod
-    def steps_of_piece_if_king_is_targeted(game, piece):
-        for i in game.steps_if_king_is_targeted():
+    def steps_of_piece_if_king_is_targeted(game, player, piece):
+        """
+        Returns the possible targets of the given piece in case the king is targeted
+
+        :param game: the current game
+        :param player: the player whose king is about to be checked
+        :param piece: the current piece
+
+        :return: the list of possible targets
+        """
+        for i in game.steps_if_king_is_targeted(player):
             if i[0].get_piece() == piece:
                 return i[1]
         return None
 
     @staticmethod
     def evaluate_board(board):
+        """
+        Evaluates the game board based on the piece values and positions
+
+        :param board: the current game board
+
+        :return: the value of the board
+        """
 
         white_value = 0
         black_value = 0

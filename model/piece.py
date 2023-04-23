@@ -3,6 +3,10 @@ from model.king_step_checker import KingStepChecker
 
 
 class Piece:
+    """
+    A class to represent a piece on a board
+    """
+
     def __init__(self, x, y, p_type, direction):
 
         self._x = x

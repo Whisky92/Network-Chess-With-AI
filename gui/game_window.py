@@ -78,6 +78,8 @@ class GameWindow(QDialog):
         self.player2StepInfo.clicked.connect(lambda:
                                              MessageBox.step_recognition_box(self.game))
 
+        self.king_start_cells = [self.game.get_board_table()[0][4], self.game.get_board_table()[7][4]]
+
         self.player1Name.resizeEvent = self.resizeText
 
         if self.__class__.__name__ != "AiGameWindow":
@@ -280,11 +282,17 @@ class GameWindow(QDialog):
 
         if start_cell.get_piece().get_en_passant_step() is not None and target_cell == \
                 start_cell.get_piece().get_en_passant_step():
-
+            print("ide nem kéne belépni")
             self.__step_in_case_of_en_passant_step(start_cell, target_cell)
-        elif target_cell in self.game.get_castling_step():
-
+        elif target_cell in self.game.get_castling_step() and start_cell in self.king_start_cells:
+            print("ide szintén nem kéne belépni")
             self.__step_in_case_of_castling_step(start_cell, target_cell)
+        print("itt jár")
+        print(self.board.itemAtPosition(start_x, start_y).widget().pixmap())
+        print()
+        print(self.board.itemAtPosition(target_x, target_y).widget().pixmap())
+        print()
+        print(self.game.get_board().print_board())
 
         self.__normal_step(start_x, start_y, target_x, target_y)
 

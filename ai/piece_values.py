@@ -2,6 +2,9 @@ from model.piece_type import PieceType
 
 
 class PieceValues:
+    """
+    A class to store the chess piece values based on piece type and position
+    """
 
     piece_strengths = {
         PieceType.PAWN: 10,

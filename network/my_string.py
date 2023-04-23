@@ -1,4 +1,7 @@
 class MyString:
+    """
+    A class to wrap string variables to send it through network
+    """
 
     def __init__(self, string):
         self.string = string
