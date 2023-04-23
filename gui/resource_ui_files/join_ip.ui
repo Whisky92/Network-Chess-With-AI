@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#Form {
-	background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #e6a163, stop: 1 #b5651d);
+	background-color: #26E2A3;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="8,1,4,1" columnstretch="1,5,1">
@@ -209,8 +209,11 @@
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: white;
+        <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #FFD800, stop: 1 #FFFF66);
 border: 2px solid brown;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>
@@ -223,8 +226,11 @@ border: 2px solid brown;</string>
         </sizepolicy>
        </property>
        <property name="styleSheet">
-        <string notr="true">background-color: white;
+        <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #FFD800, stop: 1 #FFFF66);
 border: 2px solid brown;</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </item>

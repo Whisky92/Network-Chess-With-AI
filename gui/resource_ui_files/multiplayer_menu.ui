@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#Form {
-	background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #e6a163, stop: 1 #b5651d);
+	background-color: #26E2A3;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="10,5,1,5,0,1,5" columnstretch="3,4,3">

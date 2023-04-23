@@ -53,9 +53,10 @@
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-right: 2px solid black;
+      <string notr="true">border-right: 5px solid black;
 border-left: 2px solid black;
-border-bottom: 2px solid black;</string>
+border-bottom: 2px solid black;
+background-color: #B66C34;</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -74,8 +75,9 @@ border-bottom: 2px solid black;</string>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">border-right: 2px solid black;
-border-bottom: 2px solid black;</string>
+      <string notr="true">border-right: 5px solid black;
+border-bottom: 2px solid black;
+background-color: #B66C34;</string>
      </property>
      <property name="text">
       <string>TextLabel</string>
@@ -95,7 +97,8 @@ border-bottom: 2px solid black;</string>
      </property>
      <property name="styleSheet">
       <string notr="true">border-right: 2px solid black;
-border-bottom: 2px solid black;</string>
+border-bottom: 2px solid black;
+background-color: #B66C34;</string>
      </property>
      <property name="text">
       <string>TextLabel</string>

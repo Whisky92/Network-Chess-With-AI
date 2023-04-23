@@ -21,7 +21,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget#Form {
-	background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #e6a163, stop: 1 #b5651d);
+	background-color: #26E2A3;
 }</string>
   </property>
   <layout class="QGridLayout" name="gridLayout" rowstretch="10,4,4,4,4,1" columnstretch="3,4,3">
@@ -37,7 +37,7 @@
       <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
      </property>
      <property name="text">
-      <string>Local Play VS Player</string>
+      <string>Player VS Player</string>
      </property>
     </widget>
    </item>
@@ -123,7 +123,7 @@
       <string notr="true">background-color: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 orange, stop: 1 brown);</string>
      </property>
      <property name="text">
-      <string>Local Play VS AI</string>
+      <string>Player VS AI</string>
      </property>
     </widget>
    </item>

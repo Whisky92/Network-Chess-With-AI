@@ -3,6 +3,7 @@ from PyQt5.QtGui import QFont
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import QEvent
 from PyQt5.QtWidgets import QApplication, QDialog, QPushButton, QLabel, QSizePolicy
+from gui.change_ui_and_font import change_ui, resize, on_back_btn_pressed
 from gui.game_window import GameWindow
 from gui.online_play_controller import MultiPlayerMenu
 from gui.ai_game_window import AiGameWindow
@@ -12,6 +13,10 @@ import sqlite3
 
 
 class MainWindow(QDialog):
+    """
+    A class to represent the main menu of the ui
+    """
+
     def __init__(self):
 
         super(MainWindow, self).__init__()
@@ -22,50 +27,14 @@ class MainWindow(QDialog):
         self.online_pvp_button = self.findChild(QPushButton, "onlinePlayerVsPlayerButton")
         self.match_history_button = self.findChild(QPushButton, "matchHistoryButton")
 
-        self.local_pvp_button.clicked.connect(self.play_local_pvp)
+        self.local_pvp_button.clicked.connect(lambda: change_ui(PlayerOneNameChoose(widget), widget))
         self.local_pvp_button.resizeEvent = self.resizeText
 
-        self.local_play_vs_ai_button.clicked.connect(self.play_against_ai)
+        self.local_play_vs_ai_button.clicked.connect(lambda: change_ui(PlayVsAiNameChoose(widget), widget))
 
-        self.online_pvp_button.clicked.connect(self.play_online_pvp)
+        self.online_pvp_button.clicked.connect(lambda: change_ui(MultiPlayerMenu(widget), widget))
 
-        self.match_history_button.clicked.connect(self.check_statistics)
-
-    def play_local_pvp(self):
-        """
-        The actions to be done in case the local pvp button was pressed
-        """
-
-        screen = PlayerOneNameChoose()
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def play_against_ai(self):
-        """
-        The actions to be done in case the local play vs AI button was pressed
-        """
-
-        screen = PlayVsAiNameChoose()
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def play_online_pvp(self):
-        """
-        The actions to be done in case the online pvp button was pressed
-        """
-
-        screen = MultiPlayerMenu(widget)
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def check_statistics(self):
-        """
-        The actions to be done in case the match history button was pressed
-        """
-        screen = Statistics()
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
+        self.match_history_button.clicked.connect(lambda: change_ui(Statistics(widget), widget))
 
     def resizeText(self, event: QEvent):
         """
@@ -74,21 +43,12 @@ class MainWindow(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.local_pvp_button.setFont(f)
-        self.matchHistoryButton.setFont(f)
-        self.playerVsAiButton.setFont(f)
-        self.onlinePlayerVsPlayerButton.setFont(f)
+        resize(self, [self.local_pvp_button, self.local_play_vs_ai_button,
+                      self.online_pvp_button, self.match_history_button])
 
 
 class Statistics(QDialog):
-    def __init__(self):
+    def __init__(self, widget):
 
         super(Statistics, self).__init__()
         loadUi("resource_ui_files/statistics.ui", self)
@@ -112,16 +72,10 @@ class Statistics(QDialog):
         conn.commit()
         conn.close()
 
-        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.backButton.resizeEvent = self.resizeText
-    def back_to_previous_page(self):
-        """
-        The actions to be done in case the back button was pressed
-        """
 
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
+        self.installEventFilter(self)
 
     def resizeText(self, event: QEvent):
         """
@@ -130,33 +84,18 @@ class Statistics(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
+        resize(self, [self.backButton])
 
 
 class PlayVsAiNameChoose(QDialog):
 
-    def __init__(self):
+    def __init__(self, widget):
         super(PlayVsAiNameChoose, self).__init__()
         loadUi("resource_ui_files/player1_name_choose.ui", self)
 
-        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.submitButton.clicked.connect(self.submit)
         self.submitButton.resizeEvent = self.resizeText
-    def back_to_previous_page(self):
-        """
-        The actions to be done in case the back button was pressed
-        """
-
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
 
     def submit(self):
         """
@@ -166,10 +105,7 @@ class PlayVsAiNameChoose(QDialog):
         text = self.nameField.text()
 
         if text != "":
-
-            screen = AiGameWindow(widget, text, True)
-            widget.addWidget(screen)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+            change_ui(AiGameWindow(widget, text, True), widget)
             self.nameField.setText("")
 
     def resizeText(self, event: QEvent):
@@ -179,35 +115,18 @@ class PlayVsAiNameChoose(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
-        self.submitButton.setFont(f)
+        resize(self, [self.submitButton, self.backButton, self.nameField])
 
 
 class PlayerOneNameChoose(QDialog):
-    def __init__(self):
+    def __init__(self, widget):
 
         super(PlayerOneNameChoose, self).__init__()
         loadUi("resource_ui_files/player1_name_choose.ui", self)
 
-        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.submitButton.clicked.connect(self.submit)
         self.submitButton.resizeEvent = self.resizeText
-
-    def back_to_previous_page(self):
-        """
-        The actions to be done in case the back button was pressed
-        """
-
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
 
     def submit(self):
         """
@@ -218,9 +137,7 @@ class PlayerOneNameChoose(QDialog):
 
         if text != "":
 
-            screen = PlayerTwoNameChoose(text)
-            widget.addWidget(screen)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+            change_ui(PlayerTwoNameChoose(text, widget), widget)
             self.nameField.setText("")
 
     def resizeText(self, event: QEvent):
@@ -230,36 +147,19 @@ class PlayerOneNameChoose(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
-        self.submitButton.setFont(f)
+        resize(self, [self.submitButton, self.backButton, self.nameField])
 
 
 class PlayerTwoNameChoose(QDialog):
 
-    def __init__(self, player_1_name):
+    def __init__(self, player_1_name, widget):
 
         super(PlayerTwoNameChoose, self).__init__()
         loadUi("resource_ui_files/player2_name_choose.ui", self)
 
-        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.submitButton.clicked.connect(lambda: self.submit(player_1_name))
         self.submitButton.resizeEvent = self.resizeText
-
-    def back_to_previous_page(self):
-        """
-        The actions to be done in case the back button was pressed
-        """
-
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
 
     def submit(self, player_1_name):
         """
@@ -270,9 +170,7 @@ class PlayerTwoNameChoose(QDialog):
 
         if text != "" and player_1_name != text:
 
-            screen = TimeSet(player_1_name, text)
-            widget.addWidget(screen)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+            change_ui(TimeSet(player_1_name, text, widget), widget)
             self.nameField.setText("")
 
     def resizeText(self, event: QEvent):
@@ -282,36 +180,19 @@ class PlayerTwoNameChoose(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
-        self.submitButton.setFont(f)
+        resize(self, [self.submitButton, self.backButton, self.nameField])
 
 
 class TimeSet(QDialog):
 
-    def __init__(self, p1_name, p2_name):
+    def __init__(self, p1_name, p2_name, widget):
 
         super(TimeSet, self).__init__()
         loadUi("resource_ui_files/time_set.ui", self)
 
-        self.backButton.clicked.connect(self.back_to_previous_page)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.submitButton.clicked.connect(lambda: self.submit(p1_name, p2_name))
         self.submitButton.resizeEvent = self.resizeText
-
-    def back_to_previous_page(self):
-        """
-        The actions to be done in case the back button was pressed
-        """
-
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
 
     def submit(self, player_1_name, player_2_name):
         """
@@ -323,9 +204,7 @@ class TimeSet(QDialog):
 
             time = 120 if int(self.timeInMinutes.text()) > 120 else int(self.timeInMinutes.text())
 
-            screen = GameWindow(widget, player_1_name, player_2_name, time, True)
-            widget.addWidget(screen)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+            change_ui(GameWindow(widget, player_1_name, player_2_name, time, True), widget)
 
     def resizeText(self, event: QEvent):
         """
@@ -334,15 +213,8 @@ class TimeSet(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
+        resize(self, [self.submitButton, self.backButton, self.timeInMinutes])
 
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
-        self.submitButton.setFont(f)
 
 
 app = QApplication(sys.argv)

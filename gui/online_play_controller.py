@@ -10,6 +10,7 @@ import re
 from time import sleep
 from network.my_string import MyString
 from gui.network_game_window import NetworkGameWindow
+from gui.change_ui_and_font import change_ui, resize, on_back_btn_pressed
 import threading
 
 
@@ -120,15 +121,7 @@ class PlayerOneNameChoose(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.backButton.setFont(f)
-        self.submitButton.setFont(f)
+        resize(self, [self.backButton, self.submitButton, self.ipField, self.time, self.nameField])
 
 
 class IpChooseMenu(QDialog):
@@ -139,6 +132,7 @@ class IpChooseMenu(QDialog):
         loadUi("resource_ui_files/join_ip.ui", self)
 
         self.submitButton.clicked.connect(lambda: self.connect(widget))
+        self.submitButton.resizeEvent = self.resizeText
         self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
 
     def connect(self, widget):
@@ -179,6 +173,15 @@ class IpChooseMenu(QDialog):
         widget.setCurrentIndex(widget.currentIndex() - 1)
         widget.removeWidget(current)
 
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        resize(self, [self.backButton, self.submitButton, self.ipField, self.nameField])
+
 
 class ReadyMenu(QDialog):
 
@@ -198,6 +201,7 @@ class ReadyMenu(QDialog):
         self.p2_checkbox: QCheckBox = self.findChild(QCheckBox, "player2_cb")
 
         self.submit_btn = self.findChild(QPushButton, "submitButton")
+        self.submit_btn.resizeEvent = self.resizeText
 
         self.widget = widget
         self.players = players
@@ -231,6 +235,15 @@ class ReadyMenu(QDialog):
             self.submit_btn.clicked.connect(lambda: self.start_game(current_player))
 
             start_new_thread(self.wait_for_other_player, (self.owned_checkbox, not_owned_checkbox))
+
+    def resizeText(self, event: QEvent):
+        """
+        Determines text resizing in case the window size changes
+
+        :param event: the event that occurs
+        """
+
+        resize(self, [self.backButton, self.submitButton, self.player1_cb, self.player2_cb])
 
     def change_for_second_player(self, value):
         self.start()

@@ -26,6 +26,8 @@ class GameWindow(QDialog):
         self.widget = widget
         self.game = Game()
 
+        self.king_start_cells = [self.game.get_board_table()[0][4], self.game.get_board_table()[7][4]]
+
         self.boardWidget: QWidget = self.gameBoard
         self.board: QGridLayout = self.gameLayout
 
@@ -77,8 +79,6 @@ class GameWindow(QDialog):
                                              MessageBox.step_recognition_box(self.game))
         self.player2StepInfo.clicked.connect(lambda:
                                              MessageBox.step_recognition_box(self.game))
-
-        self.king_start_cells = [self.game.get_board_table()[0][4], self.game.get_board_table()[7][4]]
 
         self.player1Name.resizeEvent = self.resizeText
 
