@@ -220,6 +220,7 @@ app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
 main_window = MainWindow()
 
+
 widget.addWidget(main_window)
 widget.show()
 

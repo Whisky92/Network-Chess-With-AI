@@ -23,7 +23,6 @@ class AiGameWindow(GameWindow):
 
         AiLogic.set_ai_player(self.ai_color)
 
-        print(self.ai_color)
         if self.ai_color == Color.WHITE:
             self.move_ai()
 
@@ -63,7 +62,6 @@ class AiGameWindow(GameWindow):
         :param pos_y: the target's y coordinate
         """
         correct = GameWindow.if_step_progress_is_two(self, target, pos_x, pos_y)
-        print(len(correct))
         if len(correct) != 0:
             self.move_ai()
 
@@ -77,7 +75,6 @@ class AiGameWindow(GameWindow):
         ai_step = AiLogic.minimax(self.game.get_board(), 2, self.ai_color, self.game)
 
         enemy_border = 0 if self.ai_color == Color.WHITE else 7
-        self.game.get_board().print_board()
 
         start_x = ai_step[1][0]
         start_y = ai_step[1][1]

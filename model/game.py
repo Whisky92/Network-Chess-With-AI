@@ -388,11 +388,6 @@ class Game:
                 return True
         return False
 
-    def print_possible_steps(self, x, y):
-        cell = self.get_board_table()[x][y]
-        for i in self.filter_wrong_moves(x, y):
-            print("(", i.get_piece().get_piece_x(), ", ", i.get_piece().get_piece_y(), ")")
-
     @staticmethod
     def move_in_test_game(piece_x, piece_y, cell, game):
         """

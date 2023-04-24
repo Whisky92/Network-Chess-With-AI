@@ -213,7 +213,6 @@ class KingStepChecker:
             enemy_player = black_player if cell.get_piece().get_direction() == \
                                                  white_player.get_direction() else white_player
 
-            print("MINIMUM_y:", min_y, max_y + 1)
             range_min = min_y if min_y == 4 else min_y - 1
             for i in range(range_min, max_y + 1):
                 if i == 4:

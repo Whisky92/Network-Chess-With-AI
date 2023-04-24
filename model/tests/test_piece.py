@@ -32,9 +32,6 @@ class TestPiece(unittest.TestCase):
         expected_steps = [board[2][3], board[2][5], board[3][2], board[3][6],
                           board[6][3], board[6][5], board[5][2], board[5][6]]
 
-        print(expected_steps)
-        print(actual_steps)
-
         self.assertTrue(TestPiece.__correct_expected_steps(expected_steps, actual_steps))
 
     def test_get_possible_steps_of_knight_when_it_cannot_step(self):

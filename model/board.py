@@ -52,17 +52,6 @@ class Board:
 
     def set_board(self, board):
         self._board = board
-
-
-    def print_board(self):
-        for i in range(0,8):
-            for j in range(0,8):
-                self.print_coords(self._board[i][j].get_piece())
-            print()
-
-    def print_coords(self, piece):
-            print(piece.get_piece_type(), piece.get_direction(), end=" ")
-
     def __eq__(self, other):
         for i in range(0, 8):
             for j in range(0, 8):

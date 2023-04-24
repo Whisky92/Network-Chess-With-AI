@@ -245,7 +245,6 @@ class GameWindow(QDialog):
                 cell = self.game.get_board_table()[pos_x][pos_y]
 
                 cells = self.game.steps_if_king_is_targeted()
-                print(cells)
 
                 if len(cells) != 0:
 
