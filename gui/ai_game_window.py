@@ -8,6 +8,9 @@ from PyQt5 import QtCore
 
 
 class AiGameWindow(GameWindow):
+    """
+    A class to represent a game against an AI in the gui
+    """
 
     def __init__(self, widget, player_name, yet_to_decide):
         GameWindow.__init__(self, widget, player_name, "AI", 10, yet_to_decide)
@@ -25,6 +28,10 @@ class AiGameWindow(GameWindow):
             self.move_ai()
 
     def disable_checkboxes(self):
+        """
+        Disables the checkboxes, except for the player's surrender
+        and step info buttons
+        """
 
         self.makePlayer1Surrender.clicked.disconnect()
         self.makePlayer2Surrender.clicked.disconnect()
@@ -41,25 +48,35 @@ class AiGameWindow(GameWindow):
 
     @QtCore.pyqtSlot()
     def make_step(self):
+        """
+        Moves the selected piece to the desired cell, if it is possible
+        """
         if self.game.get_current_player() != self.ai_player:
             GameWindow.make_step(self)
 
     def if_step_progress_is_two(self, target, pos_x, pos_y):
+        """
+        Does the necessary processes if 'self.step_progress' is 2
+
+        :param target: the selected cell
+        :param pos_x: the target's x coordinate
+        :param pos_y: the target's y coordinate
+        """
         correct = GameWindow.if_step_progress_is_two(self, target, pos_x, pos_y)
         print(len(correct))
         if len(correct) != 0:
             self.move_ai()
 
     def move_ai(self):
+        """
+        Calculates the AI's best step and moves the appropriate piece
+        """
 
         time.sleep(1)
 
         ai_step = AiLogic.minimax(self.game.get_board(), 2, self.ai_color, self.game)
-        print(ai_step)
 
         enemy_border = 0 if self.ai_color == Color.WHITE else 7
-
-        print()
         self.game.get_board().print_board()
 
         start_x = ai_step[1][0]
@@ -68,7 +85,7 @@ class AiGameWindow(GameWindow):
         target_x = ai_step[2][0]
         target_y = ai_step[2][1]
 
-        start_cell = self.game.get_board()[start_x][start_y]
+        start_cell = self.game.get_board_table()[start_x][start_y]
 
         if start_cell in self.king_start_cells:
 
@@ -76,15 +93,7 @@ class AiGameWindow(GameWindow):
 
             self.set_castling_properties(start_cell, target_cell)
 
-        print(start_x, start_y, target_x, target_y)
-
-        print(self.board.itemAtPosition(start_x, start_y).widget().pixmap())
-        print(self.board.itemAtPosition(target_x, target_y).widget().pixmap())
-
         self.make_move(start_x, start_y, target_x, target_y)
-
-        self.game.get_current_player()
-        self.game.get_board().print_board()
 
         target = self.game.get_board_table()[target_x][target_y]
 

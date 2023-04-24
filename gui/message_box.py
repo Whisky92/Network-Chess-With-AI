@@ -3,15 +3,24 @@ from gui.my_message_box import MyDualMessageBox, MySingleMessageBox, MyQuadruple
 from PyQt5.QtGui import QPixmap, QFont
 from PyQt5.QtWidgets import QSizePolicy, QPushButton
 from PyQt5 import QtCore
+from PyQt5.QtCore import Qt
 from step_recognition.step_recognition import StepRecognition
 import sqlite3
 import webbrowser
 
 
 class MessageBox:
+    """
+    A class to represent the message boxes to be shown
+    """
 
     @staticmethod
     def step_recognition_box(game):
+        """
+        A message box to be shown in case the step recognition button was pressed
+
+        :param game: the current game
+        """
         msgbox = MyStepRecognitionMessageBox()
 
         game_steps = game.get_steps()
@@ -30,19 +39,21 @@ class MessageBox:
 
         msgbox.exec_()
 
-
     @staticmethod
     def stalemate_message_box(game, is_offline=True):
         """
         The message box to be shown in case of stalemate
 
         :param game: the object to represent the current game
+        :param is_offline: logical value whether the game is offline or not
+
+        :return: the message box to be shown
         """
 
         msgbox = MyDualMessageBox("The result of the game is stalemate",
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
 
         MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), "Stalemate")
 
@@ -61,6 +72,9 @@ class MessageBox:
 
         :param game: the object to represent the current game
         :param game_result: the result of current game
+        :param is_offline: logical value whether the game is offline or not
+
+        :return: the message box to be shown
         """
 
         game_result = game_result + "'s victory"
@@ -68,17 +82,8 @@ class MessageBox:
         msgbox = MyDualMessageBox("CheckMate!\nThe result of the game is: " + game_result,
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
-
-        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
-
-        if not is_offline:
-            MessageBox.__set_button_stretch(msgbox)
-
-        return msgbox
+        return MessageBox.__set_game_ending_message_box_properties(msgbox, game, is_offline, game_result)
 
     @staticmethod
     def no_more_time_message_box(game, loser, is_offline=True):
@@ -86,7 +91,10 @@ class MessageBox:
         The message box to be shown in case the game finishes by a button being pressed
 
         :param game: the object to represent the current game
-        :param game_result: the result of current game
+        :param loser: the player who lost the game
+        :param is_offline: logical value whether the game is offline or not
+
+        :return: the message box to be shown
         """
         winner = game.player1Name.text() if loser == game.player2Name.text() else game.player2Name.text()
         game_result = winner + "'s victory"
@@ -95,17 +103,7 @@ class MessageBox:
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
 
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
-
-        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
-
-        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
-
-        if not is_offline:
-            MessageBox.__set_button_stretch(msgbox)
-
-        return msgbox
+        return MessageBox.__set_game_ending_message_box_properties(msgbox, game, is_offline, game_result)
 
     @staticmethod
     def end_game_message_box(game, game_result, is_offline=True):
@@ -114,6 +112,9 @@ class MessageBox:
 
         :param game: the object to represent the current game
         :param game_result: the result of current game
+        :param is_offline: logical value whether the game is offline or not
+
+        :return: the message box to be shown
         """
 
         if game_result != "Draw":
@@ -122,17 +123,8 @@ class MessageBox:
         msgbox = MyDualMessageBox("The result of the game is: " + game_result,
                                   b1_text="Start a new game",
                                   b2_text="Return to main menu")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
 
-        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
-
-        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
-        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
-
-        if not is_offline:
-            MessageBox.__set_button_stretch(msgbox)
-
-        return msgbox
+        return MessageBox.__set_game_ending_message_box_properties(msgbox, game, is_offline, game_result)
 
     @staticmethod
     def make_enemy_surrender_message_box(game, player_name, enemy_player_name):
@@ -145,7 +137,7 @@ class MessageBox:
         """
 
         msgbox = MyDualMessageBox("Do " + enemy_player_name + " want to surrender?")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
 
         def on_btn1_click():
             """
@@ -166,10 +158,12 @@ class MessageBox:
 
         :param game: the object to represent the current game
         :param enemy_player_name: the name of the opponent
+
+        :return: the message box to be shown
         """
 
         msgbox = MyDualMessageBox("Do " + enemy_player_name + " agree with a draw?")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
 
         def on_btn1_click():
             """
@@ -190,10 +184,12 @@ class MessageBox:
 
         :param game: the object to represent the current game
         :param enemy_player_name: the name of the opponent
+
+        :return: the message box to be shown
         """
 
         msgbox = MyDualMessageBox("Do you really want to surrender?")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
 
         def on_btn1_click():
             """
@@ -232,6 +228,15 @@ class MessageBox:
         msgbox.exec_()
 
     @staticmethod
+    def connection_error_message_box():
+        """
+        The message box to be shown in case of connection error
+        """
+
+        msgbox = MySingleMessageBox("Error occurred during connection")
+        msgbox.exec_()
+
+    @staticmethod
     def promote_message_box(game, cell, gui_cell):
         """
         The message box to be shown in case a pawn must be promoted
@@ -242,7 +247,7 @@ class MessageBox:
         """
 
         msgbox = MyQuadrupleMessageBox("Choose the type of piece you would like to promote the pawn to")
-        msgbox.questionLabel.setAlignment(QtCore.Qt.AlignCenter)
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
 
         def on_btn1_clicked():
             """
@@ -313,7 +318,7 @@ class MessageBox:
 
         widget.setCurrentIndex(widget.currentIndex() - 1)
         widget.removeWidget(game)
-        current.__init__(widget, name1, name2, True)
+        current.__init__(widget, name1, name2, current.time, True)
         widget.addWidget(current)
         widget.setCurrentIndex(widget.currentIndex() + 1)
 
@@ -336,6 +341,12 @@ class MessageBox:
 
     @staticmethod
     def promote_to_queen(cell, gui_cell):
+        """
+        Promotes the piece of the given cell to a queen
+
+        :param cell: the cell's representation in the model
+        :param gui_cell: the cell in the gui
+        """
 
         if cell.get_piece().get_direction() == 1:
             pixmap = QPixmap("./resource_images/pieces/w_queen.png")
@@ -345,6 +356,12 @@ class MessageBox:
 
     @staticmethod
     def promote_to_rook(cell, gui_cell):
+        """
+        Promotes the piece of the given cell to a rook
+
+        :param cell: the cell's representation in the model
+        :param gui_cell: the cell in the gui
+        """
 
         if cell.get_piece().get_direction() == 1:
             pixmap = QPixmap("./resource_images/pieces/w_rook.png")
@@ -354,6 +371,12 @@ class MessageBox:
 
     @staticmethod
     def promote_to_bishop(cell, gui_cell):
+        """
+        Promotes the piece of the given cell to a bishop
+
+        :param cell: the cell's representation in the model
+        :param gui_cell: the cell in the gui
+        """
 
         if cell.get_piece().get_direction() == 1:
             pixmap = QPixmap("./resource_images/pieces/w_bishop.png")
@@ -363,6 +386,12 @@ class MessageBox:
 
     @staticmethod
     def promote_to_knight(cell, gui_cell):
+        """
+        Promotes the piece of the given cell to a queen
+
+        :param cell: the cell's representation in the model
+        :param gui_cell: the cell in the gui
+        """
 
         if cell.get_piece().get_direction() == 1:
             pixmap = QPixmap("./resource_images/pieces/w_knight.png")
@@ -371,7 +400,29 @@ class MessageBox:
         gui_cell.setPixmap(pixmap)
 
     @staticmethod
+    def __set_game_ending_message_box_properties(msgbox, game, is_offline, game_result):
+
+        msgbox.questionLabel.setAlignment(Qt.AlignCenter)
+
+        MessageBox.insert_to_database(game.player1Name.text(), game.player2Name.text(), game_result)
+
+        msgbox.btn1.clicked.connect(lambda: MessageBox.__start_new_game(game, msgbox))
+        msgbox.btn2.clicked.connect(lambda: MessageBox.return_to_main_menu(game.widget, msgbox))
+
+        if not is_offline:
+            MessageBox.__set_button_stretch(msgbox)
+
+        return msgbox
+
+    @staticmethod
     def __set_button_stretch(msgbox):
+        """
+        Sets the stretch in the given message box in online games
+        to hide "Start a new game" option
+
+        :param msgbox:
+        :return:
+        """
 
         msgbox.btn1.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
         msgbox.btn2.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -384,6 +435,14 @@ class MessageBox:
 
     @staticmethod
     def insert_to_database(p1, p2, result):
+        """
+        Creates the database (if it does not exist)
+        and insert the current result into it
+
+        :param p1: the game's first player
+        :param p2: the game's second player
+        :param result: the result of the game
+        """
         conn = sqlite3.connect('stats.db')
         c = conn.cursor()
 

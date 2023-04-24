@@ -5,6 +5,9 @@ from PyQt5.QtGui import QFont
 
 
 class ClickableLabel(QLabel):
+    """
+    Represents a label that can emit a signal after getting clicked
+    """
 
     clicked = pyqtSignal()
 

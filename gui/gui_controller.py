@@ -216,7 +216,6 @@ class TimeSet(QDialog):
         resize(self, [self.submitButton, self.backButton, self.timeInMinutes])
 
 
-
 app = QApplication(sys.argv)
 widget = QtWidgets.QStackedWidget()
 main_window = MainWindow()

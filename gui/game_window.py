@@ -15,6 +15,9 @@ from time import sleep
 
 
 class GameWindow(QDialog):
+    """
+    A class to represent the game in the gui
+    """
 
     timeCheck = QtCore.pyqtSignal(object)
 
@@ -25,6 +28,8 @@ class GameWindow(QDialog):
 
         self.widget = widget
         self.game = Game()
+
+        self.time = time
 
         self.king_start_cells = [self.game.get_board_table()[0][4], self.game.get_board_table()[7][4]]
         self.king_castling_cells = [[self.game.get_board_table()[0][6], self.game.get_board_table()[0][2]],
@@ -63,30 +68,8 @@ class GameWindow(QDialog):
         self.p1TimerSlot.addWidget(self.p1_timer, 0, 0)
         self.p2TimerSlot.addWidget(self.p2_timer, 0, 0)
 
-        self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text())
-                                              .exec_())
-        self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text())
-                                              .exec_())
-
-        self.player1DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player2Name.text())
-                                                .exec_())
-        self.player2DrawRequest.clicked.connect(lambda: MessageBox.draw_request_message_box(self, self.player1Name.text())
-                                                .exec_())
-
-        self.makePlayer1Surrender.clicked.connect(lambda:
-                                                  MessageBox.make_enemy_surrender_message_box(self,
-                                                                                              self.player2Name.text(),
-                                                                                              self.player1Name.text(),
-))
-        self.makePlayer2Surrender.clicked.connect(lambda:
-                                                  MessageBox.make_enemy_surrender_message_box(self,
-                                                                                              self.player1Name.text(),
-                                                                                              self.player2Name.text()))
-
-        self.player1StepInfo.clicked.connect(lambda:
-                                             MessageBox.step_recognition_box(self.game))
-        self.player2StepInfo.clicked.connect(lambda:
-                                             MessageBox.step_recognition_box(self.game))
+        self.set_click_listeners_of_p1()
+        self.set_click_listeners_of_p2()
 
         self.player1Name.resizeEvent = self.resizeText
 
@@ -97,10 +80,58 @@ class GameWindow(QDialog):
 
         self.step_progress = 1
 
+    def set_click_listeners_of_p1(self):
+        """
+        Sets the click listeners of action buttons of player 1
+        """
+        self.player1Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player2Name.text())
+                                              .exec_())
+
+        self.player1DrawRequest.clicked.connect(
+            lambda: MessageBox.draw_request_message_box(self, self.player2Name.text())
+            .exec_())
+
+        self.makePlayer2Surrender.clicked.connect(lambda:
+                                                  MessageBox.make_enemy_surrender_message_box(self,
+                                                                                              self.player1Name.text(),
+                                                                                              self.player2Name.text()))
+
+        self.player1StepInfo.clicked.connect(lambda:
+                                             MessageBox.step_recognition_box(self.game))
+
+    def set_click_listeners_of_p2(self):
+        """
+        Sets the click listeners of action buttons of player 2
+        """
+        self.player2Surrender.clicked.connect(lambda: MessageBox.surrender_message_box(self, self.player1Name.text())
+                                              .exec_())
+
+        self.player2DrawRequest.clicked.connect(
+            lambda: MessageBox.draw_request_message_box(self, self.player1Name.text())
+            .exec_())
+
+        self.makePlayer1Surrender.clicked.connect(lambda:
+                                                  MessageBox.make_enemy_surrender_message_box(self,
+                                                                                              self.player2Name.text(),
+                                                                                              self.player1Name.text(),
+                                                                                              ))
+        self.player2StepInfo.clicked.connect(lambda:
+                                             MessageBox.step_recognition_box(self.game))
+
     def time_is_up(self, player_name):
+        """
+        Shows a message box in case there is no time remaning for a player
+
+        :param player_name: the player who has no more time
+        """
         MessageBox.no_more_time_message_box(self, player_name, self.__class__.__name__ == "GameWindow").exec_()
 
     def get_time(self):
+        """
+        Continuously checks the state of each timer and emits a signal,
+        when one of them reached 0
+        """
+
         while True:
             sleep(1)
             if self.timers[self.game.get_white_player()].get_remaining_time() == 0:
@@ -239,6 +270,8 @@ class GameWindow(QDialog):
         :param target: the selected cell
         :param pos_x: the target's x coordinate
         :param pos_y: the target's y coordinate
+
+        :return: return a non-empty array, if the step is correct, otherwise an empty array
         """
         correct = []
         if "background-color: #3F704D" in target.styleSheet():
@@ -253,6 +286,14 @@ class GameWindow(QDialog):
         return correct
 
     def if_correct_second_step(self, correct,  target, pos_x, pos_y):
+        """
+        Makes the move in case the step is correct
+
+        :param correct: a list to store whether the step is correct
+        :param target: the target cell
+        :param pos_x: the x coordinate of the target cell
+        :param pos_y: the y coordinate of the target cell
+        """
         start_pos = self.board.getItemPosition(self.board.indexOf(self.current_piece))
 
         start_cell = self.game.get_board_table()[start_pos[0]][start_pos[1]]
@@ -281,36 +322,39 @@ class GameWindow(QDialog):
         self.check_game_ending_conditions()
 
     def promote_pawn(self, target_cell, target):
+        """
+        Shows the pawn promotion message box, if possible
+
+        :param target_cell: the target cell
+        :param target: the target cell in the gui
+        """
         MessageBox.promote_message_box(self, target_cell, target)
 
     def make_move(self, start_x, start_y, target_x, target_y):
+        """
+        Moves the piece indicated by the start coordinates
+        to the cell indicated by target coordinates
 
-        print(start_x, start_y, target_x, target_y)
+        :param start_x: the x coordinate of the start cell
+        :param start_y: the y coordinate of the start cell
+        :param target_x: the x coordinate of the target cell
+        :param target_y: the y coordinate of the target cell
+        """
 
         start_cell = self.game.get_board_table()[start_x][start_y]
         target_cell = self.game.get_board_table()[target_x][target_y]
 
-        print(start_cell)
-        print(target_cell)
-        print(self.king_start_cells)
-
         if start_cell.get_piece().get_en_passant_step() is not None and target_cell == \
                 start_cell.get_piece().get_en_passant_step():
-            print("ide nem kéne belépni")
             self.__step_in_case_of_en_passant_step(start_cell, target_cell)
+
         elif (target_cell in self.game.get_castling_step() and start_cell in self.king_start_cells) or self.is_castling:
             if self.is_castling:
                 self.is_castling = False
-            print("ide szintén nem kéne belépni")
+
             self.__step_in_case_of_castling_step(start_cell, target_cell)
-        print("itt jár")
-        print(self.board.itemAtPosition(start_x, start_y).widget().pixmap())
-        print(self.board.itemAtPosition(target_x, target_y).widget().pixmap())
-        self.game.get_board().print_board()
 
         self.__normal_step(start_x, start_y, target_x, target_y)
-        print("---")
-        self.game.get_board().print_board()
 
     def __step_in_case_of_en_passant_step(self, start_cell, target_cell):
         """
@@ -355,11 +399,13 @@ class GameWindow(QDialog):
 
     def __normal_step(self, start_x, start_y, target_x, target_y):
         """
-        Moves the target piece from the 'start_cell' to 'target_cell'
+        Moves the piece indicated by the start coordinates
+        to the cell indicated by target coordinates
 
-        :param start_cell: the cell to move from
-        :param target_cell: the cell to move to
-        :param target: the target cell's representation in the GUI
+        :param start_x: the x coordinate of the start cell
+        :param start_y: the y coordinate of the start cell
+        :param target_x: the x coordinate of the target cell
+        :param target_y: the y coordinate of the target cell
         """
 
         start_cell = self.game.get_board_table()[start_x][start_y]
@@ -402,6 +448,14 @@ class GameWindow(QDialog):
             MessageBox.check_message_box(self)
 
     def set_castling_properties(self, start_cell, target_cell):
+        """
+        Sets the necessary castling properties
+        in case of AI and network games,
+        when the step is a castling step
+
+        :param start_cell: the cell to move from
+        :param target_cell: the cell to move to
+        """
 
         index = Game.get_index_of_item(self.king_start_cells, start_cell)
 

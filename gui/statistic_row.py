@@ -5,6 +5,9 @@ import sys
 
 
 class StatisticRow(QDialog):
+    """
+    A class to represent a row in the statistics table
+    """
 
     def __init__(self, p1_name, p2_name, result):
         QDialog.__init__(self)

@@ -1,3 +1,5 @@
+import socket
+
 from PyQt5.uic import loadUi
 from PyQt5.QtGui import QFont
 from PyQt5 import QtCore
@@ -11,35 +13,27 @@ from time import sleep
 from network.my_string import MyString
 from gui.network_game_window import NetworkGameWindow
 from gui.change_ui_and_font import change_ui, resize, on_back_btn_pressed
+from gui.message_box import MessageBox
 import threading
 
 
 class MultiPlayerMenu(QDialog):
+    """
+    A class to represent the multiplayer menu of the gui
+    """
     def __init__(self, widget):
 
         super(MultiPlayerMenu, self).__init__()
         loadUi("resource_ui_files/multiplayer_menu.ui", self)
 
         self.host_btn = self.findChild(QPushButton, "hostButton")
-        self.host_btn.clicked.connect(lambda: self.host_game(widget))
+        self.host_btn.clicked.connect(lambda: change_ui(PlayerOneNameChoose(widget), widget))
         self.host_btn.resizeEvent = self.resizeText
 
         self.join_btn = self.findChild(QPushButton, "joinByIpButton")
-        self.join_btn.clicked.connect(lambda: self.join_game(widget))
+        self.join_btn.clicked.connect(lambda: change_ui(IpChooseMenu(widget), widget))
 
-        self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
-
-    def host_game(self, widget):
-
-        screen = PlayerOneNameChoose(widget)
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
-
-    def join_game(self, widget):
-
-        screen = IpChooseMenu(widget)
-        widget.addWidget(screen)
-        widget.setCurrentIndex(widget.currentIndex() + 1)
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
 
     def resizeText(self, event: QEvent):
         """
@@ -48,34 +42,19 @@ class MultiPlayerMenu(QDialog):
         :param event: the event that occurs
         """
 
-        default_size = 9
-
-        if self.rect().width() // 40 > default_size:
-            f = QFont('', self.rect().width() // 40)
-        else:
-            f = QFont('', default_size)
-
-        self.host_btn.setFont(f)
-        self.join_btn.setFont(f)
-        self.backButton.setFont(f)
-
-    def back_to_previous_page(self, widget):
-        """
-        The actions to be done in case the back button was pressed
-        """
-
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
+        resize(self, [self.backButton, self.host_btn, self.join_btn])
 
 
 class PlayerOneNameChoose(QDialog):
+    """
+    A class to represent a menu where host can start a server
+    """
     def __init__(self, widget):
 
         super(PlayerOneNameChoose, self).__init__()
         loadUi("resource_ui_files/host_game.ui", self)
 
-        self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
         self.submitButton.resizeEvent = self.resizeText
         self.submitButton.clicked.connect(lambda: self.submit(widget))
 
@@ -89,30 +68,30 @@ class PlayerOneNameChoose(QDialog):
         time = self.time.text()
 
         if text != "" and time is not None and time.isdigit() and \
-            int(time) > 0:
-            server_network = Network(ip)
-            start_new_thread(server.start_server, (ip,))
+            int(time) > 0 and ip != "" and \
+                (re.search("((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}", ip)
+                 or ip == "localhost"):
 
-            loop = QEventLoop()
-            QTimer.singleShot(1500, loop.quit)
-            loop.exec_()
+            correct = True
+            try:
+                conn = socket.gethostbyaddr(ip)
+            except:
+                MessageBox.connection_error_message_box()
+                correct = False
 
-            server_network.connect()
+            if correct:
+                server_network = Network(ip)
+                start_new_thread(server.start_server, (ip,))
 
-            names = server_network.send_object(MyString(text))
-            screen = ReadyMenu(server_network, widget, names, time)
+                loop = QEventLoop()
+                QTimer.singleShot(1500, loop.quit)
+                loop.exec_()
 
-            widget.addWidget(screen)
-            widget.setCurrentIndex(widget.currentIndex() + 1)
+                server_network.connect()
 
-    def back_to_previous_page(self, widget):
-        """
-        The actions to be done in case the back button was pressed
-        """
+                names = server_network.send_object(MyString(text))
 
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
+                change_ui(ReadyMenu(server_network, widget, names, time), widget)
 
     def resizeText(self, event: QEvent):
         """
@@ -125,6 +104,9 @@ class PlayerOneNameChoose(QDialog):
 
 
 class IpChooseMenu(QDialog):
+    """
+    A class to represent a menu where client can join a server
+    """
 
     def __init__(self, widget):
 
@@ -133,7 +115,7 @@ class IpChooseMenu(QDialog):
 
         self.submitButton.clicked.connect(lambda: self.connect(widget))
         self.submitButton.resizeEvent = self.resizeText
-        self.backButton.clicked.connect(lambda: self.back_to_previous_page(widget))
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
 
     def connect(self, widget):
         """
@@ -147,31 +129,24 @@ class IpChooseMenu(QDialog):
                 (re.search("((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(\.|$)){4}", ip) or ip == "localhost"):
 
             client_network = Network(ip)
-            client_network.connect()
 
-            loop = QEventLoop()
-            QTimer.singleShot(1500, loop.quit)
-            loop.exec_()
+            if client_network.connect():
 
-            names = client_network.send_object(MyString(name))
+                loop = QEventLoop()
+                QTimer.singleShot(1500, loop.quit)
+                loop.exec_()
 
-            if name != "" and names[0] != name:
+                names = client_network.send_object(MyString(name))
 
-                screen = ReadyMenu(client_network, widget, names)
-                widget.addWidget(screen)
-                widget.setCurrentIndex(widget.currentIndex() + 1)
+                if name != "" and names[0] != name:
 
-                self.nameField.setText("")
-                self.ipField.setText("")
+                    change_ui(ReadyMenu(client_network, widget, names), widget)
 
-    def back_to_previous_page(self, widget):
-        """
-        The actions to be done in case the back button was pressed
-        """
+                    self.nameField.setText("")
+                    self.ipField.setText("")
 
-        current = widget.currentWidget()
-        widget.setCurrentIndex(widget.currentIndex() - 1)
-        widget.removeWidget(current)
+            else:
+                MessageBox.connection_error_message_box()
 
     def resizeText(self, event: QEvent):
         """
@@ -184,6 +159,9 @@ class IpChooseMenu(QDialog):
 
 
 class ReadyMenu(QDialog):
+    """
+    A class to represent the game lobby
+    """
 
     rolled_players = []
     socketSignal = QtCore.pyqtSignal(object)
@@ -202,6 +180,8 @@ class ReadyMenu(QDialog):
 
         self.submit_btn = self.findChild(QPushButton, "submitButton")
         self.submit_btn.resizeEvent = self.resizeText
+
+        self.backButton.clicked.connect(lambda: on_back_btn_pressed(widget))
 
         self.widget = widget
         self.players = players
@@ -246,23 +226,36 @@ class ReadyMenu(QDialog):
         resize(self, [self.backButton, self.submitButton, self.player1_cb, self.player2_cb])
 
     def change_for_second_player(self, value):
-        self.start()
+        """
+        Starts the game for the second player (on main thread)
+
+        :param value: the parameter is just there to make it possible to invoke on main thread
+        """
+        change_ui(NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
+                                    self.owned_checkbox.text(), self.time, False, self.server_network), self.widget)
 
     def start_game(self, current_player):
+        """
+        Starts the game in case the current player is the host
+
+        :param current_player: the current player
+        """
         if current_player == "p1" and self.p1_checkbox.isChecked() and self.p2_checkbox.isChecked():
 
             self.server_network.send_object(MyString("ready"))
             self.stop = True
-            self.start()
-
-    def start(self):
-
-        screen = NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
-                                   self.owned_checkbox.text(), self.time, False, self.server_network)
-        self.widget.addWidget(screen)
-        self.widget.setCurrentIndex(self.widget.currentIndex() + 1)
+            change_ui(NetworkGameWindow(self.widget, self.rolls[0], self.rolls[1],
+                                   self.owned_checkbox.text(), self.time, False, self.server_network), self.widget)
 
     def wait_for_other_player(self, owned_checkbox, not_owned_checkbox):
+        """
+        Starts a while cycle to wait for another player to connect the lobby
+
+        :param owned_checkbox: the checkbox owned by the current player
+        :param not_owned_checkbox: the checkbox not owned by the current player
+
+        :return: signal when game can start
+        """
         while True:
             try:
                 sleep(1)
@@ -278,6 +271,15 @@ class ReadyMenu(QDialog):
         return self.check_ready(owned_checkbox, not_owned_checkbox)
 
     def check_ready(self, owned_checkbox, not_owned_checkbox):
+        """
+        Continuously checks the state of checkboxes and returns when game starts
+
+        :param owned_checkbox: the checkbox owned by the current player
+        :param not_owned_checkbox: the checkbox not owned by the current player
+
+        :return: signal when gama can start
+        """
+
         rolls = self.server_network.send_object(MyString("get_rolls"))
         self.rolls[0] = rolls[0]
         self.rolls[1] = rolls[1]

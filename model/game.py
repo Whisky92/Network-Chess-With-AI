@@ -78,12 +78,30 @@ class Game:
         self._board.set_board(board)
 
     def add_to_castling_step(self, cell):
+        """
+        Adds the cell to castling_step list
+
+        :param cell: the cell to add
+        """
+
         self._castling_step.append(cell)
 
     def add_to_castling_rook(self, cell):
+        """
+        Adds the cell to castling_rook list
+
+        :param cell: the cell to add
+        """
+
         self._castling_rook.append(cell)
 
     def add_to_rook_target(self, cell):
+        """
+        Adds the cell to rook_target list
+
+        :param cell: the cell to add
+        """
+
         self._rook_target.append(cell)
 
     def filter_wrong_moves(self, x, y):
@@ -251,15 +269,7 @@ class Game:
         piece_x = piece.get_piece_x()
         piece_y = piece.get_piece_y()
 
-        target_x = target.get_piece().get_piece_x()
-        target_y = target.get_piece().get_piece_y()
-
-        test_game = copy.deepcopy(self)
-
-        cell_to_move_from = test_game.get_board_table()[piece_x][piece_y]
-        target_cell = test_game.get_board_table()[target_x][target_y]
-
-        test_game.move(cell_to_move_from, target_cell)
+        test_game, _, _ = self.move_in_test_game(piece_x, piece_y, target, self)
 
         if test_game.is_king_targeted(test_game.get_current_player()):
             return True
@@ -385,6 +395,15 @@ class Game:
 
     @staticmethod
     def move_in_test_game(piece_x, piece_y, cell, game):
+        """
+        Moves the given piece in case when we would like to test all moves
+
+        :param piece_x: the x coordinate of the movable piece
+        :param piece_y: the y coordinate of the movable piece
+        :param cell: the cell to move to
+        :param game: the current game
+        :return: the test_game, and the x and y coordinates of target cell
+        """
 
         target_x = cell.get_piece().get_piece_x()
         target_y = cell.get_piece().get_piece_y()
